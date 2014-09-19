@@ -60,7 +60,7 @@ void ImpBrush::SetColor (const Point source, const float alpha)
 }
 
 // return a random number in [0, 1), which i prefer more (as my mother tounge is JavaScript)
-double random()
+double ImpBrush::random(void)
 {
 	return (rand() / (double)(RAND_MAX + 1));
 }
