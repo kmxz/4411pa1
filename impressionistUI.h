@@ -58,6 +58,8 @@ public:
 	int					getLineAngle();	// no need to implement setter method yet
 	double				getAlpha();	// no need to implement setter method yet
 
+	void setLineOptions(bool on);
+
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
 

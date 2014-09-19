@@ -29,7 +29,7 @@ public:
 	void	setSize(int size);				// set the UI size
 	int		getLineWidth();
 	int		getLineAngle();
-	double  getAlpha();
+	double   getAlpha();
 	char*	getImageName();					// get the current image name
 	
 

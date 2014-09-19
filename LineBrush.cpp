@@ -52,3 +52,10 @@ void LineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far	
 }
+
+// @override
+bool LineBrush::isLine(void)
+{
+	return true;
+}
+
