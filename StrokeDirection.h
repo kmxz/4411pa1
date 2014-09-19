@@ -19,7 +19,6 @@ protected:
 	StrokeDirection::StrokeDirection(ImpressionistDoc* pDoc, int type);
 public:
 	int c_pAngle;
-
 	static int					c_nStrokeDirectionCount;	
 	static StrokeDirection**	c_pStrokeDirections;		
 
