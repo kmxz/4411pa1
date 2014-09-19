@@ -6,7 +6,6 @@
 
 
 #include <FL/fl_ask.h>
-
 #include <math.h>
 
 #include "impressionistUI.h"
@@ -268,7 +267,7 @@ void ImpressionistUI::cb_strokeDirectionChoice(Fl_Widget* o, void* v)
 	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
 
 	int type = (int)v;
-
+	
 	pUI->m_nStrokeDirectionType = type;
 }
 
