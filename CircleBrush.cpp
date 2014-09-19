@@ -22,7 +22,7 @@ void CircleBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->getSize();
+	size = pDoc->getSize() / 2;
 	steps = floor(size * 4 * PI + 0.5);
 	BrushMove(source, target);
 }
