@@ -9,8 +9,6 @@
 #include "../impressionistUI.h"
 #include "linebrush.h"
 
-extern float frand();
-
 LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
 ImpBrush(pDoc, name)
 {
@@ -56,6 +54,6 @@ void LineBrush::BrushEnd(const Point source, const Point target)
 // @override
 int LineBrush::extra(void)
 {
-	return EXTRA_FULL;
+	return EXTRA_WIDTH | EXTRA_ANGLE | EXTRA_LINE;
 }
 

@@ -72,6 +72,9 @@
     <ClCompile Include="ImpressionistDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConcreteBrushes\HeartBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConcreteBrushes\ScatLineBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcreteBrushes\HeartBrush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

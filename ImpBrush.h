@@ -9,6 +9,10 @@
 
 #include <stdlib.h>
 
+#ifndef PI
+#define PI 3.14159265359
+#endif
+
 // Each brush type has an associated constant.
 enum
 {
@@ -19,15 +23,17 @@ enum
 	BRUSH_SCATTERED_LINES,
 	BRUSH_SCATTERED_CIRCLES,
 	BRUSH_STARS,
+	BRUSH_HEARTS,
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
 // types of extra settings
 enum
 {
-	EXTRA_NONE,
-	EXTRA_WIDTHANGLE,
-	EXTRA_FULL
+	EXTRA_ANGLE = 1 << 0,
+	EXTRA_WIDTH = 1 << 1,
+	EXTRA_LINE = 1 << 2,
+	EXTRA_SIDES = 1 << 3
 };
 
 class ImpressionistDoc; // Pre-declaring class

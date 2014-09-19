@@ -51,6 +51,8 @@ ImpressionistDoc::ImpressionistDoc()
 		= new ScatCircleBrush(this, "Scattered Circles");
 	ImpBrush::c_pBrushes[BRUSH_STARS]
 		= new StarBrush(this, "Extra: Hollow Stars");
+	ImpBrush::c_pBrushes[BRUSH_HEARTS]
+		= new HeartBrush(this, "Extra: Hearts");
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];

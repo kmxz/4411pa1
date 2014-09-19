@@ -37,7 +37,7 @@ char* ImpBrush::BrushName(void)
 
 int ImpBrush::extra(void) // to be overloadded
 {
-	return EXTRA_NONE;
+	return 0;
 }
 
 int ImpBrush::minimum(void) // to be overloadded

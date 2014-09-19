@@ -11,8 +11,6 @@
 #include "../impressionistUI.h"
 #include "circlebrush.h"
 
-extern float frand();
-
 CircleBrush::CircleBrush(ImpressionistDoc* pDoc, char* name) :
 ImpBrush(pDoc, name)
 {

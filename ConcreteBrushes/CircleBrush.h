@@ -7,10 +7,6 @@
 #ifndef CIRCLEBRUSH_H
 #define CIRCLEBRUSH_H
 
-#ifndef PI
-#define PI 3.14159265359
-#endif
-
 #include "../ImpBrush.h"
 
 class CircleBrush : public ImpBrush

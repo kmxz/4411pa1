@@ -50,7 +50,8 @@ void StarBrush::BrushMove(const Point source, const Point target)
 
 	glPushMatrix();
 	glTranslatef(target.x, target.y, 0);
-	glScalef(size, size, 0);
+	glRotatef(angle, 0, 0, 1);
+	glScalef(size / 10.0, size / 10.0, 0);
 
 	glBegin(GL_LINE_LOOP);
 	SetColor(source, pDoc->getAlpha());
@@ -65,7 +66,7 @@ void StarBrush::BrushMove(const Point source, const Point target)
 // @override
 int StarBrush::extra(void)
 {
-	return EXTRA_WIDTHANGLE;
+	return EXTRA_WIDTH | EXTRA_ANGLE;
 }
 
 

@@ -6,3 +6,4 @@
 #include "ScatLineBrush.h"
 #include "ScatCircleBrush.h"
 #include "StarBrush.h"
+#include "HeartBrush.h"
