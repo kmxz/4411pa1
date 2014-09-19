@@ -65,6 +65,8 @@ public:
 	// Get the color of the original picture at the specified point	
 	GLubyte* GetOriginalPixel( const Point p );  
 
+	void swap(void);
+
 
 private:
 	char			m_imageName[256];
