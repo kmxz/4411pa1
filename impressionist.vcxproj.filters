@@ -51,6 +51,9 @@
     <ClCompile Include="StrokeDirection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScatCircleBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StrokeDirection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScatCircleBrush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
