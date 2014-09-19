@@ -105,11 +105,16 @@ void OriginalView::resizeWindow(int	width,
 void OriginalView::markCoord(Point coord) {
 	// section directly copied from PaintView.cpp
 	// FUCK Don'tRepeatYourself rule away! This is a fucking one-off stupid assignment and no one will FUCKING ever look into its code! 
-	int drawHeight = min(m_nWindowHeight, m_pDoc->m_nPaintHeight);
-	int startrow = m_pDoc->m_nPaintHeight - drawHeight;
-	if (startrow < 0) startrow = 0;
-	int endrow = startrow + drawHeight;
-	currentCoord = coord;
-	currentCoord.y = endrow - currentCoord.y;
-	redraw();
+	if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_FILTER) {
+		currentCoord.x = -1;
+		currentCoord.y = -1;
+	} else {
+		int drawHeight = min(m_nWindowHeight, m_pDoc->m_nPaintHeight);
+		int startrow = m_pDoc->m_nPaintHeight - drawHeight;
+		if (startrow < 0) startrow = 0;
+		int endrow = startrow + drawHeight;
+		currentCoord = coord;
+		currentCoord.y = endrow - currentCoord.y;
+		redraw();
+	}
 }

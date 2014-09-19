@@ -66,9 +66,8 @@ void StarBrush::BrushMove(const Point source, const Point target)
 // @override
 int StarBrush::extra(void)
 {
-	return EXTRA_WIDTH | EXTRA_ANGLE;
+	return EXTRA_WIDTH | EXTRA_ANGLE | ImpBrush::extra();
 }
-
 
 void StarBrush::BrushEnd(const Point source, const Point target)
 {

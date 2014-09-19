@@ -138,6 +138,7 @@
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="BrushStroke.cpp" />
     <ClCompile Include="ConcreteBrushes\CircleBrush.cpp" />
+    <ClCompile Include="ConcreteBrushes\FilterBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\HeartBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\LineBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\PointBrush.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="BrushStroke.h" />
     <ClInclude Include="ConcreteBrushes\AllBrushes.h" />
     <ClInclude Include="ConcreteBrushes\CircleBrush.h" />
+    <ClInclude Include="ConcreteBrushes\FilterBrush.h" />
     <ClInclude Include="ConcreteBrushes\HeartBrush.h" />
     <ClInclude Include="ConcreteBrushes\LineBrush.h" />
     <ClInclude Include="ConcreteBrushes\PointBrush.h" />

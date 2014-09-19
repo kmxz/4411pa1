@@ -67,6 +67,6 @@ void HeartBrush::BrushEnd(const Point source, const Point target)
 // @override
 int HeartBrush::extra(void)
 {
-	return EXTRA_ANGLE;
+	return EXTRA_ANGLE | ImpBrush::extra();
 }
 

@@ -54,6 +54,6 @@ void LineBrush::BrushEnd(const Point source, const Point target)
 // @override
 int LineBrush::extra(void)
 {
-	return EXTRA_WIDTH | EXTRA_ANGLE | EXTRA_LINE;
+	return EXTRA_WIDTH | EXTRA_ANGLE | EXTRA_LINE | ImpBrush::extra();
 }
 

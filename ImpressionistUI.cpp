@@ -439,6 +439,7 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Extra: Hollow Stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_STARS },
   {"Extra: Hearts",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_HEARTS },
   {"Extra: Poly - stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_POLY_STARS },
+  {"Filter: Dummy",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_FILTERS },
   {0}
 };
 
@@ -593,8 +594,12 @@ void ImpressionistUI::setLineOptions(int extra) {
 	}
 	if (extra & EXTRA_SIDES) {
 		m_SidesSlider->activate();
-	}
-	else {
+	} else {
 		m_SidesSlider->deactivate();
+	}
+	if (extra & EXTRA_ALPHA) {
+		m_AlphaSlider->activate();
+	} else {
+		m_AlphaSlider->deactivate();
 	}
 }

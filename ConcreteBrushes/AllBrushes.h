@@ -8,3 +8,4 @@
 #include "StarBrush.h"
 #include "HeartBrush.h"
 #include "PolyStarBrush.h"
+#include "FilterBrush.h"

@@ -55,6 +55,8 @@ ImpressionistDoc::ImpressionistDoc()
 		= new HeartBrush(this, "Extra: Hearts");
 	ImpBrush::c_pBrushes[BRUSH_POLY_STARS]
 		= new PolyStarBrush(this, "Extra: Poly-stars");
+	ImpBrush::c_pBrushes[BRUSH_FILTERS]
+		= new FilterBrush(this, "Extra: Poly-stars");
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];

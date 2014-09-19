@@ -71,6 +71,6 @@ void PolyStarBrush::BrushEnd(const Point source, const Point target)
 // @override
 int PolyStarBrush::extra(void)
 {
-	return EXTRA_ANGLE | EXTRA_SIDES;
+	return EXTRA_ANGLE | EXTRA_SIDES | ImpBrush::extra();
 }
 

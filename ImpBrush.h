@@ -25,6 +25,7 @@ enum
 	BRUSH_STARS,
 	BRUSH_HEARTS,
 	BRUSH_POLY_STARS,
+	BRUSH_FILTERS,
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
@@ -35,6 +36,8 @@ enum
 	EXTRA_WIDTH = 1 << 1,
 	EXTRA_LINE = 1 << 2,
 	EXTRA_SIDES = 1 << 3,
+	EXTRA_FILTER = 1 << 4,
+	EXTRA_ALPHA = 1 << 5
 };
 
 class ImpressionistDoc; // Pre-declaring class

@@ -4,6 +4,7 @@
 // The code maintaining the painting view of the input images
 //
 
+#include "math.h"
 #include "impressionist.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
@@ -18,6 +19,7 @@
 #define RIGHT_MOUSE_DOWN	4
 #define RIGHT_MOUSE_DRAG	5
 #define RIGHT_MOUSE_UP		6
+#define LEFT_MOUSE_MOVE     7
 
 
 #ifndef WIN32
@@ -28,6 +30,8 @@
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
+
+static const GLubyte filterIndicatorColor[3] = { 255, 0, 0 };
 
 PaintView::PaintView(int			x, 
 					 int			y, 
@@ -118,6 +122,7 @@ void PaintView::draw()
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(source, target);
 			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
+			updateFilterCircle(target);
 			break;
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionEnd(source, target);
@@ -137,7 +142,9 @@ void PaintView::draw()
 			MouseEnd(source, target, m_pDoc);
 			RestoreContent();
 			break;
-
+		case LEFT_MOUSE_MOVE:
+			updateFilterCircle(target);
+			break;
 		default:
 			printf("Unknown event!!\n");		
 			break;
@@ -195,6 +202,9 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
+		eventToDo = LEFT_MOUSE_MOVE;
+		isAnEvent = 1;
+		redraw();
 		m_pDoc->m_pUI->m_origView->markCoord(coord);
 		break;
 	default:
@@ -253,4 +263,20 @@ void PaintView::RestoreContent()
 				  m_pPaintBitstart);
 
 //	glDrawBuffer(GL_FRONT);
+}
+
+void PaintView::updateFilterCircle(Point target) {
+	if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_FILTER) {
+		RestoreContent();
+		glBegin(GL_LINE_LOOP);
+		glLineWidth(1);
+		int size = m_pDoc->getSize() / 2;
+		int steps = floor(size * 4 * PI + 0.5);
+		for (int i = 0; i < steps; i++) {
+			double a = i * 2 * PI / steps;
+			glVertex2d(target.x + cos(a) * size, target.y + sin(a) * size);
+		}
+		glColor3ubv(filterIndicatorColor);
+		glEnd();
+	}
 }

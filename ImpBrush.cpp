@@ -37,7 +37,7 @@ char* ImpBrush::BrushName(void)
 
 int ImpBrush::extra(void) // to be overloadded
 {
-	return 0;
+	return EXTRA_ALPHA;
 }
 
 //----------------------------------------------------
