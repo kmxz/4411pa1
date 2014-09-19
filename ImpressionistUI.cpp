@@ -307,6 +307,7 @@ void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
 	}
 	else if (o == self->m_BrushLineAngleSlider) {
 		self->m_nLineAngle = value;
+		StrokeDirection::c_pAngle = value;
 	}
 	else if (o == self->m_AlphaSlider) {
 		self->m_nAlpha = value;

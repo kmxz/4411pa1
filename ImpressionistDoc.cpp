@@ -60,7 +60,7 @@ ImpressionistDoc::ImpressionistDoc()
 	// create one instance of each stroke
 	StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
 	StrokeDirection::c_pStrokeDirections = new StrokeDirection*[StrokeDirection::c_nStrokeDirectionCount];
-
+	StrokeDirection::c_pAngle = 0;
 	StrokeDirection::c_pStrokeDirections[STROKE_SLIDER_RIGHT_MOUSE] = new SliderRightMouseStroke(this, STROKE_SLIDER_RIGHT_MOUSE);
 	StrokeDirection::c_pStrokeDirections[STROKE_GRADIENT] = new GradientStroke(this, STROKE_GRADIENT);
 	StrokeDirection::c_pStrokeDirections[STROKE_BRUSH_DIRECTION] = new BrushStroke(this, STROKE_BRUSH_DIRECTION);
@@ -123,7 +123,8 @@ int ImpressionistDoc::getLineWidth()
 
 int ImpressionistDoc::getLineAngle()
 {
-	return m_pUI->getLineAngle();
+	//return m_pUI->getLineAngle();
+	return StrokeDirection::c_pAngle;
 }
 
 int ImpressionistDoc::getStrokeDirectionType()
