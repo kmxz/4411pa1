@@ -145,6 +145,7 @@
     <ClCompile Include="OriginalView.cpp" />
     <ClCompile Include="PaintView.cpp" />
     <ClCompile Include="PointBrush.cpp" />
+    <ClCompile Include="ScatCircleBrush.cpp" />
     <ClCompile Include="ScatLineBrush.cpp" />
     <ClCompile Include="ScatPointBrush.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="OriginalView.h" />
     <ClInclude Include="PaintView.h" />
     <ClInclude Include="PointBrush.h" />
+    <ClInclude Include="ScatCircleBrush.h" />
     <ClInclude Include="ScatLineBrush.h" />
     <ClInclude Include="ScatPointBrush.h" />
   </ItemGroup>
