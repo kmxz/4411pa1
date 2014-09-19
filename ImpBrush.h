@@ -56,6 +56,8 @@ public:
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
 	virtual bool isLine(void);
+protected:
+	double random(void);
 private:
 	ImpressionistDoc*	m_pDoc;
 

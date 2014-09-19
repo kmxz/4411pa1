@@ -15,6 +15,7 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
+#include <time.h> 
 
 ImpressionistUI *impUI;
 ImpressionistDoc *impDoc;
@@ -22,6 +23,8 @@ ImpressionistDoc *impDoc;
 int main(int	argc, 
 		 char**	argv) 
 {
+	srand(time(NULL));
+
 	impDoc = new ImpressionistDoc();
 
 	// Create the UI
