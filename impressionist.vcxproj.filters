@@ -75,6 +75,9 @@
     <ClCompile Include="ConcreteBrushes\HeartBrush.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConcreteBrushes\PolyStarBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConcreteBrushes\HeartBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcreteBrushes\PolyStarBrush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

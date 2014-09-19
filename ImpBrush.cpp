@@ -40,11 +40,6 @@ int ImpBrush::extra(void) // to be overloadded
 	return 0;
 }
 
-int ImpBrush::minimum(void) // to be overloadded
-{
-	return 1;
-}
-
 //----------------------------------------------------
 // Set the color to paint with to the color at source,
 // which is the coord at the original window to sample 

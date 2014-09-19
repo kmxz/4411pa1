@@ -53,6 +53,8 @@ ImpressionistDoc::ImpressionistDoc()
 		= new StarBrush(this, "Extra: Hollow Stars");
 	ImpBrush::c_pBrushes[BRUSH_HEARTS]
 		= new HeartBrush(this, "Extra: Hearts");
+	ImpBrush::c_pBrushes[BRUSH_POLY_STARS]
+		= new PolyStarBrush(this, "Extra: Poly-stars");
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
@@ -123,8 +125,17 @@ int ImpressionistDoc::getLineWidth()
 
 int ImpressionistDoc::getLineAngle()
 {
-	//return m_pUI->getLineAngle();
 	return StrokeDirection::c_pAngle;
+}
+
+int ImpressionistDoc::getSides()
+{
+	return m_pUI->getSides();
+}
+
+double ImpressionistDoc::getAlpha()
+{
+	return m_pUI->getAlpha();
 }
 
 int ImpressionistDoc::getStrokeDirectionType()
@@ -132,10 +143,6 @@ int ImpressionistDoc::getStrokeDirectionType()
 	return m_pUI->getStrokeDirectionType();
 }
 
-double ImpressionistDoc::getAlpha()
-{
-	return m_pUI->getAlpha();
-}
 
 //---------------------------------------------------------
 // Load the specified image
