@@ -61,9 +61,8 @@ public:
 	double				getAlpha();	// no need to implement setter method yet
 	int					getStrokeDirectionType();
 
-	
 
-	void setLineOptions(bool on);
+	void setLineOptions(int extra);
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document

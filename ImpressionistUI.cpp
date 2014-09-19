@@ -436,6 +436,7 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Scattered Points",	FL_ALT+'q', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_POINTS},
   {"Scattered Lines",	FL_ALT+'m', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_LINES},
   {"Scattered Circles",	FL_ALT+'d', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_CIRCLES},
+  {"Extra: Hollow Stars", FL_ALT + 'd', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_STARS },
   {0}
 };
 
@@ -558,15 +559,19 @@ ImpressionistUI::ImpressionistUI() {
 
 }
 
-void ImpressionistUI::setLineOptions(bool on) {
-	if (on) {
+void ImpressionistUI::setLineOptions(int extra) {
+	if (extra == EXTRA_WIDTHANGLE || extra == EXTRA_FULL) {
 		m_BrushLineAngleSlider->activate();
 		m_BrushLineWidthSlider->activate();
-		m_StrokeDirectionTypeChoice->activate();
 	}
 	else {
 		m_BrushLineAngleSlider->deactivate();
 		m_BrushLineWidthSlider->deactivate();
+	}
+	if (extra == EXTRA_FULL) {
+		m_StrokeDirectionTypeChoice->activate();
+	}
+	else {
 		m_StrokeDirectionTypeChoice->deactivate();
 	}
 }

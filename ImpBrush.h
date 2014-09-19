@@ -18,9 +18,17 @@ enum
 	BRUSH_SCATTERED_POINTS,
 	BRUSH_SCATTERED_LINES,
 	BRUSH_SCATTERED_CIRCLES,
+	BRUSH_STARS,
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
+// types of extra settings
+enum
+{
+	EXTRA_NONE,
+	EXTRA_WIDTHANGLE,
+	EXTRA_FULL
+};
 
 class ImpressionistDoc; // Pre-declaring class
 
@@ -55,7 +63,8 @@ public:
 	
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
-	virtual bool isLine(void);
+	virtual int extra(void);
+	virtual int minimum(void);
 protected:
 	double random(void);
 private:

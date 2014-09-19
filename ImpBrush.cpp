@@ -35,9 +35,14 @@ char* ImpBrush::BrushName(void)
 	return m_pBrushName;
 }
 
-bool ImpBrush::isLine(void)
+int ImpBrush::extra(void) // to be overloadded
 {
-	return false;
+	return EXTRA_NONE;
+}
+
+int ImpBrush::minimum(void) // to be overloadded
+{
+	return 1;
 }
 
 //----------------------------------------------------
