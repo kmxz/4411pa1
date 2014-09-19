@@ -62,6 +62,8 @@ public:
 
 	
 
+	void setLineOptions(bool on);
+
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
 

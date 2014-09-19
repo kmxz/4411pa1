@@ -35,6 +35,11 @@ char* ImpBrush::BrushName(void)
 	return m_pBrushName;
 }
 
+bool ImpBrush::isLine(void)
+{
+	return false;
+}
+
 //----------------------------------------------------
 // Set the color to paint with to the color at source,
 // which is the coord at the original window to sample 

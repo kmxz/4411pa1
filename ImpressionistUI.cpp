@@ -516,6 +516,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineWidthSlider->value(m_nLineWidth);
 		m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineWidthSlider->callback(cb_slides);
+		m_BrushLineWidthSlider->deactivate();
 
 		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
 		m_BrushLineAngleSlider->user_data((void*)(this));	// record self to be used by static callback functions
@@ -528,6 +529,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineAngleSlider->value(m_nLineAngle);
 		m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineAngleSlider->callback(cb_slides);
+		m_BrushLineAngleSlider->deactivate();
 
 		m_AlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
 		m_AlphaSlider->user_data((void*)(this));	// record self to be used by static callback functions
@@ -543,4 +545,15 @@ ImpressionistUI::ImpressionistUI() {
 
     m_brushDialog->end();	
 
+}
+
+void ImpressionistUI::setLineOptions(bool on) {
+	if (on) {
+		m_BrushLineAngleSlider->activate();
+		m_BrushLineWidthSlider->activate();
+	}
+	else {
+		m_BrushLineAngleSlider->deactivate();
+		m_BrushLineWidthSlider->deactivate();
+	}
 }
