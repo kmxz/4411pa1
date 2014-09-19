@@ -98,9 +98,15 @@ void PaintView::draw()
 		// Clear it after processing.
 		isAnEvent	= 0;	
 
+		// issue #4: out-of-boundary detection
+		if (coord.x < 0) { coord.x = 0; }
+		if (coord.x >= m_nDrawWidth) { coord.x = m_nDrawWidth - 1; }
+		if (coord.y < 0) { coord.y = 0; }
+		if (coord.y >= m_nDrawHeight) { coord.y = m_nDrawHeight - 1; }
+
 		Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
 		Point target( coord.x, m_nWindowHeight - coord.y );
-		
+
 		// This is the event handler
 		switch (eventToDo) 
 		{
