@@ -258,6 +258,23 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	pDoc->setBrushType(type);
 }
 
+//-------------------------------------------------------------
+// Sets the type of stroke direction to use to the one chosen  
+// in the stroke direction choice.  
+// Called by the UI when a stroke direction is chosen in the 
+// stroke direction choice.
+//-------------------------------------------------------------
+void ImpressionistUI::cb_stroke_direction(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
+
+	int type = (int)v;
+
+	pDoc->setStrokeDirection(type);
+}
+
+
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas button is pushed
