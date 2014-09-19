@@ -493,10 +493,10 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushTypeChoice->callback(cb_brushChoice);
 
 		// Add a stroke direction type choice to the dialog
-		m_BrushTypeChoice = new Fl_Choice(110, 45, 150, 25, "&Stroke Direction");
-		m_BrushTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
-		m_BrushTypeChoice->menu(strokeDirectionTypeMenu);
-		m_BrushTypeChoice->callback(cb_strokeDirectionChoice);
+		m_StrokeDirectionTypeChoice = new Fl_Choice(110, 45, 150, 25, "&Stroke Direction");
+		m_StrokeDirectionTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
+		m_StrokeDirectionTypeChoice->menu(strokeDirectionTypeMenu);
+		m_StrokeDirectionTypeChoice->callback(cb_strokeDirectionChoice);
 
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
@@ -527,7 +527,6 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineWidthSlider->value(m_nLineWidth);
 		m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineWidthSlider->callback(cb_slides);
-		m_BrushLineWidthSlider->deactivate();
 
 		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
 		m_BrushLineAngleSlider->user_data((void*)(this));	// record self to be used by static callback functions
@@ -540,7 +539,6 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineAngleSlider->value(m_nLineAngle);
 		m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineAngleSlider->callback(cb_slides);
-		m_BrushLineAngleSlider->deactivate();
 
 		m_AlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
 		m_AlphaSlider->user_data((void*)(this));	// record self to be used by static callback functions
@@ -554,7 +552,8 @@ ImpressionistUI::ImpressionistUI() {
 		m_AlphaSlider->align(FL_ALIGN_RIGHT);
 		m_AlphaSlider->callback(cb_slides);
 
-    m_brushDialog->end();	
+		m_brushDialog->end();
+		setLineOptions(false);
 
 }
 
@@ -562,9 +561,11 @@ void ImpressionistUI::setLineOptions(bool on) {
 	if (on) {
 		m_BrushLineAngleSlider->activate();
 		m_BrushLineWidthSlider->activate();
+		m_StrokeDirectionTypeChoice->activate();
 	}
 	else {
 		m_BrushLineAngleSlider->deactivate();
 		m_BrushLineWidthSlider->deactivate();
+		m_StrokeDirectionTypeChoice->deactivate();
 	}
 }
