@@ -54,18 +54,15 @@ ImpressionistDoc::ImpressionistDoc()
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
 
 	// create one instance of each stroke
-	StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
-	StrokeDirection::c_pStrokeDirections = new StrokeDirection*[StrokeDirection::c_nStrokeDirectionCount];
+	//StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
+	//StrokeDirection::c_pStrokeDirections = new StrokeDirection*[StrokeDirection::c_nStrokeDirectionCount];
 
-	StrokeDirection::c_pStrokeDirections[STROKE_SLIDER_RIGHT_MOUSE] = new StrokeDirection(this, STROKE_SLIDER_RIGHT_MOUSE);
-
-	StrokeDirection::c_pStrokeDirections[STROKE_GRADIENT]
-		= new LineBrush(this, STROKE_GRADIENT);
-	StrokeDirection::c_pStrokeDirections[STROKE_BRUSH_DIRECTION]
-		= new CircleBrush(this, STROKE_BRUSH_DIRECTION);
+	//StrokeDirection::c_pStrokeDirections[STROKE_SLIDER_RIGHT_MOUSE] = new StrokeDirection(this, STROKE_SLIDER_RIGHT_MOUSE);
+	//StrokeDirection::c_pStrokeDirections[STROKE_GRADIENT]= new LineBrush(this, STROKE_GRADIENT);
+	//StrokeDirection::c_pStrokeDirections[STROKE_BRUSH_DIRECTION]= new CircleBrush(this, STROKE_BRUSH_DIRECTION);
 
 	// make one of the stroke direction current
-	m_pCurrentStrokeDirection = StrokeDirection::c_pStrokeDirections[0];
+	//m_pCurrentStrokeDirection = StrokeDirection::c_pStrokeDirections[0];
 
 }
 

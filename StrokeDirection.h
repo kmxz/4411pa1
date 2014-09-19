@@ -14,8 +14,8 @@ class StrokeDirection
 public:
 	int c_pAngle;
 
-	static int					c_nStrokeDirectionCount;	// How many brushes we have,
-	static StrokeDirection**	c_pStrokeDirections;		// and what they are.
+	static int					c_nStrokeDirectionCount;	
+	static StrokeDirection**	c_pStrokeDirections;		
 
 	virtual void StrokeDirectionBegin(const Point source, const Point target) = 0;
 	virtual void StrokeDirectionMove(const Point source, const Point target) = 0;
