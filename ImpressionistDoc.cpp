@@ -13,13 +13,7 @@
 #include "ImpBrush.h"
 #include "StrokeDirection.h"
 
-// Include individual brush headers here.
-#include "PointBrush.h"
-#include "LineBrush.h"
-#include "CircleBrush.h"
-#include "ScatPointBrush.h"
-#include "ScatLineBrush.h"
-#include "ScatCircleBrush.h"
+#include "ConcreteBrushes/AllBrushes.h"
 
 // Include individual strokes headers here.
 #include "SliderRightMouseStroke.h"
