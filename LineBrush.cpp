@@ -40,7 +40,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	glRotatef(angle, 0, 0, 1);
 
 	glBegin(GL_LINES);
-	SetColor(source);
+	SetColor(source, pDoc->getAlpha());
 	glVertex2d(-size/2, 0);
 	glVertex2d(size/2, 0);
 	glEnd();

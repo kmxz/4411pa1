@@ -49,7 +49,7 @@ ImpressionistDoc::ImpressionistDoc()
 		= new PointBrush( this, "Scattered Circles" );
 
 	// make one of the brushes current
-	m_pCurrentBrush	= ImpBrush::c_pBrushes[1];
+	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
 
 }
 
@@ -95,6 +95,11 @@ int ImpressionistDoc::getLineWidth()
 int ImpressionistDoc::getLineAngle()
 {
 	return m_pUI->getLineAngle();
+}
+
+float ImpressionistDoc::getAlpha()
+{
+	return m_pUI->getAlpha();
 }
 
 //---------------------------------------------------------

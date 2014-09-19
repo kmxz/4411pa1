@@ -40,6 +40,7 @@ public:
 	Fl_Slider*			m_BrushSizeSlider;
 	Fl_Slider*			m_BrushLineWidthSlider;
 	Fl_Slider*			m_BrushLineAngleSlider;
+	Fl_Slider*			m_AlphaSlider;
 
 	Fl_Button*          m_ClearCanvasButton;
 
@@ -55,6 +56,7 @@ public:
 	void				setSize(int size);
 	int					getLineWidth();	// no need to implement setter method yet
 	int					getLineAngle();	// no need to implement setter method yet
+	float				getAlpha();	// no need to implement setter method yet
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
@@ -63,6 +65,7 @@ private:
 	int		m_nSize;
 	int		m_nLineWidth;
 	int		m_nLineAngle;
+	float	m_nAlpha;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
