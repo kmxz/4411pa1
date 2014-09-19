@@ -30,6 +30,8 @@ public:
 
 	void resizeWindow(int width, int height);
 
+	void markCoord(Point coord);
+
 	ImpressionistDoc*	m_pDoc;
 
 private:

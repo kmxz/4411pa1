@@ -24,6 +24,9 @@ OriginalView::OriginalView(int			x,
 
 }
 
+static Point currentCoord = Point(-1, -1);
+static const GLubyte indicatorColor[3] = { 255, 0, 0 };
+
 void OriginalView::draw()
 {
 	if(!valid())
@@ -75,6 +78,14 @@ void OriginalView::draw()
 		glDrawBuffer( GL_BACK );
 		glDrawPixels( drawWidth, drawHeight, GL_RGB, GL_UNSIGNED_BYTE, bitstart );
 
+		if (currentCoord.x >= 0 && currentCoord.y >= 0) {
+			glPointSize((float)5);
+			glBegin(GL_POINTS);
+			glColor3ubv(indicatorColor);
+			glVertex2d(currentCoord.x, currentCoord.y);
+			glEnd();
+		}
+
 	}
 			
 	glFlush();
@@ -91,3 +102,14 @@ void OriginalView::resizeWindow(int	width,
 	resize(x(), y(), width, height);
 }
 
+void OriginalView::markCoord(Point coord) {
+	// section directly copied from PaintView.cpp
+	// FUCK Don'tRepeatYourself rule away! This is a fucking one-off stupid assignment and no one will FUCKING ever look into its code! 
+	int drawHeight = min(m_nWindowHeight, m_pDoc->m_nPaintHeight);
+	int startrow = m_pDoc->m_nPaintHeight - drawHeight;
+	if (startrow < 0) startrow = 0;
+	int endrow = startrow + drawHeight;
+	currentCoord = coord;
+	currentCoord.y = endrow - currentCoord.y;
+	redraw();
+}

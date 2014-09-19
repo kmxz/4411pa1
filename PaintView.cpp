@@ -99,9 +99,15 @@ void PaintView::draw()
 		// Clear it after processing.
 		isAnEvent	= 0;	
 
+		// issue #4: out-of-boundary detection
+		if (coord.x < 0) { coord.x = 0; }
+		if (coord.x >= m_nDrawWidth) { coord.x = m_nDrawWidth - 1; }
+		if (coord.y < 0) { coord.y = 0; }
+		if (coord.y >= m_nDrawHeight) { coord.y = m_nDrawHeight - 1; }
+
 		Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
 		Point target( coord.x, m_nWindowHeight - coord.y );
-		
+
 		// This is the event handler
 		switch (eventToDo) 
 		{
@@ -172,6 +178,7 @@ int PaintView::handle(int event)
 			eventToDo=LEFT_MOUSE_DRAG;
 		isAnEvent=1;
 		redraw();
+		m_pDoc->m_pUI->m_origView->markCoord(coord);
 		break;
 	case FL_RELEASE:
 		coord.x = Fl::event_x();
@@ -186,6 +193,7 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
+		m_pDoc->m_pUI->m_origView->markCoord(coord);
 		break;
 	default:
 		return 0;

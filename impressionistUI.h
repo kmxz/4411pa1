@@ -96,6 +96,8 @@ private:
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
 	static void	cb_slides(Fl_Widget* o, void* v);
 
+	// bonus
+	static void	cb_swap(Fl_Menu_* o, void* v);
 };
 
 #endif

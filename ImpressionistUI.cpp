@@ -228,6 +228,13 @@ void ImpressionistUI::cb_exit(Fl_Menu_* o, void* v)
 
 }
 
+//------------------------------------------------------------
+// Bonus: swap canvas
+//------------------------------------------------------------
+void ImpressionistUI::cb_swap(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_pDoc->swap();
+}
 
 
 //-----------------------------------------------------------
@@ -407,6 +414,10 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
 		
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
+		{ 0 },
+
+	{ "&Display",	0, 0, 0, FL_SUBMENU },
+	{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
 		{ 0 },
 
 	{ "&Help",		0, 0, 0, FL_SUBMENU },
