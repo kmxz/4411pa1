@@ -19,7 +19,7 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	ImpressionistDoc* pDoc = GetDocument();
 
 	size = pDoc->getSize();
-	angle = pDoc->getLineAngle();
+	
 	glLineWidth(pDoc->getLineWidth());
 	BrushMove(source, target);
 }
@@ -35,7 +35,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	glPushMatrix();
 	glTranslatef(target.x, target.y, 0);
-	glRotatef(angle, 0, 0, 1);
+	glRotatef(pDoc->getLineAngle(), 0, 0, 1);
 
 	glBegin(GL_LINES);
 	SetColor(source, pDoc->getAlpha());

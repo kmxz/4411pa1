@@ -30,7 +30,7 @@ void ScatLineBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 	int count = 2 + random() * 3; // randomly choose between 2, 3 or 4 lines
-	double angleRad = angle * DEG2RAD;
+	double angleRad = pDoc->getLineAngle() * DEG2RAD;
 	for (int i = 0; i < count; i++) {
 		int dx = (random() - 0.5) * (size * cos(angleRad) + width * sin(angleRad) * 3) * 1.21; // Jan. 21st is the day I declared to her
 		int dy = (random() - 0.5) * (size * sin(angleRad) + width * cos(angleRad) * 3) * 1.21;

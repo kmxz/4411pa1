@@ -21,7 +21,6 @@ public:
     int extra(void);
 protected:
 	double size;
-	int angle;
 };
 
 #endif
