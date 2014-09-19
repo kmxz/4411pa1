@@ -30,8 +30,11 @@ public:
 	void	setSize(int size);				// set the UI size
 	int		getLineWidth();
 	int		getLineAngle();
-	int		getStrokeDirectionType();
+	int		getSides();
 	double  getAlpha();
+
+	int		getStrokeDirectionType();
+
 	char*	getImageName();					// get the current image name
 	
 

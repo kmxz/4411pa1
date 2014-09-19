@@ -22,7 +22,7 @@ void HeartBrush::BrushBegin(const Point source, const Point target)
 
 	size = pDoc->getSize();
 	angle = pDoc->getLineAngle();
-	steps = floor(size / 4 * PI + 0.5);
+	steps = floor(size / 4.0 * PI + 0.5);
 	BrushMove(source, target);
 }
 
@@ -46,12 +46,12 @@ void HeartBrush::BrushMove(const Point source, const Point target)
 	glVertex2d(2, 1);
 	for (int i = 0; i < steps; i++) {
 		double a = i * PI / steps;
-		glVertex2d(cos(a) * size + 1, sin(a) * size + 1);
+		glVertex2d(cos(a) + 1, sin(a) + 1);
 	}
 	glVertex2d(0, 1);
 	for (int i = 0; i < steps; i++) {
 		double a = i * PI / steps;
-		glVertex2d(cos(a) * size - 1, sin(a) * size + 1);
+		glVertex2d(cos(a) - 1, sin(a) + 1);
 	}
 	glVertex2d(-2, 1);
 	glEnd();

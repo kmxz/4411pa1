@@ -7,3 +7,4 @@
 #include "ScatCircleBrush.h"
 #include "StarBrush.h"
 #include "HeartBrush.h"
+#include "PolyStarBrush.h"

@@ -312,6 +312,9 @@ void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
 	else if (o == self->m_AlphaSlider) {
 		self->m_nAlpha = value;
 	}
+	else if (o == self->m_SidesSlider) {
+		self->m_nSides = value;
+	}
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -381,6 +384,15 @@ int ImpressionistUI::getLineAngle()
 //------------------------------------------------
 // Return the brush line angle
 //------------------------------------------------
+int ImpressionistUI::getSides()
+{
+	return m_nSides;
+}
+
+
+//------------------------------------------------
+// Return the brush line angle
+//------------------------------------------------
 int ImpressionistUI::getStrokeDirectionType()
 {
 	return m_nStrokeDirectionType;
@@ -392,18 +404,6 @@ int ImpressionistUI::getStrokeDirectionType()
 double ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
-}
-
-
-//-------------------------------------------------
-// Set the brush size
-//-------------------------------------------------
-void ImpressionistUI::setSize( int size )
-{
-	m_nSize=size;
-
-	if (size<=40) 
-		m_BrushSizeSlider->value(m_nSize);
 }
 
 // Main menu definition
@@ -436,8 +436,9 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Scattered Points",	FL_ALT+'q', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_POINTS},
   {"Scattered Lines",	FL_ALT+'m', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_LINES},
   {"Scattered Circles",	FL_ALT+'d', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_CIRCLES},
-  {"Extra: Hollow Stars", NULL, (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_STARS },
-  {"Extra: Hearts", NULL, (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_HEARTS },
+  {"Extra: Hollow Stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_STARS },
+  {"Extra: Hearts",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_HEARTS },
+  {"Extra: Poly - stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_POLY_STARS },
   {0}
 };
 
@@ -484,7 +485,9 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nLineWidth = 1;
 	m_nLineAngle = 0;
+	m_nSides = 6;
 	m_nAlpha = 1;
+
 	m_nStrokeDirectionType = 0;
 
 	// brush dialog definition
@@ -531,7 +534,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineWidthSlider->callback(cb_slides);
 
-		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
+		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Angle");
 		m_BrushLineAngleSlider->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushLineAngleSlider->type(FL_HOR_NICE_SLIDER);
 		m_BrushLineAngleSlider->labelfont(FL_COURIER);
@@ -543,7 +546,19 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineAngleSlider->callback(cb_slides);
 
-		m_AlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
+		m_SidesSlider = new Fl_Value_Slider(10, 170, 300, 20, "Sides");
+		m_SidesSlider->user_data((void*)(this));	// record self to be used by static callback functions
+		m_SidesSlider->type(FL_HOR_NICE_SLIDER);
+		m_SidesSlider->labelfont(FL_COURIER);
+		m_SidesSlider->labelsize(12);
+		m_SidesSlider->minimum(2);
+		m_SidesSlider->maximum(20);
+		m_SidesSlider->step(1);
+		m_SidesSlider->value(m_nSides);
+		m_SidesSlider->align(FL_ALIGN_RIGHT);
+		m_SidesSlider->callback(cb_slides);
+
+		m_AlphaSlider = new Fl_Value_Slider(10, 200, 300, 20, "Alpha");
 		m_AlphaSlider->user_data((void*)(this));	// record self to be used by static callback functions
 		m_AlphaSlider->type(FL_HOR_NICE_SLIDER);
 		m_AlphaSlider->labelfont(FL_COURIER);
@@ -575,5 +590,11 @@ void ImpressionistUI::setLineOptions(int extra) {
 		m_StrokeDirectionTypeChoice->activate();
 	} else {
 		m_StrokeDirectionTypeChoice->deactivate();
+	}
+	if (extra & EXTRA_SIDES) {
+		m_SidesSlider->activate();
+	}
+	else {
+		m_SidesSlider->deactivate();
 	}
 }

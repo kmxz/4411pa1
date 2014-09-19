@@ -42,6 +42,7 @@ public:
 	Fl_Slider*			m_BrushSizeSlider;
 	Fl_Slider*			m_BrushLineWidthSlider;
 	Fl_Slider*			m_BrushLineAngleSlider;
+	Fl_Slider*			m_SidesSlider;
 	Fl_Slider*			m_AlphaSlider;
 
 	Fl_Button*          m_ClearCanvasButton;
@@ -55,9 +56,9 @@ public:
 
 	// Interface to get attribute
 	int					getSize();
-	void				setSize(int size);
 	int					getLineWidth();	// no need to implement setter method yet
 	int					getLineAngle();	// no need to implement setter method yet
+	int					getSides();	// no need to implement setter method yet
 	double				getAlpha();	// no need to implement setter method yet
 	int					getStrokeDirectionType();
 
@@ -73,7 +74,7 @@ private:
 	int		m_nLineAngle;
 	int		m_nStrokeDirectionType;
 	double	m_nAlpha;
-
+	int		m_nSides;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];

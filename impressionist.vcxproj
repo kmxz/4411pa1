@@ -141,6 +141,7 @@
     <ClCompile Include="ConcreteBrushes\HeartBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\LineBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\PointBrush.cpp" />
+    <ClCompile Include="ConcreteBrushes\PolyStarBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\ScatCircleBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\ScatLineBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\ScatPointBrush.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="ConcreteBrushes\HeartBrush.h" />
     <ClInclude Include="ConcreteBrushes\LineBrush.h" />
     <ClInclude Include="ConcreteBrushes\PointBrush.h" />
+    <ClInclude Include="ConcreteBrushes\PolyStarBrush.h" />
     <ClInclude Include="ConcreteBrushes\ScatCircleBrush.h" />
     <ClInclude Include="ConcreteBrushes\ScatLineBrush.h" />
     <ClInclude Include="ConcreteBrushes\ScatPointBrush.h" />

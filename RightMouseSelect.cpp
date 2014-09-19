@@ -2,7 +2,6 @@
 #include "math.h"
 Point initailPoint;
 static const GLubyte red[] = { 255, 0, 0 };
-static const int     PI = 3.1415926;
 
 void MouseBegin(const Point source, const Point target, ImpressionistDoc* pDoc)
 {
