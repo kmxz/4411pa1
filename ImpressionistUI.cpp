@@ -11,7 +11,6 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
-
 /*
 //------------------------------ Widget Examples -------------------------------------------------
 Here is some example code for all of the widgets that you may need to add to the 
@@ -278,15 +277,18 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
-	int value = int(((Fl_Slider *)o)->value());
+	double value = ((Fl_Slider *)o)->value();
 	if (o == self->m_BrushSizeSlider) {
 		self->m_nSize = value;
 	}
 	else if (o == self->m_BrushLineWidthSlider) {
 		self->m_nLineWidth = value;
 	}
-	else {
+	else if (o == self->m_BrushLineAngleSlider) {
 		self->m_nLineAngle = value;
+	}
+	else if (o == self->m_AlphaSlider) {
+		self->m_nAlpha = value;
 	}
 }
 
@@ -357,7 +359,7 @@ int ImpressionistUI::getLineAngle()
 //------------------------------------------------
 // Return the brush alpha opacity
 //------------------------------------------------
-float ImpressionistUI::getAlpha()
+double ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
 }

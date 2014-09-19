@@ -56,7 +56,7 @@ public:
 	void				setSize(int size);
 	int					getLineWidth();	// no need to implement setter method yet
 	int					getLineAngle();	// no need to implement setter method yet
-	float				getAlpha();	// no need to implement setter method yet
+	double				getAlpha();	// no need to implement setter method yet
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
@@ -65,7 +65,7 @@ private:
 	int		m_nSize;
 	int		m_nLineWidth;
 	int		m_nLineAngle;
-	float	m_nAlpha;
+	double	m_nAlpha;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];

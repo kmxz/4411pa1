@@ -7,7 +7,6 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "ImpBrush.h"
-#include <iostream>
 
 // Static class member initializations
 int			ImpBrush::c_nBrushCount	= 0;
@@ -48,11 +47,9 @@ void ImpBrush::SetColor (const Point source, const float alpha)
 	GLubyte color[4];
 
 	unsigned char alphaByte = alpha * 255;
-	std::cout << ((int)alphaByte);
 	color[3] = alphaByte;
-
 	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
- 
+
 	glColor4ubv( color );
 
 }
