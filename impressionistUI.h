@@ -74,14 +74,6 @@ private:
 	int		m_nStrokeDirectionType;
 	double	m_nAlpha;
 
-	// Each stroke direction type has an associated constant.
-	enum
-	{
-		STROKE_SLIDER_RIGHT_MOUSE = 0,
-		STROKE_GRADIENT,
-		STROKE_BRUSH_DIRECTION,
-		NUM_STROKE_DIRECTION_TYPE // Make sure this stays at the end!
-	};
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
