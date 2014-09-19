@@ -11,15 +11,20 @@
 #include "impressionistUI.h"
 
 #include "ImpBrush.h"
+#include "StrokeDirection.h"
 
 // Include individual brush headers here.
 #include "PointBrush.h"
 #include "LineBrush.h"
 #include "CircleBrush.h"
 #include "ScatPointBrush.h"
-#include "StrokeDirection.h"
 #include "ScatLineBrush.h"
 #include "ScatCircleBrush.h"
+
+// Include individual strokes headers here.
+#include "SliderRightMouseStroke.h"
+#include "GradientStroke.h"
+#include "BrushStroke.h"
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
 
@@ -55,15 +60,15 @@ ImpressionistDoc::ImpressionistDoc()
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
 
 	// create one instance of each stroke
-	//StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
-	//StrokeDirection::c_pStrokeDirections = new StrokeDirection*[StrokeDirection::c_nStrokeDirectionCount];
+	StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
+	StrokeDirection::c_pStrokeDirections = new StrokeDirection*[StrokeDirection::c_nStrokeDirectionCount];
 
-	//StrokeDirection::c_pStrokeDirections[STROKE_SLIDER_RIGHT_MOUSE] = new StrokeDirection(this, STROKE_SLIDER_RIGHT_MOUSE);
-	//StrokeDirection::c_pStrokeDirections[STROKE_GRADIENT]= new LineBrush(this, STROKE_GRADIENT);
-	//StrokeDirection::c_pStrokeDirections[STROKE_BRUSH_DIRECTION]= new CircleBrush(this, STROKE_BRUSH_DIRECTION);
+	StrokeDirection::c_pStrokeDirections[STROKE_SLIDER_RIGHT_MOUSE] = new SliderRightMouseStroke(this, STROKE_SLIDER_RIGHT_MOUSE);
+	StrokeDirection::c_pStrokeDirections[STROKE_GRADIENT] = new GradientStroke(this, STROKE_GRADIENT);
+	StrokeDirection::c_pStrokeDirections[STROKE_BRUSH_DIRECTION] = new BrushStroke(this, STROKE_BRUSH_DIRECTION);
 
 	// make one of the stroke direction current
-	//m_pCurrentStrokeDirection = StrokeDirection::c_pStrokeDirections[0];
+	m_pCurrentStrokeDirection = StrokeDirection::c_pStrokeDirections[0];
 
 }
 
@@ -94,6 +99,15 @@ void ImpressionistDoc::setBrushType(int type)
 	m_pUI->setLineOptions(m_pCurrentBrush->isLine());
 }
 
+//---------------------------------------------------------
+// Called by the UI when the user changes the stroke type.
+// type: one of the defined stroke direction types.
+//---------------------------------------------------------
+void ImpressionistDoc::setStrokeDirectionType(int type)
+{
+	m_pCurrentStrokeDirection = StrokeDirection::c_pStrokeDirections[type];
+
+}
 
 
 //---------------------------------------------------------

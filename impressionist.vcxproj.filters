@@ -54,6 +54,21 @@
     <ClCompile Include="ScatCircleBrush.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScatLineBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SliderRightMouseStroke.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GradientStroke.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BrushStroke.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RightMouseSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h">
@@ -93,6 +108,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScatCircleBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScatLineBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderRightMouseStroke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GradientStroke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrushStroke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RightMouseSelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

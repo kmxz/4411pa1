@@ -21,6 +21,7 @@
 #include "PaintView.h"
 
 #include "ImpBrush.h"
+#include "StrokeDirection.h"
 
 class ImpressionistUI {
 public:

@@ -1,4 +1,8 @@
-#pragma once
+#ifndef STROKEDIRECTION_H
+#define STROKEDIRECTION_H
+
+class ImpressionistDoc; // Pre-declaring class
+class Point;
 
 // Each stroke direction type has an associated constant.
 enum
@@ -11,20 +15,26 @@ enum
 
 class StrokeDirection
 {
+protected:
+	StrokeDirection::StrokeDirection(ImpressionistDoc* pDoc, int type);
 public:
 	int c_pAngle;
 
 	static int					c_nStrokeDirectionCount;	
 	static StrokeDirection**	c_pStrokeDirections;		
 
+	// get Doc to communicate with it
+	ImpressionistDoc* GetDocument(void);
+
 	virtual void StrokeDirectionBegin(const Point source, const Point target) = 0;
 	virtual void StrokeDirectionMove(const Point source, const Point target) = 0;
 	virtual void StrokeDirectionEnd(const Point source, const Point target) = 0;
 
-	StrokeDirection(ImpressionistDoc* pDoc = NULL, int type = NULL);
+	
 
 private:
 	int m_pType;
 	ImpressionistDoc *m_pDoc;
 };
 
+#endif

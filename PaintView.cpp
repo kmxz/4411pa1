@@ -9,6 +9,7 @@
 #include "impressionistUI.h"
 #include "paintview.h"
 #include "ImpBrush.h"
+#include "RightMouseSelect.h"
 
 
 #define LEFT_MOUSE_DOWN		1
@@ -105,25 +106,28 @@ void PaintView::draw()
 		switch (eventToDo) 
 		{
 		case LEFT_MOUSE_DOWN:
+			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionBegin(source, target);
 			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
 			break;
 		case LEFT_MOUSE_DRAG:
+			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(source, target);
 			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
 			break;
 		case LEFT_MOUSE_UP:
+			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionEnd(source, target);
 			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
 
 			SaveCurrentContent();
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
-			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionBegin(source, target);
+			MouseBegin(source, target);
 			break;
 		case RIGHT_MOUSE_DRAG:
-			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(source, target);
+			MouseMove(source, target);
 			break;
 		case RIGHT_MOUSE_UP:
-			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionEnd(source, target);
+			MouseEnd(source, target);
 			break;
 
 		default:
