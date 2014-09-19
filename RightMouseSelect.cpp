@@ -28,4 +28,5 @@ void MouseEnd(const Point source, const Point target, ImpressionistDoc* pDoc)
 		theta=((int)(atan((p2.y - p1.y+0.0) / (p2.x - p1.x))/PI*180+360)%360);
 
 	pDoc->m_pUI->m_BrushLineAngleSlider->value(theta);
+	StrokeDirection::c_pAngle = theta;
 }

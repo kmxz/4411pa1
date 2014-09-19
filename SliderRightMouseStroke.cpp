@@ -11,10 +11,11 @@ void SliderRightMouseStroke::StrokeDirectionBegin(const Point source, const Poin
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	int size = pDoc->getStrokeDirectionType();
-
 	StrokeDirectionMove(source, target);
 }
 
-void SliderRightMouseStroke::StrokeDirectionMove(const Point source, const Point target){}
+void SliderRightMouseStroke::StrokeDirectionMove(const Point source, const Point target)
+{
+
+}
 void SliderRightMouseStroke::StrokeDirectionEnd(const Point source, const Point target){}

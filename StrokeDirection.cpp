@@ -5,6 +5,7 @@
 
 // Static class member initializations
 int			StrokeDirection::c_nStrokeDirectionCount = 0;
+int			StrokeDirection::c_pAngle = 0;
 StrokeDirection**	StrokeDirection::c_pStrokeDirections = NULL;
 
 StrokeDirection::StrokeDirection(ImpressionistDoc* pDoc,
@@ -12,7 +13,6 @@ StrokeDirection::StrokeDirection(ImpressionistDoc* pDoc,
 								m_pType(type),
 								m_pDoc(pDoc)
 {
-	c_pAngle = 0;
 }
 
 
