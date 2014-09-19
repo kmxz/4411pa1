@@ -80,6 +80,8 @@ void ImpressionistDoc::setBrushType(int type)
 	m_pUI->setLineOptions(m_pCurrentBrush->isLine());
 }
 
+
+
 //---------------------------------------------------------
 // Returns the size of the brush, and other parameters.
 //---------------------------------------------------------
@@ -96,6 +98,11 @@ int ImpressionistDoc::getLineWidth()
 int ImpressionistDoc::getLineAngle()
 {
 	return m_pUI->getLineAngle();
+}
+
+int ImpressionistDoc::getStrokeDirectionType()
+{
+	return m_pUI->getStrokeDirectionType();
 }
 
 double ImpressionistDoc::getAlpha()
