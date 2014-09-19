@@ -19,7 +19,7 @@ public:
 	void BrushEnd(const Point source, const Point target);
 	char* BrushName(void);
     bool isLine(void);
-private:
+protected:
 	double size;
 	int angle;
 };

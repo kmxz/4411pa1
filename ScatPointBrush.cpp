@@ -25,8 +25,6 @@ void ScatPointBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-#include <iostream>
-
 void ScatPointBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
@@ -41,15 +39,14 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 	glPushMatrix();
 	glTranslatef(target.x, target.y, 0);
 
-	std::cout << "fuck" << std::endl;
-
 	for (int i = - size / 2; i < size / 2; i++) {
-		for (int j = -size / 2; j < size / 2; i++) {
+		for (int j = -size / 2; j < size / 2; j++) {
 			if (random() > 0.230493) { // my birthday as magic number
 				continue;
 			}
 			glBegin(GL_POINTS);
-			SetColor(source, pDoc->getAlpha());
+			Point real_source = Point(source.x + i, source.y + j);
+			SetColor(real_source, pDoc->getAlpha());
 			glVertex2d(i, j);
 			glEnd();
 		}
