@@ -11,7 +11,6 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
-
 /*
 //------------------------------ Widget Examples -------------------------------------------------
 Here is some example code for all of the widgets that you may need to add to the 
@@ -295,15 +294,18 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
-	int value = int(((Fl_Slider *)o)->value());
+	double value = ((Fl_Slider *)o)->value();
 	if (o == self->m_BrushSizeSlider) {
 		self->m_nSize = value;
 	}
 	else if (o == self->m_BrushLineWidthSlider) {
 		self->m_nLineWidth = value;
 	}
-	else {
+	else if (o == self->m_BrushLineAngleSlider) {
 		self->m_nLineAngle = value;
+	}
+	else if (o == self->m_AlphaSlider) {
+		self->m_nAlpha = value;
 	}
 }
 
@@ -369,6 +371,14 @@ int ImpressionistUI::getLineWidth()
 int ImpressionistUI::getLineAngle()
 {
 	return m_nLineAngle;
+}
+
+//------------------------------------------------
+// Return the brush alpha opacity
+//------------------------------------------------
+double ImpressionistUI::getAlpha()
+{
+	return m_nAlpha;
 }
 
 
@@ -448,6 +458,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nLineWidth = 1;
 	m_nLineAngle = 0;
+	m_nAlpha = 1;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -463,7 +474,7 @@ ImpressionistUI::ImpressionistUI() {
 
 
 		// Add brush size slider to the dialog 
-		m_BrushSizeSlider = new Fl_Value_Slider(10, 75, 300, 20, "Size");
+		m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");
 		m_BrushSizeSlider->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushSizeSlider->type(FL_HOR_NICE_SLIDER);
         m_BrushSizeSlider->labelfont(FL_COURIER);
@@ -475,7 +486,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushSizeSlider->align(FL_ALIGN_RIGHT);
 		m_BrushSizeSlider->callback(cb_slides);
 		
-		m_BrushLineWidthSlider = new Fl_Value_Slider(10, 100, 300, 20, "Line Width");
+		m_BrushLineWidthSlider = new Fl_Value_Slider(10, 110, 300, 20, "Line Width");
 		m_BrushLineWidthSlider->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
 		m_BrushLineWidthSlider->labelfont(FL_COURIER);
@@ -487,7 +498,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineWidthSlider->callback(cb_slides);
 
-		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 125, 300, 20, "Line Angle");
+		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
 		m_BrushLineAngleSlider->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushLineAngleSlider->type(FL_HOR_NICE_SLIDER);
 		m_BrushLineAngleSlider->labelfont(FL_COURIER);
@@ -498,6 +509,18 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushLineAngleSlider->value(m_nLineAngle);
 		m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushLineAngleSlider->callback(cb_slides);
+
+		m_AlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
+		m_AlphaSlider->user_data((void*)(this));	// record self to be used by static callback functions
+		m_AlphaSlider->type(FL_HOR_NICE_SLIDER);
+		m_AlphaSlider->labelfont(FL_COURIER);
+		m_AlphaSlider->labelsize(12);
+		m_AlphaSlider->minimum(0);
+		m_AlphaSlider->maximum(1);
+		m_AlphaSlider->step(0.01);
+		m_AlphaSlider->value(m_nAlpha);
+		m_AlphaSlider->align(FL_ALIGN_RIGHT);
+		m_AlphaSlider->callback(cb_slides);
 
     m_brushDialog->end();	
 

@@ -39,7 +39,7 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	glTranslatef(target.x, target.y, 0);
 
 	glBegin(GL_POLYGON);
-	SetColor(source);
+	SetColor(source, pDoc->getAlpha());
 	for (int i = 0; i < steps; i++) {
 		double a = i * 2 * PI / steps;
 		glVertex2d(cos(a) * size, sin(a) * size);
