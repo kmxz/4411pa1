@@ -49,6 +49,8 @@ ImpressionistDoc::ImpressionistDoc()
 		= new ScatLineBrush( this, "Scattered Lines" );
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_CIRCLES]	
 		= new ScatCircleBrush(this, "Scattered Circles");
+	ImpBrush::c_pBrushes[BRUSH_STARS]
+		= new StarBrush(this, "Extra: Hollow Stars");
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
@@ -90,7 +92,7 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
-	m_pUI->setLineOptions(m_pCurrentBrush->isLine());
+	m_pUI->setLineOptions(m_pCurrentBrush->extra());
 }
 
 //---------------------------------------------------------

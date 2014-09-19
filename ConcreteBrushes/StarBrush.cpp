@@ -35,6 +35,8 @@ void StarBrush::BrushBegin(const Point source, const Point target)
 	ImpressionistDoc* pDoc = GetDocument();
 
 	size = pDoc->getSize();
+	angle = pDoc->getLineAngle();
+	glLineWidth(pDoc->getLineWidth());
 	BrushMove(source, target);
 }
 
@@ -42,7 +44,7 @@ void StarBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	if (pDoc == NULL) {
-		printf("CircleBrush::BrushMove  document is NULL\n");
+		printf("StarBrush::BrushMove  document is NULL\n");
 		return;
 	}
 
@@ -50,8 +52,11 @@ void StarBrush::BrushMove(const Point source, const Point target)
 	glTranslatef(target.x, target.y, 0);
 	glScalef(size, size, 0);
 
-	glBegin(GL_POLYGON);
+	glBegin(GL_LINE_LOOP);
 	SetColor(source, pDoc->getAlpha());
+	for (int i = 0; i < 10; i++) {
+		glVertex2d(coords[i][0], coords[i][1]);
+	}
 	glEnd();
 
 	glPopMatrix();

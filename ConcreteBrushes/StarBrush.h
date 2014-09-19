@@ -21,6 +21,7 @@ public:
 	int extra(void);
 private:
 	int size;
+	int angle;
 	static double coords[10][2];
 };
 
