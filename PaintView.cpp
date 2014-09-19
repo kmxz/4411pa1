@@ -132,15 +132,21 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
+			if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_LINE) {
 			MouseBegin(source, target, m_pDoc);
+			}
 			break;
 		case RIGHT_MOUSE_DRAG:
+			if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_LINE) {
 			RestoreContent();
 			MouseMove(source, target, m_pDoc);
+			}
 			break;
 		case RIGHT_MOUSE_UP:
+			if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_LINE) {
 			MouseEnd(source, target, m_pDoc);
 			RestoreContent();
+			}
 			break;
 		case LEFT_MOUSE_MOVE:
 			updateFilterCircle(target);

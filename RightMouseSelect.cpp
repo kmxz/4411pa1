@@ -6,7 +6,7 @@ static const GLubyte red[] = { 255, 0, 0 };
 void MouseBegin(const Point source, const Point target, ImpressionistDoc* pDoc)
 {
 	glLineWidth(1);
-	initailPoint = source;
+	initailPoint = target;
 	MouseMove(source, target,pDoc);
 }
 void MouseMove(const Point source, const Point target, ImpressionistDoc* pDoc)
