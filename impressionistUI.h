@@ -44,6 +44,9 @@ public:
 	Fl_Slider*			m_BrushLineAngleSlider;
 	Fl_Slider*			m_SidesSlider;
 	Fl_Slider*			m_AlphaSlider;
+	Fl_Slider*			m_autoDrawSpacingSlider;
+	Fl_Light_Button*	m_autoDrawSizeRandomed;
+	Fl_Button*          m_AutoDrawButton;
 
 	Fl_Button*          m_ClearCanvasButton;
 
@@ -60,8 +63,9 @@ public:
 	int					getLineAngle();	// no need to implement setter method yet
 	int					getSides();	// no need to implement setter method yet
 	double				getAlpha();	// no need to implement setter method yet
-	int					getStrokeDirectionType();
+	int					getAutoDrawSpacing();
 
+	int					getStrokeDirectionType();
 
 	void setLineOptions(int extra);
 
@@ -75,6 +79,7 @@ private:
 	int		m_nStrokeDirectionType;
 	double	m_nAlpha;
 	int		m_nSides;
+	int		m_nAutoDrawSpacing;
 	int     m_currentBrushIndex;
 
 	// Static class members
@@ -96,6 +101,7 @@ private:
 	static void cb_strokeDirectionChoice(Fl_Widget* o, void* v);
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
 	static void	cb_slides(Fl_Widget* o, void* v);
+	static void	cb_autodraw(Fl_Widget* o, void* v);
 
 	// bonus
 	static void	cb_swap(Fl_Menu_* o, void* v);

@@ -320,6 +320,17 @@ void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
 	}
 }
 
+#include<iostream>
+//-----------------------------------------------------------
+// Do a auto-draw
+//-----------------------------------------------------------
+void ImpressionistUI::cb_autodraw(Fl_Widget* o, void* v)
+{
+	// TODO
+	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
+	std::cout << self->m_autoDrawSizeRandomed->value() << std::endl;
+}
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -381,7 +392,7 @@ int ImpressionistUI::getLineWidth()
 //------------------------------------------------
 int ImpressionistUI::getLineAngle()
 {
-	return m_nLineAngle;
+	return StrokeDirection::c_pAngle;
 }
 
 //------------------------------------------------
@@ -407,6 +418,14 @@ int ImpressionistUI::getStrokeDirectionType()
 double ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
+}
+
+//------------------------------------------------
+// Return the brush auto-draw spacing
+//------------------------------------------------
+int ImpressionistUI::getAutoDrawSpacing()
+{
+	return m_nAutoDrawSpacing;
 }
 
 // Main menu definition
@@ -492,6 +511,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nLineAngle = 0;
 	m_nSides = 6;
 	m_nAlpha = 1;
+	m_nAutoDrawSpacing = 4;
 
 	m_nStrokeDirectionType = 0;
 
@@ -514,7 +534,6 @@ ImpressionistUI::ImpressionistUI() {
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
 		m_ClearCanvasButton->callback(cb_clear_canvas_button);
-
 
 		// Add brush size slider to the dialog 
 		m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");
@@ -576,6 +595,30 @@ ImpressionistUI::ImpressionistUI() {
 		m_AlphaSlider->value(m_nAlpha);
 		m_AlphaSlider->align(FL_ALIGN_RIGHT);
 		m_AlphaSlider->callback(cb_slides);
+
+		Fl_Group* autoDrawGroup = new Fl_Group(10, 230, 380, 40);
+
+			autoDrawGroup->box(FL_FRAME_BOX);
+
+			m_autoDrawSpacingSlider = new Fl_Value_Slider(20, 240, 140, 20, "Spacing");
+			m_autoDrawSpacingSlider->user_data((void*)(this));	// record self to be used by static callback functions
+			m_autoDrawSpacingSlider->type(FL_HOR_NICE_SLIDER);
+			m_autoDrawSpacingSlider->labelfont(FL_COURIER);
+			m_autoDrawSpacingSlider->labelsize(12);
+			m_autoDrawSpacingSlider->minimum(1);
+			m_autoDrawSpacingSlider->maximum(16);
+			m_autoDrawSpacingSlider->step(1);
+			m_autoDrawSpacingSlider->value(m_nAutoDrawSpacing);
+			m_autoDrawSpacingSlider->align(FL_ALIGN_RIGHT);
+			m_autoDrawSpacingSlider->callback(cb_slides);
+
+			m_autoDrawSizeRandomed = new Fl_Light_Button(220, 240, 90, 20, "Size rand.");
+			
+			m_AutoDrawButton = new Fl_Button(320, 240, 60, 20, "Draw");
+			m_AutoDrawButton->user_data((void*)(this));
+			m_AutoDrawButton->callback(cb_autodraw);
+
+			autoDrawGroup->end();
 
 		m_brushDialog->end();
 		setLineOptions(DEFAULT_BRUSH_SETTINGS);

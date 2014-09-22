@@ -18,8 +18,6 @@ ImpBrush(pDoc, name)
 
 void ScatPointBrush::BrushBegin(const Point source, const Point target)
 {
-	ImpressionistDoc* pDoc = GetDocument();
-
 	glPointSize(1);
 
 	BrushMove(source, target);
@@ -34,7 +32,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	int size = pDoc->getSize();
+	int size = pDoc->m_pUI->getSize();
 
 	glPushMatrix();
 	glTranslatef(target.x, target.y, 0);
@@ -46,7 +44,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 			}
 			glBegin(GL_POINTS);
 			Point real_source = Point(source.x + i, source.y + j);
-			SetColor(real_source, pDoc->getAlpha());
+			SetColor(real_source, pDoc->m_pUI->getAlpha());
 			glVertex2d(i, j);
 			glEnd();
 		}
@@ -54,7 +52,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 
 	// hack: always paint at center
 	glBegin(GL_POINTS);
-	SetColor(source, pDoc->getAlpha());
+	SetColor(source, pDoc->m_pUI->getAlpha());
 	glVertex2d(0, 0);
 	glEnd();
 

@@ -20,9 +20,9 @@ void PolyStarBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->getSize();
-	angle = pDoc->getLineAngle();
-	sides = pDoc->getSides();
+	size = pDoc->m_pUI->getSize();
+	angle = pDoc->m_pUI->getLineAngle();
+	sides = pDoc->m_pUI->getSides();
 	BrushMove(source, target);
 }
 
@@ -40,7 +40,7 @@ void PolyStarBrush::BrushMove(const Point source, const Point target)
 	glRotatef(angle, 0, 0, 1);
 	glScalef(size, size, 1);
 
-	SetColor(source, pDoc->getAlpha());
+	SetColor(source, pDoc->m_pUI->getAlpha());
 
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < sides; i++) {

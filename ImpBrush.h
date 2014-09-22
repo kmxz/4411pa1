@@ -43,7 +43,8 @@ enum
 	EXTRA_SIDES = 1 << 3,
 	EXTRA_FILTER = 1 << 4,
 	EXTRA_ALPHA = 1 << 5,
-	EXTRA_SIZE = 1 << 6
+	EXTRA_SIZE = 1 << 6,
+	EXTRA_AUTO = 1 << 7
 };
 
 class ImpressionistDoc; // Pre-declaring class

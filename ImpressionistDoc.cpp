@@ -117,41 +117,6 @@ void ImpressionistDoc::setStrokeDirectionType(int type)
 
 }
 
-
-//---------------------------------------------------------
-// Returns the size of the brush, and other parameters.
-//---------------------------------------------------------
-int ImpressionistDoc::getSize()
-{
-	return m_pUI->getSize();
-}
-
-int ImpressionistDoc::getLineWidth()
-{
-	return m_pUI->getLineWidth();
-}
-
-int ImpressionistDoc::getLineAngle()
-{
-	return StrokeDirection::c_pAngle;
-}
-
-int ImpressionistDoc::getSides()
-{
-	return m_pUI->getSides();
-}
-
-double ImpressionistDoc::getAlpha()
-{
-	return m_pUI->getAlpha();
-}
-
-int ImpressionistDoc::getStrokeDirectionType()
-{
-	return m_pUI->getStrokeDirectionType();
-}
-
-
 //---------------------------------------------------------
 // Load the specified image
 // This is called by the UI when the load image button is 

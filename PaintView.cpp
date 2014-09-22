@@ -277,7 +277,7 @@ void PaintView::updateFilterCircle(Point target) {
 		RestoreContent();
 		glBegin(GL_LINE_LOOP);
 		glLineWidth(1);
-		int size = m_pDoc->getSize() / 2;
+		int size = m_pDoc->m_pUI->getSize() / 2;
 		int steps = floor(size * 4 * PI + 0.5);
 		for (int i = 0; i < steps; i++) {
 			double a = i * 2 * PI / steps;

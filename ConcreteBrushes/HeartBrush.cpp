@@ -20,8 +20,8 @@ void HeartBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->getSize();
-	angle = pDoc->getLineAngle();
+	size = pDoc->m_pUI->getSize();
+	angle = pDoc->m_pUI->getLineAngle();
 	steps = floor(size / 4.0 * PI + 0.5);
 	BrushMove(source, target);
 }
@@ -41,7 +41,7 @@ void HeartBrush::BrushMove(const Point source, const Point target)
 	glScalef(size / 4.0, size / 4.0, 0);
 
 	glBegin(GL_POLYGON);
-	SetColor(source, pDoc->getAlpha());
+	SetColor(source, pDoc->m_pUI->getAlpha());
 	glVertex2d(0, -2);
 	glVertex2d(2, 1);
 	for (int i = 0; i < steps; i++) {

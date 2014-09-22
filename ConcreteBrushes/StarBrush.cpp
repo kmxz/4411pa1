@@ -34,9 +34,9 @@ void StarBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->getSize();
-	angle = pDoc->getLineAngle();
-	glLineWidth(pDoc->getLineWidth());
+	size = pDoc->m_pUI->getSize();
+	angle = pDoc->m_pUI->getLineAngle();
+	glLineWidth(pDoc->m_pUI->getLineWidth());
 	BrushMove(source, target);
 }
 
@@ -54,7 +54,7 @@ void StarBrush::BrushMove(const Point source, const Point target)
 	glScalef(size / 10.0, size / 10.0, 0);
 
 	glBegin(GL_LINE_LOOP);
-	SetColor(source, pDoc->getAlpha());
+	SetColor(source, pDoc->m_pUI->getAlpha());
 	for (int i = 0; i < 10; i++) {
 		glVertex2d(coords[i][0], coords[i][1]);
 	}
