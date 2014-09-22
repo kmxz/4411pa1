@@ -13,6 +13,10 @@
 #define PI 3.14159265359
 #endif
 
+
+#define DEFAULT_BRUSH_INDEX 0
+#define DEFAULT_BRUSH_SETTINGS EXTRA_SIZE | EXTRA_ALPHA
+
 // Each brush type has an associated constant.
 enum
 {
@@ -26,6 +30,7 @@ enum
 	BRUSH_HEARTS,
 	BRUSH_POLY_STARS,
 	BRUSH_FILTERS,
+	BRUSH_MASKS,
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
@@ -37,7 +42,8 @@ enum
 	EXTRA_LINE = 1 << 2,
 	EXTRA_SIDES = 1 << 3,
 	EXTRA_FILTER = 1 << 4,
-	EXTRA_ALPHA = 1 << 5
+	EXTRA_ALPHA = 1 << 5,
+	EXTRA_SIZE = 1 << 6
 };
 
 class ImpressionistDoc; // Pre-declaring class
@@ -74,6 +80,7 @@ public:
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
 	virtual int extra(void);
+	virtual bool init(void);
 protected:
 	double random(void);
 private:

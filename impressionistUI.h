@@ -75,6 +75,7 @@ private:
 	int		m_nStrokeDirectionType;
 	double	m_nAlpha;
 	int		m_nSides;
+	int     m_currentBrushIndex;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];

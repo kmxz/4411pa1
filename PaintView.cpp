@@ -208,9 +208,10 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
-		eventToDo = LEFT_MOUSE_MOVE;
-		isAnEvent = 1;
-		redraw();
+		// seems this section will cause bug on some computers. let's comment it out first and fix it later.
+		//eventToDo = LEFT_MOUSE_MOVE;
+		//isAnEvent = 1;
+		//redraw();
 		m_pDoc->m_pUI->m_origView->markCoord(coord);
 		break;
 	default:

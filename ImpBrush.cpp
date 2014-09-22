@@ -37,7 +37,11 @@ char* ImpBrush::BrushName(void)
 
 int ImpBrush::extra(void) // to be overloadded
 {
-	return EXTRA_ALPHA;
+	return DEFAULT_BRUSH_SETTINGS;
+}
+
+bool ImpBrush::init(void) { // to be overloadded
+	return true;
 }
 
 //----------------------------------------------------

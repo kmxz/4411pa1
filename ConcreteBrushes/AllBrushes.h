@@ -9,3 +9,4 @@
 #include "HeartBrush.h"
 #include "PolyStarBrush.h"
 #include "FilterBrush.h"
+#include "MaskBrush.h"

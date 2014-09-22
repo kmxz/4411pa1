@@ -259,8 +259,11 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 
 	int type=(int)v;
 
-
-	pDoc->setBrushType(type);
+	if (!pDoc->setBrushType(type)) {
+		((Fl_Choice*)o)->value(pUI->m_currentBrushIndex);
+	} else {
+		pUI->m_currentBrushIndex = type;
+	}
 }
 
 //-------------------------------------------------------------
@@ -440,6 +443,7 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Extra: Hearts",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_HEARTS },
   {"Extra: Poly - stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_POLY_STARS },
   {"Filter: Dummy",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_FILTERS },
+  {"Matte (luminance mask)", NULL,	(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_MASKS },
   {0}
 };
 
@@ -490,6 +494,8 @@ ImpressionistUI::ImpressionistUI() {
 	m_nAlpha = 1;
 
 	m_nStrokeDirectionType = 0;
+
+	m_currentBrushIndex = DEFAULT_BRUSH_INDEX;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -572,7 +578,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_AlphaSlider->callback(cb_slides);
 
 		m_brushDialog->end();
-		setLineOptions(false);
+		setLineOptions(DEFAULT_BRUSH_SETTINGS);
 
 }
 
@@ -601,5 +607,11 @@ void ImpressionistUI::setLineOptions(int extra) {
 		m_AlphaSlider->activate();
 	} else {
 		m_AlphaSlider->deactivate();
+	}
+	if (extra & EXTRA_SIZE) {
+		m_BrushSizeSlider->activate();
+	}
+	else {
+		m_BrushSizeSlider->deactivate();
 	}
 }

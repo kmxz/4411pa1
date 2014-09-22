@@ -57,9 +57,11 @@ ImpressionistDoc::ImpressionistDoc()
 		= new PolyStarBrush(this, "Extra: Poly-stars");
 	ImpBrush::c_pBrushes[BRUSH_FILTERS]
 		= new FilterBrush(this, "Extra: Poly-stars");
+	ImpBrush::c_pBrushes[BRUSH_MASKS]
+		= new MaskBrush(this, "Matte (luminance mask)");
 
 	// make one of the brushes current
-	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
+	m_pCurrentBrush	= ImpBrush::c_pBrushes[DEFAULT_BRUSH_INDEX];
 
 	// create one instance of each stroke
 	StrokeDirection::c_nStrokeDirectionCount = NUM_STROKE_DIRECTION_TYPE;
@@ -95,10 +97,14 @@ char* ImpressionistDoc::getImageName()
 // Called by the UI when the user changes the brush type.
 // type: one of the defined brush types.
 //---------------------------------------------------------
-void ImpressionistDoc::setBrushType(int type)
+bool ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
+	if (!m_pCurrentBrush->init()) {
+		return false;
+	}
 	m_pUI->setLineOptions(m_pCurrentBrush->extra());
+	return true;
 }
 
 //---------------------------------------------------------

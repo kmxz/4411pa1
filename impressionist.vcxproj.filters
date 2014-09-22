@@ -81,6 +81,9 @@
     <ClCompile Include="ConcreteBrushes\FilterBrush.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConcreteBrushes\MaskBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConcreteBrushes\FilterBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcreteBrushes\MaskBrush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
