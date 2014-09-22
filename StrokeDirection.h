@@ -18,7 +18,6 @@ class StrokeDirection
 protected:
 	StrokeDirection::StrokeDirection(ImpressionistDoc* pDoc, int type);
 public:
-	static int					c_pAngle;
 	static int					c_nStrokeDirectionCount;	
 	static StrokeDirection**	c_pStrokeDirections;		
 
@@ -29,8 +28,7 @@ public:
 	virtual void StrokeDirectionMove(const Point source, const Point target) = 0;
 	virtual void StrokeDirectionEnd(const Point source, const Point target) = 0;
 
-	
-
+	virtual int getAngle(void) = 0;
 private:
 	int m_pType;
 	ImpressionistDoc *m_pDoc;

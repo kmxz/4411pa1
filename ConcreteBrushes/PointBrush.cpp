@@ -18,9 +18,7 @@ PointBrush::PointBrush( ImpressionistDoc* pDoc, char* name ) :
 
 void PointBrush::BrushBegin( const Point source, const Point target )
 {
-	ImpressionistDoc* pDoc = GetDocument();
-
-	int size = pDoc->m_pUI->getSize();
+	int size = getSize();
 
 	glPointSize( (float)size );
 

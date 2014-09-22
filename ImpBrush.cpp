@@ -11,6 +11,7 @@
 // Static class member initializations
 int			ImpBrush::c_nBrushCount	= 0;
 ImpBrush**	ImpBrush::c_pBrushes	= NULL;
+bool 		ImpBrush::randomSize = false;
 
 ImpBrush::ImpBrush(ImpressionistDoc*	pDoc, 
 				   char*				name) :
@@ -25,6 +26,15 @@ ImpBrush::ImpBrush(ImpressionistDoc*	pDoc,
 ImpressionistDoc* ImpBrush::GetDocument(void)
 {
 	return m_pDoc;
+}
+
+int ImpBrush::getSize(void)
+{
+	int baseSize = m_pDoc->m_pUI->getSize();
+	if (randomSize) {
+		baseSize *= (0.5 + random());
+	}
+	return baseSize;
 }
 
 //---------------------------------------------------

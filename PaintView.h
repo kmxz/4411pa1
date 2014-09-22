@@ -32,6 +32,9 @@ public:
 
 	ImpressionistDoc *m_pDoc;
 
+	void autoDraw(int spacing, bool randomSize);
+	void realAutoDraw(); // the name reminds me of "mysql_real_escape_string"
+
 private:
 	GLvoid* m_pPaintBitstart;
 	int		m_nDrawWidth,

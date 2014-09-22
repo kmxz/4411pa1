@@ -20,7 +20,7 @@ void HeartBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->m_pUI->getSize();
+	size = getSize();
 	angle = pDoc->m_pUI->getLineAngle();
 	steps = floor(size / 4.0 * PI + 0.5);
 	BrushMove(source, target);

@@ -10,6 +10,9 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
+
+#define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
+
 /*
 //------------------------------ Widget Examples -------------------------------------------------
 Here is some example code for all of the widgets that you may need to add to the 
@@ -294,41 +297,12 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 }
 
 //-----------------------------------------------------------
-// Updates the brush size to use from the value of the size
-// slider
-// Called by the UI when the size slider is moved
-//-----------------------------------------------------------
-void ImpressionistUI::cb_slides(Fl_Widget* o, void* v)
-{
-	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
-	double value = ((Fl_Slider *)o)->value();
-	if (o == self->m_BrushSizeSlider) {
-		self->m_nSize = value;
-	}
-	else if (o == self->m_BrushLineWidthSlider) {
-		self->m_nLineWidth = value;
-	}
-	else if (o == self->m_BrushLineAngleSlider) {
-		self->m_nLineAngle = value;
-		StrokeDirection::c_pAngle = value;
-	}
-	else if (o == self->m_AlphaSlider) {
-		self->m_nAlpha = value;
-	}
-	else if (o == self->m_SidesSlider) {
-		self->m_nSides = value;
-	}
-}
-
-#include<iostream>
-//-----------------------------------------------------------
 // Do a auto-draw
 //-----------------------------------------------------------
 void ImpressionistUI::cb_autodraw(Fl_Widget* o, void* v)
 {
-	// TODO
 	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
-	std::cout << self->m_autoDrawSizeRandomed->value() << std::endl;
+	self->m_paintView->autoDraw(self->m_autoDrawSpacingSlider->value(), self->m_autoDrawSizeRandomed->value());
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -376,7 +350,7 @@ void ImpressionistUI::setDocument(ImpressionistDoc* doc)
 //------------------------------------------------
 int ImpressionistUI::getSize()
 {
-	return m_nSize;
+	return m_BrushSizeSlider->value();
 }
 
 //------------------------------------------------
@@ -384,7 +358,7 @@ int ImpressionistUI::getSize()
 //------------------------------------------------
 int ImpressionistUI::getLineWidth()
 {
-	return m_nLineWidth;
+	return m_BrushLineWidthSlider->value();
 }
 
 //------------------------------------------------
@@ -392,7 +366,7 @@ int ImpressionistUI::getLineWidth()
 //------------------------------------------------
 int ImpressionistUI::getLineAngle()
 {
-	return StrokeDirection::c_pAngle;
+	return m_BrushLineAngleSlider->value();
 }
 
 //------------------------------------------------
@@ -400,9 +374,8 @@ int ImpressionistUI::getLineAngle()
 //------------------------------------------------
 int ImpressionistUI::getSides()
 {
-	return m_nSides;
+	return m_SidesSlider->value();
 }
-
 
 //------------------------------------------------
 // Return the brush line angle
@@ -417,15 +390,7 @@ int ImpressionistUI::getStrokeDirectionType()
 //------------------------------------------------
 double ImpressionistUI::getAlpha()
 {
-	return m_nAlpha;
-}
-
-//------------------------------------------------
-// Return the brush auto-draw spacing
-//------------------------------------------------
-int ImpressionistUI::getAutoDrawSpacing()
-{
-	return m_nAutoDrawSpacing;
+	return m_AlphaSlider->value();
 }
 
 // Main menu definition
@@ -504,15 +469,6 @@ ImpressionistUI::ImpressionistUI() {
 		Fl_Group::current()->resizable(group);
     m_mainWindow->end();
 
-	// init values
-
-	m_nSize = 10;
-	m_nLineWidth = 1;
-	m_nLineAngle = 0;
-	m_nSides = 6;
-	m_nAlpha = 1;
-	m_nAutoDrawSpacing = 4;
-
 	m_nStrokeDirectionType = 0;
 
 	m_currentBrushIndex = DEFAULT_BRUSH_INDEX;
@@ -537,80 +493,50 @@ ImpressionistUI::ImpressionistUI() {
 
 		// Add brush size slider to the dialog 
 		m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");
-		m_BrushSizeSlider->user_data((void*)(this));	// record self to be used by static callback functions
-		m_BrushSizeSlider->type(FL_HOR_NICE_SLIDER);
-        m_BrushSizeSlider->labelfont(FL_COURIER);
-        m_BrushSizeSlider->labelsize(12);
+		STYLIZE_THE_FUCKING_SLIDER(m_BrushSizeSlider);
 		m_BrushSizeSlider->minimum(1);
 		m_BrushSizeSlider->maximum(40);
 		m_BrushSizeSlider->step(1);
-		m_BrushSizeSlider->value(m_nSize);
-		m_BrushSizeSlider->align(FL_ALIGN_RIGHT);
-		m_BrushSizeSlider->callback(cb_slides);
+		m_BrushSizeSlider->value(10);
 		
 		m_BrushLineWidthSlider = new Fl_Value_Slider(10, 110, 300, 20, "Line Width");
-		m_BrushLineWidthSlider->user_data((void*)(this));	// record self to be used by static callback functions
-		m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
-		m_BrushLineWidthSlider->labelfont(FL_COURIER);
-		m_BrushLineWidthSlider->labelsize(12);
+		STYLIZE_THE_FUCKING_SLIDER(m_BrushLineWidthSlider);
 		m_BrushLineWidthSlider->minimum(1);
 		m_BrushLineWidthSlider->maximum(40);
 		m_BrushLineWidthSlider->step(1);
-		m_BrushLineWidthSlider->value(m_nLineWidth);
-		m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
-		m_BrushLineWidthSlider->callback(cb_slides);
+		m_BrushLineWidthSlider->value(1);
 
 		m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Angle");
-		m_BrushLineAngleSlider->user_data((void*)(this));	// record self to be used by static callback functions
-		m_BrushLineAngleSlider->type(FL_HOR_NICE_SLIDER);
-		m_BrushLineAngleSlider->labelfont(FL_COURIER);
-		m_BrushLineAngleSlider->labelsize(12);
+		STYLIZE_THE_FUCKING_SLIDER(m_BrushLineAngleSlider);
 		m_BrushLineAngleSlider->minimum(0);
 		m_BrushLineAngleSlider->maximum(359);
 		m_BrushLineAngleSlider->step(1);
-		m_BrushLineAngleSlider->value(m_nLineAngle);
-		m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
-		m_BrushLineAngleSlider->callback(cb_slides);
+		m_BrushLineAngleSlider->value(0);
 
 		m_SidesSlider = new Fl_Value_Slider(10, 170, 300, 20, "Sides");
-		m_SidesSlider->user_data((void*)(this));	// record self to be used by static callback functions
-		m_SidesSlider->type(FL_HOR_NICE_SLIDER);
-		m_SidesSlider->labelfont(FL_COURIER);
-		m_SidesSlider->labelsize(12);
+		STYLIZE_THE_FUCKING_SLIDER(m_SidesSlider);
 		m_SidesSlider->minimum(2);
 		m_SidesSlider->maximum(20);
 		m_SidesSlider->step(1);
-		m_SidesSlider->value(m_nSides);
-		m_SidesSlider->align(FL_ALIGN_RIGHT);
-		m_SidesSlider->callback(cb_slides);
+		m_SidesSlider->value(6);
 
 		m_AlphaSlider = new Fl_Value_Slider(10, 200, 300, 20, "Alpha");
-		m_AlphaSlider->user_data((void*)(this));	// record self to be used by static callback functions
-		m_AlphaSlider->type(FL_HOR_NICE_SLIDER);
-		m_AlphaSlider->labelfont(FL_COURIER);
-		m_AlphaSlider->labelsize(12);
+		STYLIZE_THE_FUCKING_SLIDER(m_AlphaSlider);
 		m_AlphaSlider->minimum(0);
 		m_AlphaSlider->maximum(1);
 		m_AlphaSlider->step(0.01);
-		m_AlphaSlider->value(m_nAlpha);
-		m_AlphaSlider->align(FL_ALIGN_RIGHT);
-		m_AlphaSlider->callback(cb_slides);
+		m_AlphaSlider->value(1);
 
 		Fl_Group* autoDrawGroup = new Fl_Group(10, 230, 380, 40);
 
 			autoDrawGroup->box(FL_FRAME_BOX);
 
 			m_autoDrawSpacingSlider = new Fl_Value_Slider(20, 240, 140, 20, "Spacing");
-			m_autoDrawSpacingSlider->user_data((void*)(this));	// record self to be used by static callback functions
-			m_autoDrawSpacingSlider->type(FL_HOR_NICE_SLIDER);
-			m_autoDrawSpacingSlider->labelfont(FL_COURIER);
-			m_autoDrawSpacingSlider->labelsize(12);
+			STYLIZE_THE_FUCKING_SLIDER(m_autoDrawSpacingSlider);
 			m_autoDrawSpacingSlider->minimum(1);
 			m_autoDrawSpacingSlider->maximum(16);
 			m_autoDrawSpacingSlider->step(1);
-			m_autoDrawSpacingSlider->value(m_nAutoDrawSpacing);
-			m_autoDrawSpacingSlider->align(FL_ALIGN_RIGHT);
-			m_autoDrawSpacingSlider->callback(cb_slides);
+			m_autoDrawSpacingSlider->value(4);
 
 			m_autoDrawSizeRandomed = new Fl_Light_Button(220, 240, 90, 20, "Size rand.");
 			
@@ -656,5 +582,11 @@ void ImpressionistUI::setLineOptions(int extra) {
 	}
 	else {
 		m_BrushSizeSlider->deactivate();
+	}
+	if (extra & EXTRA_AUTO) {
+		m_AutoDrawButton->activate();
+	}
+	else {
+		m_AutoDrawButton->deactivate();
 	}
 }

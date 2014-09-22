@@ -18,9 +18,7 @@ ImpBrush(pDoc, name)
 
 void CircleBrush::BrushBegin(const Point source, const Point target)
 {
-	ImpressionistDoc* pDoc = GetDocument();
-
-	size = pDoc->m_pUI->getSize() / 2;
+	size = getSize() / 2;
 	steps = floor(size * 4 * PI + 0.5);
 	BrushMove(source, target);
 }

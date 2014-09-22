@@ -11,8 +11,9 @@ public:
 	void StrokeDirectionBegin(const Point source, const Point target);
 	void StrokeDirectionMove(const Point source, const Point target);
 	void StrokeDirectionEnd(const Point source, const Point target);
-
-	
+	int getAngle(void);
+private:
+	int	c_pAngle;
 };
 
 #endif

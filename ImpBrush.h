@@ -15,7 +15,7 @@
 
 
 #define DEFAULT_BRUSH_INDEX 0
-#define DEFAULT_BRUSH_SETTINGS EXTRA_SIZE | EXTRA_ALPHA
+#define DEFAULT_BRUSH_SETTINGS EXTRA_SIZE | EXTRA_ALPHA | EXTRA_AUTO
 
 // Each brush type has an associated constant.
 enum
@@ -80,10 +80,16 @@ public:
 	
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
+
+	static bool			randomSize;
+
 	virtual int extra(void);
 	virtual bool init(void);
+
 protected:
 	double random(void);
+	int getSize(void);
+
 private:
 	ImpressionistDoc*	m_pDoc;
 

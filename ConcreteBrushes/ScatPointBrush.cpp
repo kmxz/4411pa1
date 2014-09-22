@@ -32,7 +32,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	int size = pDoc->m_pUI->getSize();
+	int size = getSize();
 
 	glPushMatrix();
 	glTranslatef(target.x, target.y, 0);

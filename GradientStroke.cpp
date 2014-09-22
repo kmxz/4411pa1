@@ -11,3 +11,7 @@ void GradientStroke::StrokeDirectionBegin(const Point source, const Point target
 void GradientStroke::StrokeDirectionMove(const Point source, const Point target){}
 void GradientStroke::StrokeDirectionEnd(const Point source, const Point target){}
 
+int GradientStroke::getAngle(void) {
+	// TODO
+	return 0;
+}

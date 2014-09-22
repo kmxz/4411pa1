@@ -63,7 +63,6 @@ public:
 	int					getLineAngle();	// no need to implement setter method yet
 	int					getSides();	// no need to implement setter method yet
 	double				getAlpha();	// no need to implement setter method yet
-	int					getAutoDrawSpacing();
 
 	int					getStrokeDirectionType();
 

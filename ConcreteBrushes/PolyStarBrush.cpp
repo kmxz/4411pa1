@@ -20,7 +20,7 @@ void PolyStarBrush::BrushBegin(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	size = pDoc->m_pUI->getSize();
+	size = getSize();
 	angle = pDoc->m_pUI->getLineAngle();
 	sides = pDoc->m_pUI->getSides();
 	BrushMove(source, target);

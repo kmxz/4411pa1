@@ -20,6 +20,7 @@
 #define RIGHT_MOUSE_DRAG	5
 #define RIGHT_MOUSE_UP		6
 #define LEFT_MOUSE_MOVE     7
+#define AUTO_DRAW			8
 
 
 #ifndef WIN32
@@ -30,6 +31,7 @@
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
+struct { int spacing; bool randomSize; } autoDrawSettings;
 
 static const GLubyte filterIndicatorColor[3] = { 255, 0, 0 };
 
@@ -122,7 +124,7 @@ void PaintView::draw()
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(source, target);
 			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
-			updateFilterCircle(target);
+			// updateFilterCircle(target);
 			break;
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionEnd(source, target);
@@ -149,7 +151,12 @@ void PaintView::draw()
 			}
 			break;
 		case LEFT_MOUSE_MOVE:
-			updateFilterCircle(target);
+			// updateFilterCircle(target);
+			break;
+		case AUTO_DRAW:
+			realAutoDraw();
+			SaveCurrentContent();
+			RestoreContent();
 			break;
 		default:
 			printf("Unknown event!!\n");		
@@ -217,10 +224,7 @@ int PaintView::handle(int event)
 	default:
 		return 0;
 		break;
-
 	}
-
-
 
 	return 1;
 }
@@ -286,4 +290,27 @@ void PaintView::updateFilterCircle(Point target) {
 		glColor3ubv(filterIndicatorColor);
 		glEnd();
 	}
+}
+
+#include<iostream>
+
+void PaintView::autoDraw(int spacing, bool randomSize) {
+	autoDrawSettings.spacing = spacing;
+	autoDrawSettings.randomSize = randomSize;
+	eventToDo = AUTO_DRAW;
+	isAnEvent = 1;
+	redraw();
+}
+
+void PaintView::realAutoDraw() {
+	if (autoDrawSettings.randomSize) { ImpBrush::randomSize = true; }
+	for (int x = 0; x < m_pDoc->m_nPaintWidth + autoDrawSettings.spacing; x += autoDrawSettings.spacing) {
+		for (int y = 0; y < m_pDoc->m_nPaintHeight + autoDrawSettings.spacing; y += autoDrawSettings.spacing) {
+			Point punkt = Point(x, y);
+			m_pDoc->m_pCurrentBrush->BrushBegin(punkt, punkt);
+		}
+	}
+	ImpBrush::randomSize = false;
+	SaveCurrentContent();
+	RestoreContent();
 }
