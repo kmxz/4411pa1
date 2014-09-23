@@ -6,6 +6,8 @@
 
 
 #include <FL/fl_ask.h>
+#include <FL/Enumerations.H>
+#include <FL/Fl_Box.H>
 #include <math.h>
 
 #include "impressionistUI.h"
@@ -210,6 +212,17 @@ void ImpressionistUI::cb_brushes(Fl_Menu_* o, void* v)
 {
 	whoami(o)->m_brushDialog->show();
 }
+
+//-------------------------------------------------------------
+// Brings up the color manipulation dialog
+// This is called by the UI when the color manip menu item
+// is chosen
+//-------------------------------------------------------------
+void ImpressionistUI::cb_color_manip(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_colorDialog->show();
+}
+
 
 //------------------------------------------------------------
 // Clears the paintview canvas.
@@ -416,6 +429,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 	{ "&Actions",	0, 0, 0, FL_SUBMENU },
 		{ "&Undo", NULL, (Fl_Callback *)ImpressionistUI::cb_undo },
 		{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
+		{ "&Color manipulation", NULL, (Fl_Callback *)ImpressionistUI::cb_color_manip },
 		{ 0 },
 
 	{ "&Help",		0, 0, 0, FL_SUBMENU },
@@ -559,6 +573,23 @@ ImpressionistUI::ImpressionistUI() {
 		m_brushDialog->end();
 		setLineOptions(DEFAULT_BRUSH_SETTINGS);
 
+	// color dialog definition
+	m_colorDialog = new Fl_Window(400, 325, "Color Manipulation");
+		Fl_Box *box = new Fl_Box(10, 10, 305, 20, "Gamma correction for color channels");
+
+		m_colorSliders[0] = new Fl_Value_Slider(10, 40, 300, 20, "Red");
+		m_colorSliders[0]->labelcolor(FL_RED);
+		m_colorSliders[1] = new Fl_Value_Slider(10, 70, 300, 20, "Green");
+		m_colorSliders[1]->labelcolor(FL_GREEN);
+		m_colorSliders[2] = new Fl_Value_Slider(10, 100, 300, 20, "Blue");
+		m_colorSliders[2]->labelcolor(FL_BLUE);
+		for (int i = 0; i < 3; i++) {
+			STYLIZE_THE_FUCKING_SLIDER(m_colorSliders[i]);
+			m_colorSliders[i]->minimum(0.4);
+			m_colorSliders[i]->maximum(2.5);
+			m_colorSliders[i]->step(0.02);
+			m_colorSliders[i]->value(1);
+		}
 }
 
 void ImpressionistUI::setLineOptions(int extra) {

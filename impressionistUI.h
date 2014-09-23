@@ -50,6 +50,10 @@ public:
 
 	Fl_Button*          m_ClearCanvasButton;
 
+// for color manip dialog
+	Fl_Window*			m_colorDialog;
+	Fl_Slider*			m_colorSliders[3];
+
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
 	ImpressionistDoc*	getDocument();
@@ -93,6 +97,7 @@ private:
 	static void	cb_load_image(Fl_Menu_* o, void* v);
 	static void	cb_save_image(Fl_Menu_* o, void* v);
 	static void	cb_brushes(Fl_Menu_* o, void* v);
+	static void	cb_color_manip(Fl_Menu_* o, void* v);
 	static void	cb_clear_canvas(Fl_Menu_* o, void* v);
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
