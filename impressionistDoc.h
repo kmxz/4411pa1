@@ -67,9 +67,11 @@ public:
 
 	void undo(void);
 	void swap(void);
+	void gamma(double r, double g, double b);
 
 private:
 	char			m_imageName[256];
+	inline unsigned char map(unsigned char origin, double gamma);
 
 };
 

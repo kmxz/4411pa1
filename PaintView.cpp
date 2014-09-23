@@ -296,8 +296,6 @@ void PaintView::updateFilterCircle(Point target) {
 	}
 }
 
-#include<iostream>
-
 void PaintView::autoDraw(int spacing, bool randomSize) {
 	autoDrawSettings.spacing = spacing;
 	autoDrawSettings.randomSize = randomSize;

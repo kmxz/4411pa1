@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AvBridge.cpp" />
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="BrushStroke.cpp" />
     <ClCompile Include="ConcreteBrushes\CircleBrush.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="StrokeDirection.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AvBridge.h" />
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="BrushStroke.h" />
     <ClInclude Include="ConcreteBrushes\AllBrushes.h" />

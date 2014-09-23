@@ -12,6 +12,7 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
+#include "AvBridge.h"
 
 #define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
 
@@ -327,6 +328,17 @@ void ImpressionistUI::cb_autodraw(Fl_Widget* o, void* v)
 	self->m_paintView->autoDraw(self->m_autoDrawSpacingSlider->value(), self->m_autoDrawSizeRandomed->value());
 }
 
+//-----------------------------------------------------------
+// Color manipulation related
+//-----------------------------------------------------------
+
+void ImpressionistUI::cb_updateColor(Fl_Widget* o, void* v) {
+	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
+	self->m_pDoc->gamma(self->m_colorSliders[0]->value(), self->m_colorSliders[1]->value(), self->m_colorSliders[2]->value());
+	self->m_paintView->refresh();
+	self->m_pDoc->undoable = true;
+}
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -574,7 +586,7 @@ ImpressionistUI::ImpressionistUI() {
 		setLineOptions(DEFAULT_BRUSH_SETTINGS);
 
 	// color dialog definition
-	m_colorDialog = new Fl_Window(400, 325, "Color Manipulation");
+	m_colorDialog = new Fl_Window(400, 130, "Color Manipulation");
 		Fl_Box *box = new Fl_Box(10, 10, 305, 20, "Gamma correction for color channels");
 
 		m_colorSliders[0] = new Fl_Value_Slider(10, 40, 300, 20, "Red");
@@ -589,6 +601,8 @@ ImpressionistUI::ImpressionistUI() {
 			m_colorSliders[i]->maximum(2.5);
 			m_colorSliders[i]->step(0.02);
 			m_colorSliders[i]->value(1);
+			m_colorSliders[i]->user_data((void*)(this));	// record self to be used by static callback functions
+			m_colorSliders[i]->callback(cb_updateColor);
 		}
 }
 

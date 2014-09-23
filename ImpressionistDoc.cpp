@@ -6,7 +6,7 @@
 //
 
 #include <FL/fl_ask.H>
-
+#include "math.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 
@@ -252,7 +252,21 @@ void ImpressionistDoc::swap(void) {
 	unsigned char* temp = m_ucBitmap;
 	m_ucBitmap = m_ucPainting;
 	m_ucPainting = temp;
+	memcpy(m_ucLast, m_ucPainting, m_nPaintWidth * m_nPaintHeight * 3); // to fix color manip bug
 	m_pUI->m_origView->refresh();
 	m_pUI->m_paintView->refresh();
 	undoable = false;
+}
+
+unsigned char ImpressionistDoc::map(unsigned char origin, double gamma) {
+	return pow(origin / 255.0, gamma) * 255 + 0.5;
+}
+
+void ImpressionistDoc::gamma(double r, double g, double b) {
+	int length = m_nPaintWidth * m_nPaintHeight * 3;
+	for (int i = 0; i < length; i += 3) {
+		m_ucPainting[i] = map(m_ucLast[i], r);
+		m_ucPainting[i + 1] = map(m_ucLast[i + 1], g);
+		m_ucPainting[i + 2] = map(m_ucLast[i + 2], b);
+	}
 }
