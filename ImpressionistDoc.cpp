@@ -157,19 +157,13 @@ int ImpressionistDoc::loadImage(char *iname)
 	m_ucLast = new unsigned char[width*height * 3];
 	memset(m_ucPainting, 0, width*height * 3);
 
-	m_pUI->m_mainWindow->resize(m_pUI->m_mainWindow->x(), 
-								m_pUI->m_mainWindow->y(), 
-								width*2, 
-								height+25);
+	m_pUI->resize_windows(width, height);
 
 	// display it on origView
-	m_pUI->m_origView->resizeWindow(width, height);	
 	m_pUI->m_origView->refresh();
 
 	// refresh paint view as well
-	m_pUI->m_paintView->resizeWindow(width, height);	
 	m_pUI->m_paintView->refresh();
-
 
 	return 1;
 }

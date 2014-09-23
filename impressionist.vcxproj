@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AvBridge.cpp" />
+    <ClCompile Include="AvProcess.cpp" />
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="BrushStroke.cpp" />
     <ClCompile Include="ConcreteBrushes\CircleBrush.cpp" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AvBridge.h" />
+    <ClInclude Include="AvProcess.h" />
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="BrushStroke.h" />
     <ClInclude Include="ConcreteBrushes\AllBrushes.h" />
