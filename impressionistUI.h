@@ -103,6 +103,7 @@ private:
 	static void	cb_autodraw(Fl_Widget* o, void* v);
 
 	// bonus
+	static void	cb_undo(Fl_Menu_* o, void* v);
 	static void	cb_swap(Fl_Menu_* o, void* v);
 };
 

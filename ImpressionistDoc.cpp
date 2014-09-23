@@ -30,7 +30,8 @@ ImpressionistDoc::ImpressionistDoc()
 	m_nWidth		= -1;
 	m_ucBitmap		= NULL;
 	m_ucPainting	= NULL;
-
+	m_ucLast		= NULL;
+	undoable		= false;
 
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount	= NUM_BRUSH_TYPE;
@@ -143,12 +144,18 @@ int ImpressionistDoc::loadImage(char *iname)
 	// release old storage
 	if ( m_ucBitmap ) delete [] m_ucBitmap;
 	if ( m_ucPainting ) delete [] m_ucPainting;
+	if ( m_ucLast ) delete[] m_ucLast;
+
+	undoable = false;
 
 	m_ucBitmap		= data;
 
 	// allocate space for draw view
 	m_ucPainting	= new unsigned char [width*height*3];
 	memset(m_ucPainting, 0, width*height*3);
+
+	m_ucLast = new unsigned char[width*height * 3];
+	memset(m_ucPainting, 0, width*height * 3);
 
 	m_pUI->m_mainWindow->resize(m_pUI->m_mainWindow->x(), 
 								m_pUI->m_mainWindow->y(), 
@@ -231,10 +238,21 @@ GLubyte* ImpressionistDoc::GetOriginalPixel( const Point p )
 	return GetOriginalPixel( p.x, p.y );
 }
 
+void ImpressionistDoc::undo(void) {
+	if (!undoable) {
+		fl_alert("Nothing to undo!");
+		return;
+	}
+	memcpy(m_ucPainting, m_ucLast, m_nPaintWidth * m_nPaintHeight * 3);
+	m_pUI->m_paintView->redraw();
+	undoable = false;
+}
+
 void ImpressionistDoc::swap(void) {
 	unsigned char* temp = m_ucBitmap;
 	m_ucBitmap = m_ucPainting;
 	m_ucPainting = temp;
 	m_pUI->m_origView->refresh();
 	m_pUI->m_paintView->refresh();
+	undoable = false;
 }

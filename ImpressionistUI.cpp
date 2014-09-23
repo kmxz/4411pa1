@@ -13,6 +13,8 @@
 
 #define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
 
+#define ITEM_ACTIVATION(name, widget) { if (extra & name) { widget->activate(); } else { widget->deactivate(); } }
+
 /*
 //------------------------------ Widget Examples -------------------------------------------------
 Here is some example code for all of the widgets that you may need to add to the 
@@ -232,13 +234,20 @@ void ImpressionistUI::cb_exit(Fl_Menu_* o, void* v)
 }
 
 //------------------------------------------------------------
+// Bonus: undo
+//------------------------------------------------------------
+void ImpressionistUI::cb_undo(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_pDoc->undo();
+}
+
+//------------------------------------------------------------
 // Bonus: swap canvas
 //------------------------------------------------------------
 void ImpressionistUI::cb_swap(Fl_Menu_* o, void* v)
 {
 	whoami(o)->m_pDoc->swap();
 }
-
 
 //-----------------------------------------------------------
 // Brings up an about dialog box
@@ -404,8 +413,9 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 		{ 0 },
 
-	{ "&Display",	0, 0, 0, FL_SUBMENU },
-	{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
+	{ "&Actions",	0, 0, 0, FL_SUBMENU },
+		{ "&Undo", NULL, (Fl_Callback *)ImpressionistUI::cb_undo },
+		{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
 		{ 0 },
 
 	{ "&Help",		0, 0, 0, FL_SUBMENU },
@@ -552,41 +562,11 @@ ImpressionistUI::ImpressionistUI() {
 }
 
 void ImpressionistUI::setLineOptions(int extra) {
-	if (extra & EXTRA_ANGLE) {
-		m_BrushLineAngleSlider->activate();
-	} else {
-		m_BrushLineAngleSlider->deactivate();
-	}
-	if (extra & EXTRA_WIDTH) {
-		m_BrushLineWidthSlider->activate();
-	} else {
-		m_BrushLineWidthSlider->deactivate();
-	}
-	if (extra & EXTRA_LINE) {
-		m_StrokeDirectionTypeChoice->activate();
-	} else {
-		m_StrokeDirectionTypeChoice->deactivate();
-	}
-	if (extra & EXTRA_SIDES) {
-		m_SidesSlider->activate();
-	} else {
-		m_SidesSlider->deactivate();
-	}
-	if (extra & EXTRA_ALPHA) {
-		m_AlphaSlider->activate();
-	} else {
-		m_AlphaSlider->deactivate();
-	}
-	if (extra & EXTRA_SIZE) {
-		m_BrushSizeSlider->activate();
-	}
-	else {
-		m_BrushSizeSlider->deactivate();
-	}
-	if (extra & EXTRA_AUTO) {
-		m_AutoDrawButton->activate();
-	}
-	else {
-		m_AutoDrawButton->deactivate();
-	}
+	ITEM_ACTIVATION(EXTRA_ANGLE, m_BrushLineAngleSlider);
+	ITEM_ACTIVATION(EXTRA_WIDTH, m_BrushLineWidthSlider);
+	ITEM_ACTIVATION(EXTRA_LINE, m_StrokeDirectionTypeChoice);
+	ITEM_ACTIVATION(EXTRA_SIDES, m_SidesSlider);
+	ITEM_ACTIVATION(EXTRA_ALPHA, m_AlphaSlider);
+	ITEM_ACTIVATION(EXTRA_SIZE, m_BrushSizeSlider);
+	ITEM_ACTIVATION(EXTRA_AUTO, m_AutoDrawButton);
 }

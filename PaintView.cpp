@@ -98,7 +98,6 @@ void PaintView::draw()
 	if ( m_pDoc->m_ucPainting && !isAnEvent) 
 	{
 		RestoreContent();
-
 	}
 
 	if ( m_pDoc->m_ucPainting && isAnEvent) 
@@ -131,9 +130,9 @@ void PaintView::draw()
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionEnd(source, target);
 			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
-
 			SaveCurrentContent();
 			RestoreContent();
+			m_pDoc->undoable = true;
 			break;
 		case RIGHT_MOUSE_DOWN:
 			if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_LINE) {
@@ -157,6 +156,7 @@ void PaintView::draw()
 			break;
 		case AUTO_DRAW:
 			realAutoDraw();
+
 			SaveCurrentContent();
 			RestoreContent();
 			break;
@@ -250,6 +250,8 @@ void PaintView::SaveCurrentContent()
 	glPixelStorei( GL_PACK_ALIGNMENT, 1 );
 	glPixelStorei( GL_PACK_ROW_LENGTH, m_pDoc->m_nPaintWidth );
 	
+	memcpy(m_pDoc->m_ucLast, m_pDoc->m_ucPainting, m_nDrawWidth * m_nDrawHeight * 3);
+
 	glReadPixels( 0, 
 				  m_nWindowHeight - m_nDrawHeight, 
 				  m_nDrawWidth, 
@@ -318,6 +320,5 @@ void PaintView::realAutoDraw() {
 		m_pDoc->m_pCurrentBrush->BrushBegin(*i, *i);
 	}
 	ImpBrush::randomSize = false;
-	SaveCurrentContent();
-	RestoreContent();
+	m_pDoc->undoable = true;
 }

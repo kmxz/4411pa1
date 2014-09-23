@@ -43,7 +43,7 @@ public:
 	// Bitmaps for original image and painting.
 	unsigned char*	m_ucBitmap;
 	unsigned char*	m_ucPainting;
-
+	unsigned char*	m_ucLast;
 
 	// The current active brush.
 	ImpBrush*			m_pCurrentBrush;	
@@ -56,6 +56,8 @@ public:
 
 	ImpressionistUI*	m_pUI;
 
+	bool				undoable;
+
 // Operations
 public:
 	// Get the color of the original picture at the specified coord
@@ -63,8 +65,8 @@ public:
 	// Get the color of the original picture at the specified point	
 	GLubyte* GetOriginalPixel( const Point p );  
 
+	void undo(void);
 	void swap(void);
-
 
 private:
 	char			m_imageName[256];
