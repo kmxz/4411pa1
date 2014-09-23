@@ -11,6 +11,8 @@
 #include "paintview.h"
 #include "ImpBrush.h"
 #include "RightMouseSelect.h"
+#include <vector>
+#include <algorithm>
 
 
 #define LEFT_MOUSE_DOWN		1
@@ -303,12 +305,17 @@ void PaintView::autoDraw(int spacing, bool randomSize) {
 }
 
 void PaintView::realAutoDraw() {
+	std::vector<Point> spots;
 	if (autoDrawSettings.randomSize) { ImpBrush::randomSize = true; }
 	for (int x = 0; x < m_pDoc->m_nPaintWidth + autoDrawSettings.spacing; x += autoDrawSettings.spacing) {
 		for (int y = 0; y < m_pDoc->m_nPaintHeight + autoDrawSettings.spacing; y += autoDrawSettings.spacing) {
 			Point punkt = Point(x, y);
-			m_pDoc->m_pCurrentBrush->BrushBegin(punkt, punkt);
+			spots.push_back(punkt);
 		}
+	}
+	std::random_shuffle(spots.begin(), spots.end());
+	for (std::vector<Point>::iterator i = spots.begin(); i != spots.end(); i++) {
+		m_pDoc->m_pCurrentBrush->BrushBegin(*i, *i);
 	}
 	ImpBrush::randomSize = false;
 	SaveCurrentContent();
