@@ -452,7 +452,7 @@ int ImpressionistUI::getLineWidth()
 //------------------------------------------------
 int ImpressionistUI::getLineAngle()
 {
-	return m_BrushLineAngleSlider->value();
+	return m_pDoc->m_pCurrentStrokeDirection->getAngle();
 }
 
 //------------------------------------------------

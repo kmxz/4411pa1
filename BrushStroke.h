@@ -8,6 +8,8 @@
 #define BRUSHSTROKE_H
 
 #include "StrokeDirection.h"
+#include "ImpBrush.h"
+#include <queue>
 
 class BrushStroke :
 	public StrokeDirection
@@ -20,6 +22,7 @@ public:
 	int getAngle(void);
 private:
 	int	c_pAngle;
+	std::queue<Point> strokes;
 };
 
 #endif

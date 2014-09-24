@@ -9,9 +9,6 @@
 #include "impressionistUI.h"
 #include "math.h"
 
-Point lastPoint;
-long num = 0;
-
 BrushStroke::BrushStroke(ImpressionistDoc* pDoc, int type) :
 StrokeDirection(pDoc, type)
 {
@@ -19,28 +16,31 @@ StrokeDirection(pDoc, type)
 
 void BrushStroke::StrokeDirectionBegin(const Point source, const Point target)
 {
-	lastPoint = source;
+	strokes.push(source);
 	//StrokeDirectionMove(source, target);
 }
+
 void BrushStroke::StrokeDirectionMove(const Point source, const Point target)
 {
-	Point p1 = lastPoint;
-	Point p2 = source;
-	int theta = c_pAngle;
-
-
-	if ((p2.x - p1.x != 0) && (abs(p2.y-p1.y)+abs(p2.x-p1.x))>5)
-		theta = ((int)(atan((p2.y - p1.y + 0.0) / (p2.x - p1.x)) / PI * 180 + 360) % 360);
-
-	//pDoc->m_pUI->m_BrushLineAngleSlider->value(theta);
-	c_pAngle = theta;
-	if (num++ % 10 == 0){
-		lastPoint = source;
-		printf("%d %d %d %d %d\n", p1.x, p1.y, p2.x, p2.y,theta);
+	Point p2;
+	while (strokes.size() > 1) {
+		p2 = strokes.front();
+		if (abs(p2.y - source.y) + abs(p2.x - source.x) < 8) { // 8 is 2^3, so should be lucky
+			break;
+		}
+		strokes.pop();
 	}
-	num %= 1000000;
+	p2 = strokes.front();
+	int theta = ((int)(atan2((double)(p2.y - source.y), p2.x - source.x) / PI * 180 + 360) % 360);
+	c_pAngle = theta;
+	strokes.push(source);
+	if (strokes.size() > 5) {
+		strokes.pop();
+	}
 }
+
 void BrushStroke::StrokeDirectionEnd(const Point source, const Point target){}
+
 int BrushStroke::getAngle(void) {
 	return c_pAngle;
 }
