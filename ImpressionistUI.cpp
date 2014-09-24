@@ -355,6 +355,7 @@ void ImpressionistUI::cb_autodraw_video(Fl_Widget* o, void* v)
 	if (self->currentAvBridge->ffOpen(vidFile) != AvBridge::AVBRIDGE_NO_ERROR) {
 		fl_alert("Video file cannot be identified by FFmpeg."); return;
 	}
+	self->m_AutoDrawButton->deactivate();
 	self->m_autoDrawSpacingSlider->deactivate();
 	self->m_autoDrawVideoSlider->deactivate();
 	self->m_autoDrawSizeRandomed->deactivate();
@@ -363,6 +364,7 @@ void ImpressionistUI::cb_autodraw_video(Fl_Widget* o, void* v)
 	if (self->currentAvBridge->readFrame() != AvBridge::AVBRIDGE_NO_ERROR) {
 		fl_alert("Error occured with FFmpeg");
 	}
+	self->m_AutoDrawButton->activate();
 	self->m_autoDrawSpacingSlider->activate();
 	self->m_autoDrawVideoSlider->activate();
 	self->m_autoDrawSizeRandomed->activate();
@@ -639,7 +641,7 @@ ImpressionistUI::ImpressionistUI() {
 			m_autoDrawVideoSlider->minimum(0);
 			m_autoDrawVideoSlider->maximum(1);
 			m_autoDrawVideoSlider->step(0.01);
-			m_autoDrawVideoSlider->value(0.85);
+			m_autoDrawVideoSlider->value(1);
 
 			m_AutoDrawVideoButton = new Fl_Button(300, 270, 80, 20, "On video");
 			m_AutoDrawVideoButton->user_data((void*)(this));

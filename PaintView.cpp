@@ -347,11 +347,9 @@ void PaintView::realAutoDraw() {
 	for (std::vector<Punkt>::iterator i = autoDrawSettings.spots.begin(); i != autoDrawSettings.spots.end(); i++) {
 		if (autoDrawSettings.randomSize) {
 			if (ImpBrush::random() > coherency) {
-				ImpBrush::magnify = ImpBrush::random() + 0.5;
+				i->rate = ImpBrush::random() + 0.5;
 			}
-			else {
-				ImpBrush::magnify = i->rate;
-			}
+			ImpBrush::magnify = i->rate;
 		}
 		m_pDoc->m_pCurrentBrush->BrushBegin(i->point, i->point);
 	}
