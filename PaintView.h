@@ -32,7 +32,8 @@ public:
 
 	ImpressionistDoc *m_pDoc;
 
-	void autoDraw(int spacing, bool randomSize);
+	void initAutoDraw(int spacing, bool randomSize, double coherency, bool isVideo);
+	void singleAutoDraw();
 	void realAutoDraw(); // the name reminds me of "mysql_real_escape_string"
 
 private:

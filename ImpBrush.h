@@ -81,13 +81,13 @@ public:
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
 
-	static bool			randomSize;
+	static double		magnify;
+	static double		random(void);
 
 	virtual int extra(void);
 	virtual bool init(void);
 
 protected:
-	double random(void);
 	int getSize(void);
 
 private:

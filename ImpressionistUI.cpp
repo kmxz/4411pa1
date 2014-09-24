@@ -12,7 +12,6 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
-#include "AvBridge.h"
 
 #define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
 
@@ -175,6 +174,10 @@ ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_* o)
 
 //--------------------------------- Callback Functions --------------------------------------------
 
+void ImpressionistUI::cb_window(Fl_Widget* o, void* v) {
+	exit(0);
+}
+
 //------------------------------------------------------------------
 // Brings up a file chooser and then loads the chosen image
 // This is called by the UI when the load image menu item is chosen
@@ -182,7 +185,7 @@ ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_* o)
 void ImpressionistUI::cb_load_image(Fl_Menu_* o, void* v) 
 {
 	ImpressionistDoc *pDoc=whoami(o)->getDocument();
-
+	whoami(o)->stopAvBridges();
 	char* newfile = fl_file_chooser("Open File?", "*.bmp", pDoc->getImageName() );
 	if (newfile != NULL) {
 		pDoc->loadImage(newfile);
@@ -242,6 +245,7 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 //------------------------------------------------------------
 void ImpressionistUI::cb_exit(Fl_Menu_* o, void* v) 
 {
+	whoami(o)->stopAvBridges();
 	whoami(o)->m_mainWindow->hide();
 	whoami(o)->m_brushDialog->hide();
 
@@ -325,8 +329,39 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 void ImpressionistUI::cb_autodraw(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
-	self->m_paintView->autoDraw(self->m_autoDrawSpacingSlider->value(), self->m_autoDrawSizeRandomed->value());
+	self->m_paintView->initAutoDraw(self->m_autoDrawSpacingSlider->value(), self->m_autoDrawSizeRandomed->value(), 0, false);
+	self->m_paintView->singleAutoDraw();
 }
+
+//-----------------------------------------------------------
+// Do a auto-draw on video
+//-----------------------------------------------------------
+void ImpressionistUI::cb_autodraw_video(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
+	self->stopAvBridges();
+	AvBridge::AVBRIDGE_ERROR err;
+	char* vidFile = fl_file_chooser("Select your video file.", "*.*", "");
+	if (vidFile == NULL) {
+		fl_alert("No valid video file selected."); return;
+	}
+	self->currentAvBridge = new AvBridge(self->m_pDoc);
+	if (self->currentAvBridge->ffOpen(vidFile) != AvBridge::AVBRIDGE_NO_ERROR) {
+		fl_alert("Video file cannot be identified by FFmpeg."); return;
+	}
+	self->m_autoDrawSpacingSlider->deactivate();
+	self->m_autoDrawVideoSlider->deactivate();
+	self->m_autoDrawSizeRandomed->deactivate();
+	double coherency = self->m_autoDrawVideoSlider->value();
+	self->m_paintView->initAutoDraw(self->m_autoDrawSpacingSlider->value(), self->m_autoDrawSizeRandomed->value(), coherency, true);
+	if (self->currentAvBridge->readFrame() != AvBridge::AVBRIDGE_NO_ERROR) {
+		fl_alert("Error occured with FFmpeg");
+	}
+	self->m_autoDrawSpacingSlider->activate();
+	self->m_autoDrawVideoSlider->activate();
+	self->m_autoDrawSizeRandomed->activate();
+}
+
 
 //-----------------------------------------------------------
 // Color manipulation related
@@ -358,14 +393,22 @@ void ImpressionistUI::show() {
 	m_origView->show();
 }
 
+void ImpressionistUI::stopAvBridges() {
+	if (currentAvBridge) { 
+		AvBridge* bridge = currentAvBridge;
+		currentAvBridge = NULL;
+		bridge->stop();
+	}
+}
+
 //------------------------------------------------
 // Change the paint and original window sizes to 
 // w by h
 //------------------------------------------------
 void ImpressionistUI::resize_windows(int w, int h) {
 	m_mainWindow->resize(m_mainWindow->x(), m_mainWindow->y(), w * 2, h + 25);
-	m_origView->resizeWindow(w, w);
-	m_paintView->resizeWindow(h, h);
+	m_origView->resizeWindow(w, h);
+	m_paintView->resizeWindow(w, h);
 }
 
 //------------------------------------------------ 
@@ -506,6 +549,10 @@ ImpressionistUI::ImpressionistUI() {
 		Fl_Group::current()->resizable(group);
     m_mainWindow->end();
 
+	m_mainWindow->callback(cb_window);
+
+	currentAvBridge = NULL;
+
 	m_nStrokeDirectionType = 0;
 
 	m_currentBrushIndex = DEFAULT_BRUSH_INDEX;
@@ -564,7 +611,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_AlphaSlider->step(0.01);
 		m_AlphaSlider->value(1);
 
-		Fl_Group* autoDrawGroup = new Fl_Group(10, 230, 380, 40);
+		Fl_Group* autoDrawGroup = new Fl_Group(10, 230, 380, 70);
 
 			autoDrawGroup->box(FL_FRAME_BOX);
 
@@ -576,10 +623,21 @@ ImpressionistUI::ImpressionistUI() {
 			m_autoDrawSpacingSlider->value(4);
 
 			m_autoDrawSizeRandomed = new Fl_Light_Button(220, 240, 90, 20, "Size rand.");
-			
+
 			m_AutoDrawButton = new Fl_Button(320, 240, 60, 20, "Draw");
 			m_AutoDrawButton->user_data((void*)(this));
 			m_AutoDrawButton->callback(cb_autodraw);
+
+			m_autoDrawVideoSlider = new Fl_Value_Slider(20, 270, 140, 20, "Temporal coherency");
+			STYLIZE_THE_FUCKING_SLIDER(m_autoDrawVideoSlider);
+			m_autoDrawVideoSlider->minimum(0);
+			m_autoDrawVideoSlider->maximum(1);
+			m_autoDrawVideoSlider->step(0.01);
+			m_autoDrawVideoSlider->value(0.85);
+
+			m_AutoDrawVideoButton = new Fl_Button(300, 270, 80, 20, "On video");
+			m_AutoDrawVideoButton->user_data((void*)(this));
+			m_AutoDrawVideoButton->callback(cb_autodraw_video);
 
 			autoDrawGroup->end();
 
@@ -588,7 +646,7 @@ ImpressionistUI::ImpressionistUI() {
 
 	// color dialog definition
 	m_colorDialog = new Fl_Window(400, 130, "Color Manipulation");
-		Fl_Box *box = new Fl_Box(10, 10, 305, 20, "Gamma correction for color channels");
+		new Fl_Box(10, 10, 305, 20, "Gamma correction for color channels");
 
 		m_colorSliders[0] = new Fl_Value_Slider(10, 40, 300, 20, "Red");
 		m_colorSliders[0]->labelcolor(FL_RED);
@@ -615,4 +673,5 @@ void ImpressionistUI::setLineOptions(int extra) {
 	ITEM_ACTIVATION(EXTRA_ALPHA, m_AlphaSlider);
 	ITEM_ACTIVATION(EXTRA_SIZE, m_BrushSizeSlider);
 	ITEM_ACTIVATION(EXTRA_AUTO, m_AutoDrawButton);
+	ITEM_ACTIVATION(EXTRA_AUTO, m_AutoDrawVideoButton);
 }

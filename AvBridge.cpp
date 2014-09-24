@@ -1,160 +1,57 @@
-#include "AvBridge.h"
-#include <FL/filename.H>
-#include <FL/fl_file_chooser.H>
-#include <FL/fl_ask.H>
-#include <windows.h> 
-#include <tchar.h>
-#include <stdio.h> 
-#include <sstream>
-#include <strsafe.h>
+#include "avbridge.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
+#include <Windows.h>
+#include <time.h> 
 
-bool AvBridge::find_file(char* wrkdir, char* needle, char* output) {
-	dirent** list;
-	bool success = false;
-	int count = filename_list(wrkdir, &list);
-	for (int i = 0; i < count; i++) {
-		char fullname[1024];
-		char* name = list[i]->d_name;
-		strcpy(fullname, wrkdir);
-		strcat(fullname, name);
-		if (filename_isdir(fullname)) {
-			if (strcmp(name, "..") != 0 && strcmp(name, ".") != 0) {
-				strcat(fullname, "\\");
-				if (find_file(fullname, needle, output)) {
-					success = true; break;
-				}
-			}
-		} else if (strcmp(name, needle) == 0) {
-			strcpy(output, fullname);
-			success = true; break;
+AvBridge::AvBridge(ImpressionistDoc* pDoc) {
+	doc = pDoc;
+	stopped = false;
+}
+
+AvBridge::AVBRIDGE_ERROR AvBridge::ffOpen(const char* file) {
+	av_register_all();
+	pFormatCtx = avformat_alloc_context();
+	AVCodec *pCodec;
+	if (avformat_open_input(&pFormatCtx, file, NULL, NULL) != 0){
+		return AVBRIDGEERR_FILE_NOT_FOUND;
+	}
+	if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
+		return AVBRIDGEERR_STREAM_NOT_FOUND;
+	}
+	videoIndex = -1;
+	for (int i = 0; i < pFormatCtx->nb_streams; i++) {
+		if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
+			videoIndex = i;
+			break;
 		}
 	}
-	return success;
+	if (videoIndex == -1) { return AVBRIDGEERR_VIDEO_STREAM_NOT_FOUND; }
+	pCodecCtx = pFormatCtx->streams[videoIndex]->codec;
+	pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
+	if (pCodec == NULL) {
+		return AVBRIDGEERR_CODEC_NOT_FOUND;
+	}
+	if (avcodec_open2(pCodecCtx, pCodec, NULL) < 0){
+		return AVBRIDGEERR_DECODER_NOT_FOUND;
+	}
+	reDoc(pCodecCtx->width, pCodecCtx->height);
+	pFrame = avcodec_alloc_frame();
+	pFrameRGB = avcodec_alloc_frame();
+	int numBytes = avpicture_get_size(PIX_FMT_RGB24, pCodecCtx->width, pCodecCtx->height);
+	out_buffer = (uint8_t *)av_malloc(numBytes * sizeof(uint8_t));
+	avpicture_fill((AVPicture *)pFrameRGB, out_buffer, PIX_FMT_RGB24, pCodecCtx->width, pCodecCtx->height);
+	packet = (AVPacket *)av_malloc(sizeof(AVPacket));
+	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL); // no actual resize involved
+	return AVBRIDGE_NO_ERROR;
 }
 
-bool AvBridge::locate_ffmpeg() {
-	if (find_file(".\\", "ffmpeg.exe", path)) {
-		return true;
-	}
-	char* newfile = fl_file_chooser("Where is FFmpeg executable?", "*.*", "ffmpeg.exe");
-	if (newfile == NULL) {
-		return false;
-	}
-	strcpy(path, newfile);
-	return true;
+void AvBridge::stop() {
+	stopped = true;
 }
 
-bool AvBridge::identify() {
-	DWORD dwRead;
-	char chBuf[1024];
-	char lineBuf[1024] = "";
-	char sectionBuf[1024];
-	bool bSuccess = false;
-	bool hit = false;
-
-	int currentLinePassed; // -1 for failed. 0 for none printable chars met yet.
-	char* matcher = "Stream"; // magic number
-
-	while (true) {
-		bSuccess = ReadFile(identifier->g_hChildStd_OUT_Rd, chBuf, 1024, &dwRead, NULL);
-		if (!bSuccess || dwRead == 0) { break; }
-		for (int i = 0; i < dwRead; i++) {
-			if (chBuf[i] == '\r' || chBuf[i] == '\n') {
-				currentLinePassed = 0;
-				int len = strlen(lineBuf);
-				if (len > 0) {
-					// further analyze!
-					if (strstr(lineBuf, "Video") != NULL) {
-						if (hit) {
-							die("More than one video tracks detected."); return false;
-						}
-						hit = true;
-						bool subhit = false;
-						bool fpshit = false;
-						sectionBuf[0] = '\0';
-						for (int j = 0; j < len; j++) {
-							if (lineBuf[j] == ',') {
-								if (strlen(sectionBuf) > 0) {
-									int w = 0; int h = 0;
-									sscanf(sectionBuf, "%dx%d", &w, &h);
-									if (w > 0 && h > 0) {
-										if (subhit) {
-											die("More than one video dimensions detected."); return false;
-										}
-										width = w; height = h;
-										subhit = true;
-									}
-									double f = 0;
-									sscanf(sectionBuf, "%f fps", &f);
-									if (f > 0) {
-										if (fpshit) {
-											die("More than one frame rates detected."); return false;
-										}
-										fps = f;
-										fpshit = true;
-									}
-								}
-								sectionBuf[0] = '\0';
-							} else if (lineBuf[j] != ' ' && lineBuf[j] != '\t') {
-								strncat(sectionBuf, lineBuf + j, 1);
-							}
-						}
-						if (!subhit) { die("No video dimensions detected."); return false; }
-						if (!fpshit) { die("No frame rates detected."); return false; }
-					}
-				}
-				lineBuf[0] = '\0';
-			} else if (currentLinePassed >= 0 && currentLinePassed <= 5 && matcher[currentLinePassed] == chBuf[i]) {
-				currentLinePassed++;
-				if (currentLinePassed == 6) {
-					currentLinePassed = -2;
-				}
-			} else if (currentLinePassed == -2) {
-				strncat(lineBuf, chBuf + i, 1);
-			} else if (chBuf[i] != ' ' && chBuf[i] != '\t') {
-				currentLinePassed = -1;
-			}
-		}
-	}
-	if (!hit) { die("No video tracks detected."); return false; }
-	return true;
-}
-
-void AvBridge::readVideo() {
-	DWORD dwRead;
-	bool bSuccess = false;
-	while (true) {
-		bSuccess = ReadFile(reader->g_hChildStd_OUT_Rd, doc->m_ucBitmap, length, &dwRead, NULL);
-		if (!bSuccess || dwRead == 0) { break; }
-		doc->m_pUI->m_paintView->refresh();
-		Sleep(1000 / fps);
-	}
-}
-
-void AvBridge::die(const char* error) {
-	printf("Fatal error: %s\n", error); // TODO: GUI Style!
-}
-
-void AvBridge::play() {
-	AvProcess* identifier = new AvProcess(this);
-	AvProcess* reader = new AvProcess(this);
-	if (!locate_ffmpeg()) {
-		die("No available FFmpeg binary in the system."); return;
-	}
-	char* vidFile = fl_file_chooser("Select your video file.", "*.*", "");
-	if (vidFile == NULL) {
-		die("No valid video file selected."); return;
-	}
-	std::stringstream command;
-	command << path << " -i " << vidFile;
-	if (!identifier->init(command.str().c_str())) { return; }
-	CloseHandle(identifier->g_hChildStd_IN_Rd);
-	CloseHandle(identifier->g_hChildStd_IN_Wr);
-	CloseHandle(identifier->g_hChildStd_OUT_Wr);
-	if (!identify()) { return; }
-	length = width * height * 3;
+void AvBridge::reDoc(int width, int height) {
+	int length = width * height * 3;
 	delete[] doc->m_ucBitmap;
 	delete[] doc->m_ucPainting;
 	delete[] doc->m_ucLast;
@@ -163,13 +60,62 @@ void AvBridge::play() {
 	doc->m_nHeight = height;
 	doc->m_nPaintHeight = height;
 	doc->m_ucBitmap = new unsigned char[length];
+	memset(doc->m_ucBitmap, 0, length);
 	doc->m_ucPainting = new unsigned char[length];
+	memset(doc->m_ucPainting, 0, length);
+	doc->m_ucLast = new unsigned char[length];
+	memset(doc->m_ucLast, 0, length);
 	doc->m_pUI->resize_windows(width, height);
-	command << " -f imagepipe" << " -pix_fmt rgb24" << " -vcodec rawvideo" << " -";
-	reader->init(command.str().c_str());
-	readVideo();
 }
 
-AvBridge::AvBridge(ImpressionistDoc* parent) {
-	doc = parent;
+AvBridge::~AvBridge() {
+	av_free(out_buffer);
+	av_free(pFrameRGB);
+	av_free(pFrame);
+	sws_freeContext(img_convert_ctx);
+	avcodec_close(pCodecCtx);
+	avformat_close_input(&pFormatCtx);
+}
+
+AvBridge::AVBRIDGE_ERROR AvBridge::readFrame() {
+	int height = pCodecCtx->height;
+	int64_t last_pts = 0;
+	clock_t tLast, tCurrent;
+	tLast = clock();
+	while (true) {
+		if (stopped) {
+			return AVBRIDGE_NO_ERROR; // manually stopped
+		}
+		int ret, got_picture;
+		if (av_read_frame(pFormatCtx, packet) < 0){
+			break;
+		}
+		if (packet->stream_index == videoIndex){
+			ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_picture, packet);
+			if (ret < 0){
+				return AVBRIDGEERR_DECODER_ERROR;
+			}
+			if (got_picture) {
+				sws_scale(img_convert_ctx, pFrame->data, pFrame->linesize, 0, height, pFrameRGB->data, pFrameRGB->linesize);
+				int lineSize = pFrameRGB->linesize[0];
+				for (int i = 0; i < height; i++) {
+					memcpy(doc->m_ucBitmap + (height - 1 - i) * (lineSize), out_buffer + i * lineSize, lineSize);
+				}
+				tCurrent = clock();
+				double secondsIdeal = (packet->pts - last_pts) * pCodecCtx->time_base.num / (double)pCodecCtx->time_base.den;
+				double secondsToWait = secondsIdeal - (tCurrent - tLast) / (double) CLOCKS_PER_SEC;
+				if (secondsToWait > 0) {
+					Sleep(secondsToWait * 1000);
+				}
+				last_pts = packet->pts;
+				tLast = tCurrent;
+				doc->m_pUI->m_origView->refresh();
+				doc->m_pUI->m_paintView->RestoreContent();
+				doc->m_pUI->m_paintView->singleAutoDraw();
+				Fl::check();
+			}
+		}
+		av_free_packet(packet);
+	}
+	return AVBRIDGE_NO_ERROR;
 }

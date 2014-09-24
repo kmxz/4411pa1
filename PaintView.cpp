@@ -30,10 +30,16 @@
 #define max(a, b)	( ( (a)>(b) ) ? (a) : (b) )
 #endif
 
+struct Punkt {
+	Point point; double rate;
+};
+
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
-struct { int spacing; bool randomSize; } autoDrawSettings;
+static struct {
+	std::vector<Punkt> spots; double coherency; bool randomSize; bool initialized; bool isVideo;
+} autoDrawSettings;
 
 static const GLubyte filterIndicatorColor[3] = { 255, 0, 0 };
 
@@ -155,10 +161,15 @@ void PaintView::draw()
 			// updateFilterCircle(target);
 			break;
 		case AUTO_DRAW:
+			if (autoDrawSettings.isVideo) {
+				glClearColor(0, 0, 0, 1.0);
+				glClear(GL_COLOR_BUFFER_BIT);
+			}
 			realAutoDraw();
-
-			SaveCurrentContent();
-			RestoreContent();
+			if (!autoDrawSettings.isVideo) {
+				SaveCurrentContent();
+				RestoreContent();
+			}
 			break;
 		default:
 			printf("Unknown event!!\n");		
@@ -174,7 +185,6 @@ void PaintView::draw()
 	#endif // !MESA
 
 }
-
 
 int PaintView::handle(int event)
 {
@@ -296,27 +306,52 @@ void PaintView::updateFilterCircle(Point target) {
 	}
 }
 
-void PaintView::autoDraw(int spacing, bool randomSize) {
-	autoDrawSettings.spacing = spacing;
+void PaintView::initAutoDraw(int spacing, bool randomSize, double coherency, bool isVideo) {
+	if (isVideo) {
+		m_pDoc->undoable = false;
+	}
 	autoDrawSettings.randomSize = randomSize;
+	autoDrawSettings.coherency = coherency;
+	autoDrawSettings.initialized = false;
+	autoDrawSettings.isVideo = isVideo;
+	autoDrawSettings.spots.clear();
+	for (int x = 0; x < m_pDoc->m_nPaintWidth + spacing; x += spacing) {
+		for (int y = 0; y < m_pDoc->m_nPaintHeight + spacing; y += spacing) {
+			Punkt punkt; punkt.point = Point(x, y); punkt.rate = 1;
+			autoDrawSettings.spots.push_back(punkt);
+		}
+	}
+}
+
+void PaintView::singleAutoDraw() {
 	eventToDo = AUTO_DRAW;
 	isAnEvent = 1;
 	redraw();
 }
 
 void PaintView::realAutoDraw() {
-	std::vector<Point> spots;
-	if (autoDrawSettings.randomSize) { ImpBrush::randomSize = true; }
-	for (int x = 0; x < m_pDoc->m_nPaintWidth + autoDrawSettings.spacing; x += autoDrawSettings.spacing) {
-		for (int y = 0; y < m_pDoc->m_nPaintHeight + autoDrawSettings.spacing; y += autoDrawSettings.spacing) {
-			Point punkt = Point(x, y);
-			spots.push_back(punkt);
+	double coherency = autoDrawSettings.initialized ? autoDrawSettings.coherency : -1;
+	int size = autoDrawSettings.spots.size();
+	for (int i = 0; i < size; i++) {
+		if (ImpBrush::random() > coherency) {
+			int toSwapIndex = ImpBrush::random() * size;
+			std::swap(autoDrawSettings.spots[i], autoDrawSettings.spots[toSwapIndex]);
 		}
 	}
-	std::random_shuffle(spots.begin(), spots.end());
-	for (std::vector<Point>::iterator i = spots.begin(); i != spots.end(); i++) {
-		m_pDoc->m_pCurrentBrush->BrushBegin(*i, *i);
+	for (std::vector<Punkt>::iterator i = autoDrawSettings.spots.begin(); i != autoDrawSettings.spots.end(); i++) {
+		if (autoDrawSettings.randomSize) {
+			if (ImpBrush::random() > coherency) {
+				ImpBrush::magnify = ImpBrush::random() + 0.5;
+			}
+			else {
+				ImpBrush::magnify = i->rate;
+			}
+		}
+		m_pDoc->m_pCurrentBrush->BrushBegin(i->point, i->point);
 	}
-	ImpBrush::randomSize = false;
-	m_pDoc->undoable = true;
+	ImpBrush::magnify = 1;
+	autoDrawSettings.initialized = true;
+	if (!autoDrawSettings.isVideo) {
+		m_pDoc->undoable = true;
+	}
 }

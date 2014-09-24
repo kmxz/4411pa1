@@ -26,6 +26,7 @@ OriginalView::OriginalView(int			x,
 
 static Point currentCoord = Point(-1, -1);
 static const GLubyte indicatorColor[3] = { 255, 0, 0 };
+static AvBridge* av = NULL;
 
 void OriginalView::draw()
 {
@@ -70,7 +71,6 @@ void OriginalView::draw()
 
 
 		bitstart = m_pDoc->m_ucBitmap + 3 * ((m_pDoc->m_nWidth * startrow) + scrollpos.x);
-
 		// just copy image to GLwindow conceptually
 		glRasterPos2i( 0, m_nWindowHeight - drawHeight );
 		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );

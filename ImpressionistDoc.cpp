@@ -155,7 +155,7 @@ int ImpressionistDoc::loadImage(char *iname)
 	memset(m_ucPainting, 0, width*height*3);
 
 	m_ucLast = new unsigned char[width*height * 3];
-	memset(m_ucPainting, 0, width*height * 3);
+	memset(m_ucLast, 0, width*height * 3);
 
 	m_pUI->resize_windows(width, height);
 

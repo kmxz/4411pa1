@@ -17,6 +17,7 @@
 #include <stdlib.h>
 
 #include "ImpBrush.h"
+#include "avbridge.h"
 
 class ImpressionistDoc;
 

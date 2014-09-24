@@ -45,8 +45,10 @@ public:
 	Fl_Slider*			m_SidesSlider;
 	Fl_Slider*			m_AlphaSlider;
 	Fl_Slider*			m_autoDrawSpacingSlider;
+	Fl_Slider*			m_autoDrawVideoSlider;
 	Fl_Light_Button*	m_autoDrawSizeRandomed;
 	Fl_Button*          m_AutoDrawButton;
+	Fl_Button*          m_AutoDrawVideoButton;
 
 	Fl_Button*          m_ClearCanvasButton;
 
@@ -67,8 +69,10 @@ public:
 	int					getLineAngle();	// no need to implement setter method yet
 	int					getSides();	// no need to implement setter method yet
 	double				getAlpha();	// no need to implement setter method yet
+	void				stopAvBridges();
 
 	int					getStrokeDirectionType();
+	AvBridge*			currentAvBridge;
 
 	void setLineOptions(int extra);
 
@@ -94,6 +98,7 @@ private:
 
 	// All callbacks here.  Callbacks are declared 
 	// static
+	static void cb_window(Fl_Widget* o, void* v);
 	static void	cb_load_image(Fl_Menu_* o, void* v);
 	static void	cb_save_image(Fl_Menu_* o, void* v);
 	static void	cb_brushes(Fl_Menu_* o, void* v);
@@ -106,6 +111,7 @@ private:
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
 	static void	cb_slides(Fl_Widget* o, void* v);
 	static void	cb_autodraw(Fl_Widget* o, void* v);
+	static void	cb_autodraw_video(Fl_Widget* o, void* v);
 	static void	cb_updateColor(Fl_Widget* o, void* v);
 
 	// bonus
