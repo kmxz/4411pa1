@@ -1,3 +1,9 @@
+////**** **** **** **** **** **** **** **** **** **** **** ****////
+////    COMP 4411 PA1 (Fall 2014) by {xkong, fxuaa}@ust.hk     ////
+////                                                           ////
+////                  Please read README.html                  ////
+////**** **** **** **** **** **** **** **** **** **** **** ****////
+
 #include "GradientStroke.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
