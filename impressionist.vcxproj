@@ -44,12 +44,12 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>c:\temp\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Users\fxuaa\Desktop\4411pa1\include;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>C:\Users\fxuaa\Desktop\4411pa1\include;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Users\fxuaa\Desktop\4411pa1\include;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Users\fxuaa\Desktop\4411pa1\include;$(ReferencePath)</ReferencePath>
-    <LibraryWPath>C:\Users\fxuaa\Desktop\4411pa1\include;$(LibraryWPath)</LibraryWPath>
-    <SourcePath>C:\Users\fxuaa\Desktop\4411pa1\include;$(SourcePath)</SourcePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryWPath>$(LibraryWPath)</LibraryWPath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
@@ -95,8 +95,8 @@
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>libcmtd;libcd;libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <OutputFile>.\Debug\impressionist.exe</OutputFile>
-      <AdditionalLibraryDirectories>local/lib;ffmpeg/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>local/lib/fltkd.lib;local/lib/fltk.lib;wsock32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>include/lib;local/lib;ffmpeg/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>local/lib/fltkd.lib;local/lib/fltk.lib;wsock32.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;opencv_core249.lib;opencv_highgui249.lib;opencv_imgproc249.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

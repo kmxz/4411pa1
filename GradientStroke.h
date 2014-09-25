@@ -18,6 +18,8 @@ public:
 	void StrokeDirectionMove(const ImpPoint source, const ImpPoint target);
 	void StrokeDirectionEnd(const ImpPoint source, const ImpPoint target);
 	int getAngle(void);
+private:
+	int	c_pAngle=0;
 };
 
 #endif
