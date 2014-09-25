@@ -62,12 +62,22 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
       <tr>
         <td><span class="ck-bell"></span></td>
         <td>Add controls that allow you to manipulate the color of the image. For example, you could implement independent scaling of the red, green, and blue channels.</td>
-        <td>Go menu <i>Action</i> -> <i>Color manipulation</i>. <a href="http://en.wikipedia.org/wiki/Gamma_correction">Gamma curve correction</a> is employed for three individual channels.</td>
+        <td>Go menu <i>Action</i> -> <i>Color manipulation</i>. <a href="http://en.wikipedia.org/wiki/Gamma_correction">Gamma curve correction</a> is employed for three individual channels. This will affect the right side (paint view) only.</td>
       </tr>
       <tr>
         <td><span class="ck-bell"></span></td>
         <td>Add an undo feature with at least one level of undo so that you can try a brush and decide to undo its effect on the canvas. This comes in very handy for experimenting with brush and filtering effects.</td>
-        <td>Go menu <i>Action</i> -> <i>Undo</i>. Brush operations and auto-painting can be undone. Some actions cannot be undone (like swapping or video processing). In such cases, an alert box will notice the user.</td>
+        <td>Go menu <i>Action</i> -> <i>Undo</i>. Brush operations and auto-painting can be undone. Some actions cannot be undone (like swapping, dissolving or video processing). In such cases, an alert box will notice the user.</td>
+      </tr>
+      <tr>
+        <td><span class="ck-bell"></span></td>
+        <td>Add the ability to dissolve one image into another.</td>
+        <td>Go menu <i>Action</i> -> <i>Dissolve</i>. An animation will dissolve the left side (original view) to right side (paint view). Hint: to dissolve two different images, you can load the first one, swap it to the right, and load another one with "mural" feature.</td>
+      </tr>
+      <tr>
+        <td><span class="ck-bell-whistle"></span></td>
+        <td>Add a "mural" effect to your Impressionist by implementing the ability to load in different images while preserving what has been drawn on the canvas. Add a "New Mural Image" or "Change Mural Image" to the controls window that allows the user to change images. The user may then load an image, draw in what he / she prefers on the canvas, and then load a different image and continue drawing on the canvas; thus, a "mural" effect.</td>
+        <td>Go menu <i>File</i> -> <i>Load Mural</i>. The new image will be be overlay upon the original one. Note that mural image must be smaller.</td>
       </tr>
       <tr>
         <td><span class="ck-bell-whistle"></span></td>

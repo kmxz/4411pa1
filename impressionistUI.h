@@ -62,6 +62,11 @@ public:
 	Fl_Window*			m_colorDialog;
 	Fl_Slider*			m_colorSliders[3];
 
+// for dissolve dialog
+	Fl_Window*			m_dissolveDialog;
+	Fl_Slider*			m_dissolveSlider;
+	Fl_Slider*			m_dissolveTimeSlider;
+
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
 	ImpressionistDoc*	getDocument();
@@ -106,6 +111,7 @@ private:
 	// static
 	static void cb_window(Fl_Widget* o, void* v);
 	static void	cb_load_image(Fl_Menu_* o, void* v);
+	static void	cb_load_mural_image(Fl_Menu_* o, void* v);
 	static void	cb_save_image(Fl_Menu_* o, void* v);
 	static void	cb_brushes(Fl_Menu_* o, void* v);
 	static void	cb_color_manip(Fl_Menu_* o, void* v);
@@ -119,6 +125,8 @@ private:
 	static void	cb_autodraw(Fl_Widget* o, void* v);
 	static void	cb_autodraw_video(Fl_Widget* o, void* v);
 	static void	cb_updateColor(Fl_Widget* o, void* v);
+	static void	cb_dissolve_dialog(Fl_Menu_* o, void* v);
+	static void	cb_dissolve(Fl_Widget* o, void* v);
 
 	// bonus
 	static void	cb_undo(Fl_Menu_* o, void* v);

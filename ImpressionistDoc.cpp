@@ -128,7 +128,7 @@ void ImpressionistDoc::setStrokeDirectionType(int type)
 // This is called by the UI when the load image button is 
 // pressed.
 //---------------------------------------------------------
-int ImpressionistDoc::loadImage(char *iname) 
+int ImpressionistDoc::loadImage(char *iname, bool mural) 
 {
 	// try to open the image to read
 	unsigned char*	data;
@@ -141,35 +141,57 @@ int ImpressionistDoc::loadImage(char *iname)
 		return 0;
 	}
 
-	// reflect the fact of loading the new image
-	m_nWidth		= width;
-	m_nPaintWidth	= width;
-	m_nHeight		= height;
-	m_nPaintHeight	= height;
+	if (mural) {
 
-	// release old storage
-	if ( m_ucBitmap ) delete [] m_ucBitmap;
-	if ( m_ucPainting ) delete [] m_ucPainting;
-	if ( m_ucLast ) delete[] m_ucLast;
+		if (!m_ucBitmap) {
+			fl_alert("You cannot add a mural image when you don't even have an original one."); return 0;
+		}
 
-	undoable = false;
+		if (width > m_nWidth || height > m_nHeight) {
+			fl_alert("You cannot add a mural image which is larger than the original one."); return 0;
+		}
 
-	m_ucBitmap		= data;
+		int offsetX = (m_nWidth - width) / 2; int offsetY = (m_nHeight - height) / 2;
 
-	// allocate space for draw view
-	m_ucPainting	= new unsigned char [width*height*3];
-	memset(m_ucPainting, 0, width*height*3);
+		for (int i = 0; i < height; i++) {
+			memcpy(m_ucBitmap + ((offsetY + i) * m_nWidth + offsetX) * 3, data + i * 3 * width, 3 * width);
+		}
 
-	m_ucLast = new unsigned char[width*height * 3];
-	memset(m_ucLast, 0, width*height * 3);
+		m_pUI->m_origView->refresh();
 
-	m_pUI->resize_windows(width, height);
+	} else {
 
-	// display it on origView
-	m_pUI->m_origView->refresh();
+		// reflect the fact of loading the new image
+		m_nWidth = width;
+		m_nPaintWidth = width;
+		m_nHeight = height;
+		m_nPaintHeight = height;
 
-	// refresh paint view as well
-	m_pUI->m_paintView->refresh();
+		// release old storage
+		if (m_ucBitmap) delete[] m_ucBitmap;
+		if (m_ucPainting) delete[] m_ucPainting;
+		if (m_ucLast) delete[] m_ucLast;
+
+		undoable = false;
+
+		m_ucBitmap = data;
+
+		// allocate space for draw view
+		m_ucPainting = new unsigned char[width*height * 3];
+		memset(m_ucPainting, 0, width*height * 3);
+
+		m_ucLast = new unsigned char[width*height * 3];
+		memset(m_ucLast, 0, width*height * 3);
+
+		m_pUI->resize_windows(width, height);
+
+		// display it on origView
+		m_pUI->m_origView->refresh();
+
+		// refresh paint view as well
+		m_pUI->m_paintView->refresh();
+
+	}
 
 	return 1;
 }
@@ -268,5 +290,22 @@ void ImpressionistDoc::gamma(double r, double g, double b) {
 		m_ucPainting[i] = map(m_ucLast[i], r);
 		m_ucPainting[i + 1] = map(m_ucLast[i + 1], g);
 		m_ucPainting[i + 2] = map(m_ucLast[i + 2], b);
+	}
+}
+
+void ImpressionistDoc::dissolve(double until, double seconds) {
+	clock_t tStart = clock();
+	int length = m_nPaintWidth * m_nPaintHeight * 3;
+	memcpy(m_ucLast, m_ucPainting, length); // save painting to last
+	while (true) {
+		double percentage = (clock() - tStart) / (double)CLOCKS_PER_SEC;
+		if (percentage > 1) { break; }
+		double rate = until * percentage;
+		double urate = 1 - rate;
+		for (int i = 0; i < length; i++) {
+			m_ucPainting[i] = m_ucLast[i] * urate + m_ucBitmap[i] * rate;
+		}
+		m_pUI->m_paintView->refresh();
+		Fl::check();
 	}
 }
