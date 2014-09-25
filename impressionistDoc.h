@@ -25,7 +25,7 @@ public:
 
 	void	setUI(ImpressionistUI* ui);		// Assign the UI to use
 
-	int		loadImage(char *iname);			// called by the UI to load image
+	int		loadImage(char *iname, bool mural);			// called by the UI to load image
 	int		saveImage(char *iname);			// called by the UI to save image
 
 
@@ -74,6 +74,7 @@ public:
 	void undo(void);
 	void swap(void);
 	void gamma(double r, double g, double b);
+	void dissolve(double until, double seconds);
 
 private:
 	char			m_imageName[256];

@@ -19,6 +19,8 @@
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
 
+#include "ConvolutionUI.h"
+
 #define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
 
 #define ITEM_ACTIVATION(name, widget) { if (extra & name) { widget->activate(); } else { widget->deactivate(); } }
@@ -194,10 +196,23 @@ void ImpressionistUI::cb_load_image(Fl_Menu_* o, void* v)
 	whoami(o)->stopAvBridges();
 	char* newfile = fl_file_chooser("Open File?", "*.bmp", pDoc->getImageName() );
 	if (newfile != NULL) {
-		pDoc->loadImage(newfile);
+		pDoc->loadImage(newfile, false);
 	}
 }
 
+//------------------------------------------------------------------
+// Brings up a file chooser and then loads the chosen image
+// This is called by the UI when the load image menu item is chosen
+//------------------------------------------------------------------
+void ImpressionistUI::cb_load_mural_image(Fl_Menu_* o, void* v)
+{
+	ImpressionistDoc *pDoc = whoami(o)->getDocument();
+	whoami(o)->stopAvBridges();
+	char* newfile = fl_file_chooser("Open File?", "*.bmp", pDoc->getImageName());
+	if (newfile != NULL) {
+		pDoc->loadImage(newfile, true);
+	}
+}
 
 //------------------------------------------------------------------
 // Brings up a file chooser and then saves the painted image
@@ -233,6 +248,15 @@ void ImpressionistUI::cb_color_manip(Fl_Menu_* o, void* v)
 	whoami(o)->m_colorDialog->show();
 }
 
+//-------------------------------------------------------------
+// Brings up the dissolve dialog
+// This is called by the UI when the color manip menu item
+// is chosen
+//-------------------------------------------------------------
+void ImpressionistUI::cb_dissolve_dialog(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_dissolveDialog->show();
+}
 
 //------------------------------------------------------------
 // Clears the paintview canvas.
@@ -327,6 +351,23 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 	ImpressionistDoc * pDoc = ((ImpressionistUI*)(o->user_data()))->getDocument();
 
 	pDoc->clearCanvas();
+}
+
+//-----------------------------------------------------------
+// Do a dissolve
+//-----------------------------------------------------------
+void ImpressionistUI::cb_dissolve(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
+	self->m_dissolveDialog->hide();
+	double until = self->m_dissolveSlider->value();
+	double seconds = self->m_dissolveTimeSlider->value();
+	self->m_pDoc->dissolve(until, seconds);
+}
+
+void ImpressionistUI::cb_convolution_dialog(Fl_Menu_* o, void* v)
+{
+	new ConvolutionUI();
 }
 
 //-----------------------------------------------------------
@@ -483,6 +524,7 @@ double ImpressionistUI::getAlpha()
 Fl_Menu_Item ImpressionistUI::menuitems[] = {
 	{ "&File",		0, 0, 0, FL_SUBMENU },
 		{ "&Load Image...",	FL_ALT + 'l', (Fl_Callback *)ImpressionistUI::cb_load_image },
+		{ "&Load Mural...", FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_load_mural_image },
 		{ "&Save Image...",	FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_save_image },
 		{ "&Brushes...",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushes }, 
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
@@ -494,6 +536,8 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Undo", NULL, (Fl_Callback *)ImpressionistUI::cb_undo },
 		{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
 		{ "&Color manipulation", NULL, (Fl_Callback *)ImpressionistUI::cb_color_manip },
+		{ "&Dissolve", NULL, (Fl_Callback *)ImpressionistUI::cb_dissolve_dialog },
+		{ "&Convolution", NULL, (Fl_Callback *)ImpressionistUI::cb_convolution_dialog },
 		{ 0 },
 
 	{ "&Help",		0, 0, 0, FL_SUBMENU },
@@ -653,7 +697,7 @@ ImpressionistUI::ImpressionistUI() {
 		setLineOptions(DEFAULT_BRUSH_SETTINGS);
 
 	// color dialog definition
-	m_colorDialog = new Fl_Window(400, 130, "Color Manipulation");
+	m_colorDialog = new Fl_Window(400, 140, "Color Manipulation");
 		new Fl_Box(10, 10, 305, 20, "Gamma correction for color channels");
 
 		m_colorSliders[0] = new Fl_Value_Slider(10, 40, 300, 20, "Red");
@@ -671,6 +715,31 @@ ImpressionistUI::ImpressionistUI() {
 			m_colorSliders[i]->user_data((void*)(this));	// record self to be used by static callback functions
 			m_colorSliders[i]->callback(cb_updateColor);
 		}
+		m_colorDialog->end();
+
+	// dissolve dialog definition
+	m_dissolveDialog = new Fl_Window(400, 160, "Dissolve");
+		new Fl_Box(10, 10, 305, 20, "This will dissolve the left view into the right view\n up to a certain degree.");
+
+		m_dissolveSlider = new Fl_Value_Slider(10, 50, 280, 20, "Percentage");
+		STYLIZE_THE_FUCKING_SLIDER(m_dissolveSlider);
+		m_dissolveSlider->minimum(0);
+		m_dissolveSlider->maximum(1);
+		m_dissolveSlider->step(0.01);
+		m_dissolveSlider->value(0.75);
+
+		m_dissolveTimeSlider = new Fl_Value_Slider(10, 80, 280, 20, "Duration (sec)");
+		STYLIZE_THE_FUCKING_SLIDER(m_dissolveTimeSlider);
+		m_dissolveTimeSlider->minimum(0.5);
+		m_dissolveTimeSlider->maximum(5);
+		m_dissolveTimeSlider->step(0.1);
+		m_dissolveTimeSlider->value(1);
+
+		Fl_Button* dissolveBtn = new Fl_Button(10, 110, 60, 20, "Dissolve");
+		dissolveBtn->user_data((void*)(this));
+		dissolveBtn->callback(cb_dissolve);
+
+		m_dissolveDialog->end();
 }
 
 void ImpressionistUI::setLineOptions(int extra) {

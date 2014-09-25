@@ -297,6 +297,7 @@ void PaintView::RestoreContent()
 }
 
 void PaintView::updateFilterCircle(ImpPoint target) {
+	return;
 	if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_FILTER) {
 		RestoreContent();
 		glBegin(GL_LINE_LOOP);
