@@ -19,6 +19,8 @@
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
 
+#include "ConvolutionUI.h"
+
 #define STYLIZE_THE_FUCKING_SLIDER(slider) { slider->type(FL_HOR_NICE_SLIDER); slider->labelfont(FL_COURIER); slider->labelsize(12); slider->align(FL_ALIGN_RIGHT); }
 
 #define ITEM_ACTIVATION(name, widget) { if (extra & name) { widget->activate(); } else { widget->deactivate(); } }
@@ -363,6 +365,10 @@ void ImpressionistUI::cb_dissolve(Fl_Widget* o, void* v)
 	self->m_pDoc->dissolve(until, seconds);
 }
 
+void ImpressionistUI::cb_convolution_dialog(Fl_Menu_* o, void* v)
+{
+	new ConvolutionUI();
+}
 
 //-----------------------------------------------------------
 // Do a auto-draw
@@ -531,6 +537,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
 		{ "&Color manipulation", NULL, (Fl_Callback *)ImpressionistUI::cb_color_manip },
 		{ "&Dissolve", NULL, (Fl_Callback *)ImpressionistUI::cb_dissolve_dialog },
+		{ "&Convolution", NULL, (Fl_Callback *)ImpressionistUI::cb_convolution_dialog },
 		{ 0 },
 
 	{ "&Help",		0, 0, 0, FL_SUBMENU },

@@ -95,8 +95,8 @@
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>libcmtd;libcd;libc;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <OutputFile>.\Debug\impressionist.exe</OutputFile>
-      <AdditionalLibraryDirectories>opencv/build/x86/vc12/lib;local/lib;ffmpeg/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>local/lib/fltkd.lib;local/lib/fltk.lib;wsock32.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;opencv_core249.lib;opencv_highgui249.lib;opencv_imgproc249.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>local/lib;ffmpeg/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>local/lib/fltkd.lib;local/lib/fltk.lib;wsock32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -155,6 +155,7 @@
     <ClCompile Include="ConcreteBrushes\ScatPointBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\StarBrush.cpp" />
     <ClCompile Include="AvBridge.cpp" />
+    <ClCompile Include="ConvolutionUI.cpp" />
     <ClCompile Include="GradientStroke.cpp" />
     <ClCompile Include="ImpBrush.cpp" />
     <ClCompile Include="Impressionist.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="ConcreteBrushes\ScatPointBrush.h" />
     <ClInclude Include="ConcreteBrushes\StarBrush.h" />
     <ClInclude Include="avbridge.h" />
+    <ClInclude Include="ConvolutionUI.h" />
     <ClInclude Include="GradientStroke.h" />
     <ClInclude Include="ImpBrush.h" />
     <ClInclude Include="impressionist.h" />

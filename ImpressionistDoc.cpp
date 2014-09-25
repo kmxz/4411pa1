@@ -271,6 +271,7 @@ void ImpressionistDoc::undo(void) {
 }
 
 void ImpressionistDoc::swap(void) {
+	if (!m_ucLast) { return; }
 	unsigned char* temp = m_ucBitmap;
 	m_ucBitmap = m_ucPainting;
 	m_ucPainting = temp;

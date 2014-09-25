@@ -127,6 +127,7 @@ private:
 	static void	cb_updateColor(Fl_Widget* o, void* v);
 	static void	cb_dissolve_dialog(Fl_Menu_* o, void* v);
 	static void	cb_dissolve(Fl_Widget* o, void* v);
+	static void	cb_convolution_dialog(Fl_Menu_* o, void* v);
 
 	// bonus
 	static void	cb_undo(Fl_Menu_* o, void* v);
