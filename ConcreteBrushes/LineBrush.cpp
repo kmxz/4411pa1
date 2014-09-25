@@ -27,7 +27,6 @@ void LineBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 	size = getSize();
 	
 	glLineWidth(pDoc->m_pUI->getLineWidth());
-	BrushMove(source, target);
 }
 
 void LineBrush::BrushMove(const ImpPoint source, const ImpPoint target)

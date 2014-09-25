@@ -20,10 +20,7 @@ ImpBrush(pDoc, name)
 {
 }
 
-void FilterBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
-{
-	BrushMove(source, target);
-}
+void FilterBrush::BrushBegin(const ImpPoint source, const ImpPoint target) {}
 
 void FilterBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {

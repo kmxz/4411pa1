@@ -43,7 +43,6 @@ void StarBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 	size = getSize();
 	angle = pDoc->m_pUI->getLineAngle();
 	glLineWidth(pDoc->m_pUI->getLineWidth());
-	BrushMove(source, target);
 }
 
 void StarBrush::BrushMove(const ImpPoint source, const ImpPoint target)

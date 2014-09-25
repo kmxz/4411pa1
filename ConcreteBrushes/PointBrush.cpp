@@ -25,10 +25,7 @@ PointBrush::PointBrush( ImpressionistDoc* pDoc, char* name ) :
 void PointBrush::BrushBegin( const ImpPoint source, const ImpPoint target )
 {
 	int size = getSize();
-
 	glPointSize( (float)size );
-
-	BrushMove( source, target );
 }
 
 void PointBrush::BrushMove( const ImpPoint source, const ImpPoint target )
