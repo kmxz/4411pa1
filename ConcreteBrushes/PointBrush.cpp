@@ -22,7 +22,7 @@ PointBrush::PointBrush( ImpressionistDoc* pDoc, char* name ) :
 {
 }
 
-void PointBrush::BrushBegin( const Point source, const Point target )
+void PointBrush::BrushBegin( const ImpPoint source, const ImpPoint target )
 {
 	int size = getSize();
 
@@ -31,7 +31,7 @@ void PointBrush::BrushBegin( const Point source, const Point target )
 	BrushMove( source, target );
 }
 
-void PointBrush::BrushMove( const Point source, const Point target )
+void PointBrush::BrushMove( const ImpPoint source, const ImpPoint target )
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -48,7 +48,7 @@ void PointBrush::BrushMove( const Point source, const Point target )
 	glEnd();
 }
 
-void PointBrush::BrushEnd( const Point source, const Point target )
+void PointBrush::BrushEnd( const ImpPoint source, const ImpPoint target )
 {
 	// do nothing so far
 }

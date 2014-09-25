@@ -29,7 +29,7 @@ ImpBrush(pDoc, name)
 	fileName[0] = '\0';
 }
 
-void MaskBrush::BrushBegin(const Point source, const Point target)
+void MaskBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -37,7 +37,7 @@ void MaskBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void MaskBrush::BrushMove(const Point source, const Point target)
+void MaskBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -65,7 +65,7 @@ void MaskBrush::BrushMove(const Point source, const Point target)
 	glPopMatrix();
 }
 
-void MaskBrush::BrushEnd(const Point source, const Point target)
+void MaskBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

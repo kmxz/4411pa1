@@ -37,12 +37,12 @@
 #endif
 
 struct Punkt {
-	Point point; double rate;
+	ImpPoint point; double rate;
 };
 
 static int		eventToDo;
 static int		isAnEvent=0;
-static Point	coord;
+static ImpPoint	coord;
 static struct {
 	std::vector<Punkt> spots; double coherency; bool randomSize; bool initialized; bool isVideo;
 } autoDrawSettings;
@@ -82,7 +82,7 @@ void PaintView::draw()
 		glClear( GL_COLOR_BUFFER_BIT );
 	}
 
-	Point scrollpos;// = GetScrollPosition();
+	ImpPoint scrollpos;// = GetScrollPosition();
 	scrollpos.x = 0;
 	scrollpos.y	= 0;
 
@@ -124,8 +124,8 @@ void PaintView::draw()
 		if (coord.y < 0) { coord.y = 0; }
 		if (coord.y >= m_nDrawHeight) { coord.y = m_nDrawHeight - 1; }
 
-		Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
-		Point target( coord.x, m_nWindowHeight - coord.y );
+		ImpPoint source( coord.x + m_nStartCol, m_nEndRow - coord.y );
+		ImpPoint target( coord.x, m_nWindowHeight - coord.y );
 
 		// This is the event handler
 		switch (eventToDo) 
@@ -296,7 +296,7 @@ void PaintView::RestoreContent()
 //	glDrawBuffer(GL_FRONT);
 }
 
-void PaintView::updateFilterCircle(Point target) {
+void PaintView::updateFilterCircle(ImpPoint target) {
 	if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_FILTER) {
 		RestoreContent();
 		glBegin(GL_LINE_LOOP);
@@ -323,7 +323,7 @@ void PaintView::initAutoDraw(int spacing, bool randomSize, double coherency, boo
 	autoDrawSettings.spots.clear();
 	for (int x = 0; x < m_pDoc->m_nPaintWidth + spacing; x += spacing) {
 		for (int y = 0; y < m_pDoc->m_nPaintHeight + spacing; y += spacing) {
-			Punkt punkt; punkt.point = Point(x, y); punkt.rate = 1;
+			Punkt punkt; punkt.point = ImpPoint(x, y); punkt.rate = 1;
 			autoDrawSettings.spots.push_back(punkt);
 		}
 	}

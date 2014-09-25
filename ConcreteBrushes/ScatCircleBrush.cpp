@@ -22,17 +22,17 @@ CircleBrush(pDoc, name)
 {
 }
 
-void ScatCircleBrush::BrushMove(const Point source, const Point target)
+void ScatCircleBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	int count = 2 + random() * 3; // randomly choose between 2, 3 or 4 lines
 	for (int i = 0; i < count; i++) {
 		int dx = (random() - 0.5) * size * 2;
 		int dy = (random() - 0.5) * size * 2;
-		CircleBrush::BrushMove(Point(source.x + dx, source.y + dy), Point(target.x + dx, target.y + dy));
+		CircleBrush::BrushMove(ImpPoint(source.x + dx, source.y + dy), ImpPoint(target.x + dx, target.y + dy));
 	}
 }
 
-void ScatCircleBrush::BrushEnd(const Point source, const Point target)
+void ScatCircleBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

@@ -6,27 +6,27 @@
 
 #include "RightMouseSelect.h"
 #include "math.h"
-Point initailPoint;
+ImpPoint initailImpPoint;
 static const GLubyte red[] = { 255, 0, 0 };
 
-void MouseBegin(const Point source, const Point target, ImpressionistDoc* pDoc)
+void MouseBegin(const ImpPoint source, const ImpPoint target, ImpressionistDoc* pDoc)
 {
 	glLineWidth(1);
-	initailPoint = target;
+	initailImpPoint = target;
 	MouseMove(source, target,pDoc);
 }
-void MouseMove(const Point source, const Point target, ImpressionistDoc* pDoc)
+void MouseMove(const ImpPoint source, const ImpPoint target, ImpressionistDoc* pDoc)
 {
 	glBegin(GL_LINES);
 	glColor3ubv(red);
-	glVertex2d(initailPoint.x, initailPoint.y);
+	glVertex2d(initailImpPoint.x, initailImpPoint.y);
 	glVertex2d(target.x, target.y);
 	glEnd();
 }
-void MouseEnd(const Point source, const Point target, ImpressionistDoc* pDoc)
+void MouseEnd(const ImpPoint source, const ImpPoint target, ImpressionistDoc* pDoc)
 {
-	Point p1 = initailPoint;
-	Point p2 = target;
+	ImpPoint p1 = initailImpPoint;
+	ImpPoint p2 = target;
 	int theta = pDoc->m_pUI->m_BrushLineAngleSlider->value();
 	
 	if (p2.x-p1.x!=0)

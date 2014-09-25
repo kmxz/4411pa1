@@ -22,14 +22,14 @@ ImpBrush(pDoc, name)
 {
 }
 
-void ScatPointBrush::BrushBegin(const Point source, const Point target)
+void ScatPointBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	glPointSize(1);
 
 	BrushMove(source, target);
 }
 
-void ScatPointBrush::BrushMove(const Point source, const Point target)
+void ScatPointBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -49,7 +49,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 				continue;
 			}
 			glBegin(GL_POINTS);
-			Point real_source = Point(source.x + i, source.y + j);
+			ImpPoint real_source = ImpPoint(source.x + i, source.y + j);
 			SetColor(real_source, pDoc->m_pUI->getAlpha());
 			glVertex2d(i, j);
 			glEnd();
@@ -65,7 +65,7 @@ void ScatPointBrush::BrushMove(const Point source, const Point target)
 	glPopMatrix();
 }
 
-void ScatPointBrush::BrushEnd(const Point source, const Point target)
+void ScatPointBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

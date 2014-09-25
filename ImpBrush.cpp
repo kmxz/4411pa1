@@ -62,7 +62,7 @@ bool ImpBrush::init(void) { // to be overloadded
 // which is the coord at the original window to sample 
 // the color from
 //----------------------------------------------------
-void ImpBrush::SetColor (const Point source, const float alpha)
+void ImpBrush::SetColor (const ImpPoint source, const float alpha)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 

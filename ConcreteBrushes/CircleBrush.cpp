@@ -22,14 +22,14 @@ ImpBrush(pDoc, name)
 {
 }
 
-void CircleBrush::BrushBegin(const Point source, const Point target)
+void CircleBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	size = getSize() / 2;
 	steps = floor(size * 4 * PI + 0.5);
 	BrushMove(source, target);
 }
 
-void CircleBrush::BrushMove(const Point source, const Point target)
+void CircleBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	if (pDoc == NULL) {
@@ -51,7 +51,7 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	glPopMatrix();
 }
 
-void CircleBrush::BrushEnd(const Point source, const Point target)
+void CircleBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

@@ -30,7 +30,7 @@ OriginalView::OriginalView(int			x,
 
 }
 
-static Point currentCoord = Point(-1, -1);
+static ImpPoint currentCoord = ImpPoint(-1, -1);
 static const GLubyte indicatorColor[3] = { 255, 0, 0 };
 static AvBridge* av = NULL;
 
@@ -65,7 +65,7 @@ void OriginalView::draw()
 		GLvoid* bitstart;
 
 		// we are not using a scrollable window, so ignore it
-		Point scrollpos;	// = GetScrollPosition();
+		ImpPoint scrollpos;	// = GetScrollPosition();
 		scrollpos.x=scrollpos.y=0;
 
 		drawWidth	= min( m_nWindowWidth, m_pDoc->m_nWidth );
@@ -108,7 +108,7 @@ void OriginalView::resizeWindow(int	width,
 	resize(x(), y(), width, height);
 }
 
-void OriginalView::markCoord(Point coord) {
+void OriginalView::markCoord(ImpPoint coord) {
 	// section directly copied from PaintView.cpp
 	// FUCK Don'tRepeatYourself rule away! This is a fucking one-off stupid assignment and no one will FUCKING ever look into its code! 
 	if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_FILTER) {

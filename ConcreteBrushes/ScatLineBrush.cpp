@@ -25,7 +25,7 @@ LineBrush(pDoc, name)
 {
 }
 
-void ScatLineBrush::BrushMove(const Point source, const Point target)
+void ScatLineBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -40,11 +40,11 @@ void ScatLineBrush::BrushMove(const Point source, const Point target)
 	for (int i = 0; i < count; i++) {
 		int dx = (random() - 0.5) * (size * cos(angleRad) + width * sin(angleRad) * 3) * 1.21; // Jan. 21st is the day I declared to her
 		int dy = (random() - 0.5) * (size * sin(angleRad) + width * cos(angleRad) * 3) * 1.21;
-		LineBrush::BrushMove(Point(source.x + dx, source.y + dy), Point(target.x + dx, target.y + dy));
+		LineBrush::BrushMove(ImpPoint(source.x + dx, source.y + dy), ImpPoint(target.x + dx, target.y + dy));
 	}
 }
 
-void ScatLineBrush::BrushEnd(const Point source, const Point target)
+void ScatLineBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

@@ -233,7 +233,7 @@ GLubyte* ImpressionistDoc::GetOriginalPixel( int x, int y )
 //----------------------------------------------------------------
 // Get the color of the pixel in the original image at point p
 //----------------------------------------------------------------
-GLubyte* ImpressionistDoc::GetOriginalPixel( const Point p )
+GLubyte* ImpressionistDoc::GetOriginalPixel( const ImpPoint p )
 {
 	return GetOriginalPixel( p.x, p.y );
 }

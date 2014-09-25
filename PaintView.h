@@ -52,7 +52,7 @@ private:
 			m_nEndCol,
 			m_nWindowWidth, 
 			m_nWindowHeight;
-	void updateFilterCircle(Point target);
+	void updateFilterCircle(ImpPoint target);
 
 };
 

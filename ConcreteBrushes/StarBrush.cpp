@@ -36,7 +36,7 @@ double StarBrush::coords[10][2] = {
 	{ 2.2452, 3.0902 }
 };
 
-void StarBrush::BrushBegin(const Point source, const Point target)
+void StarBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -46,7 +46,7 @@ void StarBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void StarBrush::BrushMove(const Point source, const Point target)
+void StarBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	if (pDoc == NULL) {
@@ -75,7 +75,7 @@ int StarBrush::extra(void)
 	return EXTRA_WIDTH | EXTRA_ANGLE | ImpBrush::extra();
 }
 
-void StarBrush::BrushEnd(const Point source, const Point target)
+void StarBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far
 }

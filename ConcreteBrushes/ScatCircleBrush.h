@@ -20,8 +20,8 @@ class ScatCircleBrush : public CircleBrush
 public:
 	ScatCircleBrush(ImpressionistDoc* pDoc = NULL, char* name = NULL);
 
-	void BrushMove(const Point source, const Point target);
-	void BrushEnd(const Point source, const Point target);
+	void BrushMove(const ImpPoint source, const ImpPoint target);
+	void BrushEnd(const ImpPoint source, const ImpPoint target);
 	char* BrushName(void);
 };
 

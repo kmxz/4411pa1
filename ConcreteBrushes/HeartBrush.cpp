@@ -22,7 +22,7 @@ ImpBrush(pDoc, name)
 {
 }
 
-void HeartBrush::BrushBegin(const Point source, const Point target)
+void HeartBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -32,7 +32,7 @@ void HeartBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void HeartBrush::BrushMove(const Point source, const Point target)
+void HeartBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -65,7 +65,7 @@ void HeartBrush::BrushMove(const Point source, const Point target)
 	glPopMatrix();
 }
 
-void HeartBrush::BrushEnd(const Point source, const Point target)
+void HeartBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far	
 }

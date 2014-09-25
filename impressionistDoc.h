@@ -69,7 +69,7 @@ public:
 	// Get the color of the original picture at the specified coord
 	GLubyte* GetOriginalPixel( int x, int y );   
 	// Get the color of the original picture at the specified point	
-	GLubyte* GetOriginalPixel( const Point p );  
+	GLubyte* GetOriginalPixel( const ImpPoint p );  
 
 	void undo(void);
 	void swap(void);

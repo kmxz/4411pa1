@@ -55,11 +55,11 @@ enum
 
 class ImpressionistDoc; // Pre-declaring class
 
-class Point 
+class ImpPoint 
 {
 public:
-	Point() {};
-	Point(int xx, int yy) { x = xx; y = yy; };
+	ImpPoint() {};
+	ImpPoint(int xx, int yy) { x = xx; y = yy; };
 
 	int x, y;
 };
@@ -71,12 +71,12 @@ protected:
 
 public:
 	// The implementation of your brush should realize these virtual functions
-	virtual void BrushBegin( const Point source, const Point target ) = 0;
-	virtual void BrushMove( const Point source, const Point target ) = 0;
-	virtual void BrushEnd( const Point source, const Point target ) = 0;
+	virtual void BrushBegin( const ImpPoint source, const ImpPoint target ) = 0;
+	virtual void BrushMove( const ImpPoint source, const ImpPoint target ) = 0;
+	virtual void BrushEnd( const ImpPoint source, const ImpPoint target ) = 0;
 
 	// according to the source image and the position, determine the draw color
-	void SetColor( const Point source, const float alpha );
+	void SetColor( const ImpPoint source, const float alpha );
 
 	// get Doc to communicate with it
 	ImpressionistDoc* GetDocument( void );

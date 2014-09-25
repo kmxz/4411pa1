@@ -14,15 +14,15 @@ StrokeDirection(pDoc, type)
 {
 }
 
-void BrushStroke::StrokeDirectionBegin(const Point source, const Point target)
+void BrushStroke::StrokeDirectionBegin(const ImpPoint source, const ImpPoint target)
 {
 	strokes.push(source);
 	//StrokeDirectionMove(source, target);
 }
 
-void BrushStroke::StrokeDirectionMove(const Point source, const Point target)
+void BrushStroke::StrokeDirectionMove(const ImpPoint source, const ImpPoint target)
 {
-	Point p2;
+	ImpPoint p2;
 	while (strokes.size() > 1) {
 		p2 = strokes.front();
 		if (abs(p2.y - source.y) + abs(p2.x - source.x) < 8) { // 8 is 2^3, so should be lucky
@@ -39,7 +39,7 @@ void BrushStroke::StrokeDirectionMove(const Point source, const Point target)
 	}
 }
 
-void BrushStroke::StrokeDirectionEnd(const Point source, const Point target){}
+void BrushStroke::StrokeDirectionEnd(const ImpPoint source, const ImpPoint target){}
 
 int BrushStroke::getAngle(void) {
 	return c_pAngle;

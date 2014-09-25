@@ -13,16 +13,16 @@ StrokeDirection(pDoc,type)
 {
 }
 
-void SliderRightMouseStroke::StrokeDirectionBegin(const Point source, const Point target)
+void SliderRightMouseStroke::StrokeDirectionBegin(const ImpPoint source, const ImpPoint target)
 {
 	StrokeDirectionMove(source, target);
 }
 
-void SliderRightMouseStroke::StrokeDirectionMove(const Point source, const Point target)
+void SliderRightMouseStroke::StrokeDirectionMove(const ImpPoint source, const ImpPoint target)
 {
 
 }
-void SliderRightMouseStroke::StrokeDirectionEnd(const Point source, const Point target){}
+void SliderRightMouseStroke::StrokeDirectionEnd(const ImpPoint source, const ImpPoint target){}
 int SliderRightMouseStroke::getAngle(void) {
 	return GetDocument()->m_pUI->m_BrushLineAngleSlider->value();
 }

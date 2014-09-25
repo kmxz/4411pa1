@@ -22,7 +22,7 @@ ImpBrush(pDoc, name)
 {
 }
 
-void PolyStarBrush::BrushBegin(const Point source, const Point target)
+void PolyStarBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -32,7 +32,7 @@ void PolyStarBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void PolyStarBrush::BrushMove(const Point source, const Point target)
+void PolyStarBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -69,7 +69,7 @@ void PolyStarBrush::BrushMove(const Point source, const Point target)
 	glPopMatrix();
 }
 
-void PolyStarBrush::BrushEnd(const Point source, const Point target)
+void PolyStarBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far	
 }

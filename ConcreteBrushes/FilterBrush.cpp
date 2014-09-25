@@ -20,12 +20,12 @@ ImpBrush(pDoc, name)
 {
 }
 
-void FilterBrush::BrushBegin(const Point source, const Point target)
+void FilterBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	BrushMove(source, target);
 }
 
-void FilterBrush::BrushMove(const Point source, const Point target)
+void FilterBrush::BrushMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -35,7 +35,7 @@ void FilterBrush::BrushMove(const Point source, const Point target)
 	}
 }
 
-void FilterBrush::BrushEnd(const Point source, const Point target)
+void FilterBrush::BrushEnd(const ImpPoint source, const ImpPoint target)
 {
 	// do nothing so far	
 }

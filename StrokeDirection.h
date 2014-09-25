@@ -8,7 +8,7 @@
 #define STROKEDIRECTION_H
 
 class ImpressionistDoc; // Pre-declaring class
-class Point;
+class ImpPoint;
 
 // Each stroke direction type has an associated constant.
 enum
@@ -30,9 +30,9 @@ public:
 	// get Doc to communicate with it
 	ImpressionistDoc* GetDocument(void);
 
-	virtual void StrokeDirectionBegin(const Point source, const Point target) = 0;
-	virtual void StrokeDirectionMove(const Point source, const Point target) = 0;
-	virtual void StrokeDirectionEnd(const Point source, const Point target) = 0;
+	virtual void StrokeDirectionBegin(const ImpPoint source, const ImpPoint target) = 0;
+	virtual void StrokeDirectionMove(const ImpPoint source, const ImpPoint target) = 0;
+	virtual void StrokeDirectionEnd(const ImpPoint source, const ImpPoint target) = 0;
 
 	virtual int getAngle(void) = 0;
 private:

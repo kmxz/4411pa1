@@ -20,9 +20,9 @@ class StarBrush : public ImpBrush
 public:
 	StarBrush(ImpressionistDoc* pDoc = NULL, char* name = NULL);
 
-	void BrushBegin(const Point source, const Point target);
-	void BrushMove(const Point source, const Point target);
-	void BrushEnd(const Point source, const Point target);
+	void BrushBegin(const ImpPoint source, const ImpPoint target);
+	void BrushMove(const ImpPoint source, const ImpPoint target);
+	void BrushEnd(const ImpPoint source, const ImpPoint target);
 	char* BrushName(void);
 	int extra(void);
 private:
