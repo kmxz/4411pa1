@@ -55,6 +55,7 @@ public:
 	Fl_Light_Button*	m_autoDrawSizeRandomed;
 	Fl_Button*          m_AutoDrawButton;
 	Fl_Button*          m_AutoDrawVideoButton;
+	Fl_Light_Button*    m_extGradient;
 
 	Fl_Button*          m_ClearCanvasButton;
 
@@ -128,6 +129,7 @@ private:
 	static void	cb_dissolve_dialog(Fl_Menu_* o, void* v);
 	static void	cb_dissolve(Fl_Widget* o, void* v);
 	static void	cb_convolution_dialog(Fl_Menu_* o, void* v);
+	static void	cb_load_ext_gradient(Fl_Widget* o, void* v);
 
 	// bonus
 	static void	cb_undo(Fl_Menu_* o, void* v);

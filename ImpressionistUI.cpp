@@ -365,6 +365,32 @@ void ImpressionistUI::cb_dissolve(Fl_Widget* o, void* v)
 	self->m_pDoc->dissolve(until, seconds);
 }
 
+//-----------------------------------------------------------
+// Do a gradient
+//-----------------------------------------------------------
+void ImpressionistUI::cb_load_ext_gradient(Fl_Widget* o, void* v) {
+	Fl_Light_Button* myself = (Fl_Light_Button*)o;
+	ImpressionistUI* self = ((ImpressionistUI*)(o->user_data()));
+	if (myself->value()) {
+		char* newfile = fl_file_chooser("Open File?", "*.bmp", "");
+		if (newfile != NULL) {
+			int width, height;
+			readBMP(newfile, width, height);
+			if (width == self->m_pDoc->m_nWidth && height == self->m_pDoc->m_nHeight) {
+				// file name to use
+			} else {
+				fl_alert("Dimensions mismatch!");
+			}
+		} else {
+			fl_alert("No valid image selected.");
+		}
+		myself->value(0);
+	}
+}
+
+//-----------------------------------------------------------
+// Do a convolution
+//-----------------------------------------------------------
 void ImpressionistUI::cb_convolution_dialog(Fl_Menu_* o, void* v)
 {
 	new ConvolutionUI();
@@ -532,7 +558,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 		{ 0 },
 
-	{ "&Actions",	0, 0, 0, FL_SUBMENU },
+	{ "&Action",	0, 0, 0, FL_SUBMENU },
 		{ "&Undo", NULL, (Fl_Callback *)ImpressionistUI::cb_undo },
 		{ "&Swap", NULL, (Fl_Callback *)ImpressionistUI::cb_swap },
 		{ "&Color manipulation", NULL, (Fl_Callback *)ImpressionistUI::cb_color_manip },
@@ -622,6 +648,10 @@ ImpressionistUI::ImpressionistUI() {
 		m_StrokeDirectionTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
 		m_StrokeDirectionTypeChoice->menu(strokeDirectionTypeMenu);
 		m_StrokeDirectionTypeChoice->callback(cb_strokeDirectionChoice);
+
+		m_extGradient = new Fl_Light_Button(275, 45, 145, 25, "Ext. Gradient");
+		m_extGradient->user_data((void*)(this));	// record self to be used by static callback functions
+		m_extGradient->callback(cb_load_ext_gradient);
 
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
