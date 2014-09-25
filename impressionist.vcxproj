@@ -155,6 +155,7 @@
     <ClCompile Include="ConcreteBrushes\ScatPointBrush.cpp" />
     <ClCompile Include="ConcreteBrushes\StarBrush.cpp" />
     <ClCompile Include="AvBridge.cpp" />
+    <ClCompile Include="ConvolutionUI.cpp" />
     <ClCompile Include="GradientStroke.cpp" />
     <ClCompile Include="ImpBrush.cpp" />
     <ClCompile Include="Impressionist.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="ConcreteBrushes\ScatPointBrush.h" />
     <ClInclude Include="ConcreteBrushes\StarBrush.h" />
     <ClInclude Include="avbridge.h" />
+    <ClInclude Include="ConvolutionUI.h" />
     <ClInclude Include="GradientStroke.h" />
     <ClInclude Include="ImpBrush.h" />
     <ClInclude Include="impressionist.h" />
