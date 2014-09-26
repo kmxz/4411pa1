@@ -393,7 +393,7 @@ void ImpressionistUI::cb_load_ext_gradient(Fl_Widget* o, void* v) {
 //-----------------------------------------------------------
 void ImpressionistUI::cb_convolution_dialog(Fl_Menu_* o, void* v)
 {
-	new ConvolutionUI();
+	new ConvolutionUI(whoami(o)->getDocument());
 }
 
 //-----------------------------------------------------------

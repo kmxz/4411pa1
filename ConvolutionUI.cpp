@@ -7,8 +7,10 @@
 #include "ConvolutionUI.h"
 #include <FL/fl_ask.H>
 
-ConvolutionUI::ConvolutionUI() {
-	sscanf(fl_input("Convolution matrix size?", "3"), "%d", &size);
+ConvolutionUI::ConvolutionUI(ImpressionistDoc* d) {
+	doc = d;
+
+	sscanf(fl_input("Kernel size?", "3"), "%d", &size);
 
 	// color dialog definition
 	window = new Fl_Window(max(size * 45 + 20, 200), size * 35 + 50, "Convolution matrix input");
@@ -49,5 +51,42 @@ void ConvolutionUI::cb_draw(Fl_Widget* o, void* v) {
 			}
 		}
 	}
-	// caution: give in order ([column(X)][row(Y)])
+	self->do_draw(values);
+	for (int i = 0; i < self->size; i++) {
+		delete[] values[i];
+	}
+	delete[] values;
+}
+
+void ConvolutionUI::do_draw(float** kernel) {
+	int* index = new int[size];
+	int* indey = new int[size];
+	unsigned char* last = doc->m_ucLast;
+	doc->m_ucLast = doc->m_ucPainting;
+	doc->m_ucPainting = last;
+	for (int pix = 0; pix < doc->m_nPaintWidth; pix++) {
+		for (int pjy = 0; pjy < doc->m_nPaintHeight; pjy++) {
+			// WONTFIX: if the brush size is larger than the canvas size, segfault will occur
+			for (int i = 0; i < size; i++) {
+				int iix = pix + i - size / 2;
+				if (iix < 0 || iix > doc->m_nPaintWidth) { iix = pix + size / 2 - i; }
+				index[i] = iix;
+				int iiy = pjy + i - size / 2;
+				if (iiy < 0 || iiy > doc->m_nPaintHeight) { iiy = pjy + size / 2 - i; }
+				indey[i] = iiy;
+			}
+			double total[] = { 0, 0, 0 };
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					for (int c = 0; c < 3; c++) {
+						total[c] += kernel[i][j] * doc->m_ucLast[(indey[j] * doc->m_nPaintWidth + index[i]) * 3 + c];
+					}
+				}
+			}
+			for (int c = 0; c < 3; c++) {
+				last[(pjy * doc->m_nPaintWidth + pix) * 3 + c] = total[c];
+			}
+		}
+	}
+	doc->m_pUI->m_paintView->redraw();
 }
