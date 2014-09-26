@@ -33,9 +33,9 @@ void GradientStroke::StrokeDirectionBegin(const ImpPoint source, const ImpPoint 
 	//int baseIndex = 0;
 	for (int i = 0; i < pDoc->m_nHeight; i++) {
 		for (int j = 0; j < pDoc->m_nWidth; j++) {
-			src->at<Vec3b>(i, j) = Vec3b(*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i)),
-				*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i) + 1),
-				*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i) + 2));
+			src->at<Vec3b>(i, j) = Vec3b(*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i, true)),
+				*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i, true) + 1),
+				*(pDoc->GetOriginalPixel(j, pDoc->m_nHeight - i, true) + 2));
 			//baseIndex = baseIndex + 3;
 		}
 	}

@@ -375,16 +375,22 @@ void ImpressionistUI::cb_load_ext_gradient(Fl_Widget* o, void* v) {
 		char* newfile = fl_file_chooser("Open File?", "*.bmp", "");
 		if (newfile != NULL) {
 			int width, height;
-			readBMP(newfile, width, height);
+			self->m_pDoc->m_ucExtBitmap = readBMP(newfile, width, height);
 			if (width == self->m_pDoc->m_nWidth && height == self->m_pDoc->m_nHeight) {
-				// file name to use
+				// nothing to do
+				return;
 			} else {
+				delete[] self->m_pDoc->m_ucExtBitmap;
+				self->m_pDoc->m_ucExtBitmap = NULL;
 				fl_alert("Dimensions mismatch!");
 			}
 		} else {
 			fl_alert("No valid image selected.");
 		}
 		myself->value(0);
+	} else {
+		delete[] self->m_pDoc->m_ucExtBitmap;
+		self->m_pDoc->m_ucExtBitmap = NULL;
 	}
 }
 

@@ -37,6 +37,7 @@ ImpressionistDoc::ImpressionistDoc()
 	m_ucBitmap		= NULL;
 	m_ucPainting	= NULL;
 	m_ucLast		= NULL;
+	m_ucExtBitmap	= NULL;
 	undoable		= false;
 
 	// create one instance of each brush
@@ -237,7 +238,7 @@ int ImpressionistDoc::clearCanvas()
 //------------------------------------------------------------------
 // Get the color of the pixel in the original image at coord x and y
 //------------------------------------------------------------------
-GLubyte* ImpressionistDoc::GetOriginalPixel( int x, int y )
+GLubyte* ImpressionistDoc::GetOriginalPixel( int x, int y, bool gradient )
 {
 	if ( x < 0 ) 
 		x = 0;
@@ -248,8 +249,10 @@ GLubyte* ImpressionistDoc::GetOriginalPixel( int x, int y )
 		y = 0;
 	else if ( y >= m_nHeight ) 
 		y = m_nHeight-1;
-
-	return (GLubyte*)(m_ucBitmap + 3 * (y*m_nWidth + x));
+	if (m_ucExtBitmap && gradient)
+		return (GLubyte*)(m_ucExtBitmap + 3 * (y*m_nWidth + x));
+	else
+		return (GLubyte*)(m_ucBitmap + 3 * (y*m_nWidth + x));
 }
 
 //----------------------------------------------------------------
