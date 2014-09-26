@@ -132,6 +132,7 @@ void PaintView::draw()
 		case LEFT_MOUSE_DOWN:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionBegin(source, target);
 			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
+			m_pDoc->m_pCurrentBrush->BrushMove(source, target);
 			break;
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(source, target);
