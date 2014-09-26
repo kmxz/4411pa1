@@ -25,6 +25,9 @@ public:
 	void BrushEnd(const ImpPoint source, const ImpPoint target);
 	char* BrushName(void);
 	int extra(void);
+private:
+	int size;
+	double** kernel;
 };
 
 #endif

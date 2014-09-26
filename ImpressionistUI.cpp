@@ -584,7 +584,7 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Extra: Hollow Stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_STARS },
   {"Extra: Hearts",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_HEARTS },
   {"Extra: Poly - stars",NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_POLY_STARS },
-  {"Filter: Dummy",		 NULL,		(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_FILTERS },
+  {"Filter: Gaussian blur",	NULL,	(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_FILTERS },
   {"Matte (luminance mask)", NULL,	(Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_MASKS },
   {0}
 };

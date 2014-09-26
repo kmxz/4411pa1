@@ -63,7 +63,7 @@ ImpressionistDoc::ImpressionistDoc()
 	ImpBrush::c_pBrushes[BRUSH_POLY_STARS]
 		= new PolyStarBrush(this, "Extra: Poly-stars");
 	ImpBrush::c_pBrushes[BRUSH_FILTERS]
-		= new FilterBrush(this, "Extra: Poly-stars");
+		= new FilterBrush(this, "Filter: Gaussian blur");
 	ImpBrush::c_pBrushes[BRUSH_MASKS]
 		= new MaskBrush(this, "Matte (luminance mask)");
 
