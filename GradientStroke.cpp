@@ -44,9 +44,9 @@ void GradientStroke::StrokeDirectionBegin(const ImpPoint source, const ImpPoint 
 	//src = imread(pDoc->getImageName(), CV_LOAD_IMAGE_GRAYSCALE);
 	//printf("filename:%s\n", pDoc->getImageName());
 	Sobel(*src, Dx, CV_64F, 1, 0, 3);
-	convertScaleAbs(Dx,Dx);
+	//convertScaleAbs(Dx,Dx);
 	Sobel(*src, Dy, CV_64F, 0, 1, 3);
-	convertScaleAbs(Dy, Dy);
+	//convertScaleAbs(Dy, Dy);
 	//printf("src:%dx%d\n", src->size().width, src->size().height);
 	//printf("Dx:%dx%d\n", Dx.size().width, Dx.size().height);
 	//printf("Dy:%dx%d\n", Dy.size().width, Dy.size().height);
@@ -61,8 +61,8 @@ void GradientStroke::StrokeDirectionBegin(const ImpPoint source, const ImpPoint 
 void GradientStroke::StrokeDirectionMove(const ImpPoint source, const ImpPoint target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
-	Scalar x = Dx.at<float>(pDoc->m_nHeight - source.y - 1, source.x);
-	Scalar y = Dy.at<float>(pDoc->m_nHeight - source.y - 1, source.x);
+	Scalar x = Dx.at<double>(pDoc->m_nHeight - source.y - 1, source.x);
+	Scalar y = Dy.at<double>(pDoc->m_nHeight - source.y - 1, source.x);
 	//printf("Dx:%d\n", x.val);
 	//printf("Dy:%d\n", y.val);
 	//printf("x:%d y:%d\n", source.x, source.y);
