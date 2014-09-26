@@ -25,8 +25,6 @@ ImpBrush(pDoc, name)
 void ScatPointBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	glPointSize(1);
-
-	BrushMove(source, target);
 }
 
 void ScatPointBrush::BrushMove(const ImpPoint source, const ImpPoint target)

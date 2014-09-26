@@ -26,7 +26,6 @@ void CircleBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
 	size = getSize() / 2;
 	steps = floor(size * 4 * PI + 0.5);
-	BrushMove(source, target);
 }
 
 void CircleBrush::BrushMove(const ImpPoint source, const ImpPoint target)

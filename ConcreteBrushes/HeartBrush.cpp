@@ -29,7 +29,6 @@ void HeartBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 	size = getSize();
 	angle = pDoc->m_pUI->getLineAngle();
 	steps = floor(size / 4.0 * PI + 0.5);
-	BrushMove(source, target);
 }
 
 void HeartBrush::BrushMove(const ImpPoint source, const ImpPoint target)

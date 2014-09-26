@@ -31,10 +31,7 @@ ImpBrush(pDoc, name)
 
 void MaskBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 {
-	ImpressionistDoc* pDoc = GetDocument();
-
 	glPointSize((float)1);
-	BrushMove(source, target);
 }
 
 void MaskBrush::BrushMove(const ImpPoint source, const ImpPoint target)

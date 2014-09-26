@@ -147,6 +147,7 @@ void PaintView::draw()
 		case RIGHT_MOUSE_DOWN:
 			if (m_pDoc->m_pCurrentBrush->extra() & EXTRA_LINE) {
 				MouseBegin(source, target, m_pDoc);
+				MouseMove(source, target, m_pDoc);
 			}
 			break;
 		case RIGHT_MOUSE_DRAG:
@@ -296,8 +297,8 @@ void PaintView::initAutoDraw(int spacing, bool randomSize, double coherency, boo
 	autoDrawSettings.initialized = false;
 	autoDrawSettings.isVideo = isVideo;
 	autoDrawSettings.spots.clear();
-	for (int x = 0; x < m_pDoc->m_nPaintWidth + spacing; x += spacing) {
-		for (int y = 0; y < m_pDoc->m_nPaintHeight + spacing; y += spacing) {
+	for (int x = 0; x < m_pDoc->m_nPaintWidth; x += spacing) {
+		for (int y = 0; y < m_pDoc->m_nPaintHeight; y += spacing) {
 			Punkt punkt; punkt.point = ImpPoint(x, y); punkt.rate = 1;
 			autoDrawSettings.spots.push_back(punkt);
 		}
@@ -319,6 +320,9 @@ void PaintView::realAutoDraw() {
 			std::swap(autoDrawSettings.spots[i], autoDrawSettings.spots[toSwapIndex]);
 		}
 	}
+	ImpPoint dummy = ImpPoint(0, 0);
+	m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionBegin(dummy, dummy);
+	m_pDoc->m_pCurrentBrush->BrushBegin(dummy, dummy);
 	for (std::vector<Punkt>::iterator i = autoDrawSettings.spots.begin(); i != autoDrawSettings.spots.end(); i++) {
 		if (autoDrawSettings.randomSize) {
 			if (ImpBrush::random() > coherency) {
@@ -326,7 +330,8 @@ void PaintView::realAutoDraw() {
 			}
 			ImpBrush::magnify = i->rate;
 		}
-		m_pDoc->m_pCurrentBrush->BrushBegin(i->point, i->point);
+		m_pDoc->m_pCurrentStrokeDirection->StrokeDirectionMove(i->point, i->point);
+		m_pDoc->m_pCurrentBrush->BrushMove(i->point, i->point);
 	}
 	ImpBrush::magnify = 1;
 	autoDrawSettings.initialized = true;

@@ -29,7 +29,6 @@ void PolyStarBrush::BrushBegin(const ImpPoint source, const ImpPoint target)
 	size = getSize();
 	angle = pDoc->m_pUI->getLineAngle();
 	sides = pDoc->m_pUI->getSides();
-	BrushMove(source, target);
 }
 
 void PolyStarBrush::BrushMove(const ImpPoint source, const ImpPoint target)
